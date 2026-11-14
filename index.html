@@ -11,15 +11,23 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#1c1712">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="AppFiles/Logos/AppIcon192px.png">
 <!-- End app icons -->
 
 <title>Cards Against Humanity</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
-
 <style>
+
+  /* ==========================================================
+     Self-hosted fonts (AppFiles/Fonts/*.woff2). Run get-fonts.py once
+     to download them. Until then the fallback stacks below are used.
+  ========================================================== */
+  @font-face { font-family: 'Big Shoulders Display'; font-style: normal; font-weight: 600; font-display: swap; src: url('AppFiles/Fonts/big-shoulders-display-600.woff2') format('woff2'); }
+  @font-face { font-family: 'Big Shoulders Display'; font-style: normal; font-weight: 800; font-display: swap; src: url('AppFiles/Fonts/big-shoulders-display-800.woff2') format('woff2'); }
+  @font-face { font-family: 'Source Sans 3'; font-style: normal; font-weight: 400; font-display: swap; src: url('AppFiles/Fonts/source-sans-3-400.woff2') format('woff2'); }
+  @font-face { font-family: 'Source Sans 3'; font-style: normal; font-weight: 600; font-display: swap; src: url('AppFiles/Fonts/source-sans-3-600.woff2') format('woff2'); }
+  @font-face { font-family: 'Source Sans 3'; font-style: normal; font-weight: 700; font-display: swap; src: url('AppFiles/Fonts/source-sans-3-700.woff2') format('woff2'); }
 
   /* ==========================================================
      Tokens
@@ -39,8 +47,8 @@
     --card-white: #fffdf6;
     --rule: rgba(28, 23, 18, 0.16);
     --shadow-ink: rgba(28, 23, 18, 0.28);
-    --font-display: 'Big Shoulders Display', sans-serif;
-    --font-body: 'Source Sans 3', sans-serif;
+    --font-display: 'Big Shoulders Display', 'Arial Narrow', Impact, sans-serif;
+    --font-body: 'Source Sans 3', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   }
 
   * {
@@ -101,7 +109,7 @@
     text-transform: uppercase;
   }
 
-  #main-menu, #card-display, #setup-screen {
+  #main-menu, #card-display {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -115,96 +123,6 @@
   #main-menu {
     justify-content: center;
     gap: 6px;
-  }
-
-  /* ---------- Player badge / role banner ---------- */
-  .player-banner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 18px;
-    padding: 14px 22px;
-    border-radius: 4px;
-    background-color: var(--card-white);
-    border: 1px solid var(--rule);
-    box-shadow: 0 2px 0 var(--rule);
-  }
-
-  body.dark-mode .player-banner {
-    background-color: #262019;
-    border-color: rgba(255,255,255,0.12);
-    box-shadow: 0 2px 0 rgba(255,255,255,0.08);
-  }
-
-  .player-banner .who {
-    font-size: 13px;
-    letter-spacing: 0.03em;
-    color: var(--ink-soft);
-  }
-
-  body.dark-mode .player-banner .who {
-    color: #b9ae9c;
-  }
-
-  .role-pill {
-    display: inline-block;
-    padding: 5px 16px;
-    border-radius: 3px;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 17px;
-    letter-spacing: 0.02em;
-  }
-
-  .role-pill.czar {
-    background-color: var(--crimson);
-    color: var(--card-white);
-  }
-
-  body.dark-mode .role-pill.czar {
-    background-color: var(--crimson);
-    color: white;
-  }
-
-  .role-pill.player {
-    background-color: transparent;
-    color: var(--pine);
-    border: 2px solid var(--pine);
-  }
-
-  body.dark-mode .role-pill.player {
-    color: #8fb491;
-    border-color: #8fb491;
-  }
-
-  .round-controls {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    margin-top: 2px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .link-button {
-    background: none;
-    border: none;
-    color: var(--crimson);
-    cursor: pointer;
-    font-size: 13px;
-    font-weight: 600;
-    text-decoration: underline;
-    text-underline-offset: 2px;
-    padding: 2px 4px;
-  }
-
-  .link-button:hover {
-    color: var(--crimson-dark);
-  }
-
-  body.dark-mode .link-button {
-    color: #e0785f;
   }
 
   .small-button {
@@ -242,7 +160,8 @@
   }
 
   #main-menu button.draw-black-card,
-  #main-menu button.draw-white-cards {
+  #main-menu button.draw-white-cards,
+  #main-menu button.draw-round-cards {
     width: 200px;
     height: 200px;
     font-family: var(--font-display);
@@ -287,6 +206,35 @@
     box-shadow: 3px 3px 0 var(--crimson);
   }
 
+  /* Sync Mode: the single "Draw Cards" button */
+  #main-menu .draw-round-cards {
+    background-color: var(--crimson);
+    color: white;
+    border: 2px solid var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+
+  #main-menu .draw-round-cards:hover:not(:disabled) {
+    box-shadow: 9px 9px 0 var(--ink);
+  }
+
+  #main-menu .draw-round-cards:active:not(:disabled) {
+    box-shadow: 3px 3px 0 var(--ink);
+  }
+
+  body.dark-mode #main-menu .draw-round-cards {
+    border-color: #f1ead9;
+    box-shadow: 6px 6px 0 #f1ead9;
+  }
+
+  body.dark-mode #main-menu .draw-round-cards:hover:not(:disabled) {
+    box-shadow: 9px 9px 0 #f1ead9;
+  }
+
+  body.dark-mode #main-menu .draw-round-cards:active:not(:disabled) {
+    box-shadow: 3px 3px 0 #f1ead9;
+  }
+
   #main-menu button:disabled {
     opacity: 0.35;
     cursor: not-allowed;
@@ -299,20 +247,10 @@
   .small-button:focus-visible,
   input:focus-visible,
   select:focus-visible,
-  .pack-checkbox input:focus-visible {
+  .pack-checkbox input:focus-visible,
+  .sync-toggle input:focus-visible {
     outline: 3px solid var(--crimson);
     outline-offset: 2px;
-  }
-
-  .role-hint {
-    font-size: 13px;
-    color: var(--ink-soft);
-    max-width: 260px;
-    margin: -6px 0 8px;
-  }
-
-  body.dark-mode .role-hint {
-    color: #b9ae9c;
   }
 
   /* ---------- Deck selection ---------- */
@@ -388,8 +326,32 @@
     cursor: pointer;
   }
 
-  .pack-checkbox span {
+  .pack-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .pack-name {
     font-size: 15px;
+  }
+
+  .pack-counts,
+  .deck-count {
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+
+  body.dark-mode .pack-counts,
+  body.dark-mode .deck-count {
+    color: #b9ae9c;
+  }
+
+  .deck-totals {
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 8px;
+    max-width: 320px;
   }
 
   /* ---------- Hand size control ---------- */
@@ -441,30 +403,318 @@
     color: #b9ae9c;
   }
 
-  /* ---------- Setup screen ---------- */
-  #setup-screen {
-    gap: 14px;
-    padding-top: 60px;
-    max-width: 340px;
-    margin: 0 auto;
+  /* ---------- Sync Mode toggle + Room panel ---------- */
+  .sync-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 18px;
+    cursor: pointer;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
   }
 
-  .setup-field {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    width: 220px;
+  .sync-toggle input {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--crimson);
+    cursor: pointer;
+  }
+
+  .sync-hint {
+    font-size: 12px;
+    color: var(--ink-soft);
+    max-width: 260px;
+    margin-top: 2px;
+  }
+
+  body.dark-mode .sync-hint {
+    color: #b9ae9c;
+  }
+
+  .room-panel {
+    width: 100%;
+    max-width: 320px;
+    margin-top: 12px;
+    padding: 16px;
+    border: 2px solid var(--ink);
+    border-radius: 4px;
+    background-color: var(--card-white);
     text-align: left;
   }
 
-  .setup-field label {
-    font-weight: 700;
-    font-size: 14px;
+  body.dark-mode .room-panel {
+    background-color: #201a14;
+    border-color: #f1ead9;
   }
 
-  .setup-field input,
-  .setup-field select {
+  .room-section {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .room-option {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .room-option-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 19px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  .room-option p {
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  body.dark-mode .room-option p {
+    color: #b9ae9c;
+  }
+
+  .join-row {
+    display: flex;
+    gap: 8px;
+  }
+
+  .room-input {
+    flex: 1;
+    min-width: 0;
     padding: 8px 10px;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 2px solid var(--ink);
+    border-radius: 4px;
+    background-color: var(--card-white);
+    color: var(--ink);
+  }
+
+  body.dark-mode .room-input {
+    background-color: #201a14;
+    color: #f1ead9;
+    border-color: #f1ead9;
+  }
+
+  .room-code-big {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(30px, 11vw, 52px);
+    letter-spacing: 0.08em;
+    line-height: 1;
+    text-align: center;
+    word-break: break-all;
+    padding: 16px 12px;
+    background-color: var(--ink);
+    color: var(--paper);
+    border-radius: 6px;
+    box-shadow: 5px 5px 0 var(--crimson);
+  }
+
+  body.dark-mode .room-code-big {
+    background-color: #060504;
+    color: #f1ead9;
+    border: 2px solid #f1ead9;
+  }
+
+  /* Muted deck code + drop-down list of enabled / disabled decks */
+  .deck-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .room-section .deck-info {
+    margin-top: -6px;
+  }
+
+  .deck-code {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    opacity: 0.5;
+    padding: 3px 8px;
+    border-radius: 3px;
+    transition: opacity 0.2s ease;
+  }
+
+  .deck-code::after {
+    content: ' ▾';
+  }
+
+  .deck-code[aria-expanded="true"]::after {
+    content: ' ▴';
+  }
+
+  .deck-code:hover,
+  .deck-code[aria-expanded="true"] {
+    opacity: 1;
+  }
+
+  body.dark-mode .deck-code {
+    color: #b9ae9c;
+  }
+
+  .deck-list {
+    width: 100%;
+    max-width: 280px;
+    max-height: 180px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 8px 10px;
+    text-align: left;
+    font-size: 13px;
+    background-color: var(--paper-dim);
+    border: 1px dashed var(--ink-soft);
+    border-radius: 3px;
+  }
+
+  body.dark-mode .deck-list {
+    background-color: #2c2419;
+    border-color: #b9ae9c;
+  }
+
+  .deck-list.deck-list-game {
+    max-height: 75vh;
+  }
+
+  .deck-qr {
+    margin-top: 8px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--ink-soft);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  body.dark-mode .deck-qr {
+    border-top-color: #b9ae9c;
+  }
+
+  .deck-qr .qr-box {
+    max-width: 180px;
+  }
+
+  .deck-qr-note {
+    font-size: 11px;
+    text-align: center;
+    color: var(--ink-soft);
+  }
+
+  body.dark-mode .deck-qr-note {
+    color: #b9ae9c;
+  }
+
+  .deck-list-head {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 2px;
+  }
+
+  body.dark-mode .deck-list-head {
+    color: #b9ae9c;
+  }
+
+  .deck-item.on {
+    font-weight: 600;
+  }
+
+  .deck-item.off {
+    opacity: 0.45;
+  }
+
+  .room-actions {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .round-row,
+  .round-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .round-row input {
+    width: 70px;
+    padding: 6px 8px;
+    font-size: 16px;
+    font-family: var(--font-body);
+    border: 2px solid var(--ink);
+    border-radius: 4px;
+    text-align: center;
+    background-color: var(--card-white);
+    color: var(--ink);
+  }
+
+  body.dark-mode .round-row input {
+    background-color: #201a14;
+    color: #f1ead9;
+    border-color: #f1ead9;
+  }
+
+  .round-bar {
+    margin: 0 0 6px;
+  }
+
+  .round-badge {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    padding: 4px 14px;
+    background-color: var(--crimson);
+    color: white;
+    border-radius: 3px;
+  }
+
+  /* Seats + invite link / QR */
+  .seat-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .seat-row label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .seat-row input,
+  .seat-row select {
+    min-width: 96px;
+    padding: 6px 8px;
     font-size: 16px;
     font-family: var(--font-body);
     border: 2px solid var(--ink);
@@ -473,55 +723,228 @@
     color: var(--ink);
   }
 
-  body.dark-mode .setup-field input,
-  body.dark-mode .setup-field select {
+  body.dark-mode .seat-row input,
+  body.dark-mode .seat-row select {
     background-color: #201a14;
     color: #f1ead9;
     border-color: #f1ead9;
   }
 
-  .setup-explainer {
-    font-size: 13px;
-    color: var(--ink-soft);
-    max-width: 260px;
+  .invite summary {
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 4px 0;
   }
 
-  body.dark-mode .setup-explainer {
+  .invite[open] summary {
+    margin-bottom: 10px;
+  }
+
+  .invite-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .qr-box {
+    width: 100%;
+    max-width: 220px;
+    padding: 8px;
+    background-color: #ffffff;
+    border: 2px solid var(--ink);
+    border-radius: 4px;
+  }
+
+  .qr-box svg,
+  .qr-box img,
+  .qr-box canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  body.dark-mode .qr-box {
+    border-color: #f1ead9;
+  }
+
+  .room-input.invite-link {
+    flex: none;
+    width: 100%;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .invite-note {
+    font-size: 12px;
+    color: var(--ink-soft);
+    text-align: center;
+  }
+
+  body.dark-mode .invite-note {
     color: #b9ae9c;
   }
 
-  #setup-form button[type="submit"] {
-    margin-top: 8px;
-    padding: 11px 26px;
-    font-family: var(--font-display);
-    font-size: 18px;
+  /* Prominent room code on the card screen */
+  .room-banner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  .room-banner-label {
+    font-size: 11px;
     font-weight: 700;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    letter-spacing: 0.02em;
-    background-color: var(--crimson);
-    color: var(--card-white);
-    border: 2px solid var(--crimson);
-    border-radius: 5px;
+    color: var(--ink-soft);
+  }
+
+  body.dark-mode .room-banner-label {
+    color: #b9ae9c;
+  }
+
+  .room-banner-code {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(26px, 9vw, 36px);
+    letter-spacing: 0.08em;
+    line-height: 1;
+    word-break: break-all;
+    padding: 8px 18px;
+    background-color: var(--ink);
+    color: var(--paper);
+    border-radius: 4px;
+    box-shadow: 4px 4px 0 var(--crimson);
+  }
+
+  body.dark-mode .room-banner-code {
+    background-color: #060504;
+    color: #f1ead9;
+    border: 1px solid #f1ead9;
+  }
+
+  /* ---------- Card Czar ---------- */
+  .czar-now {
+    font-weight: 700;
+    color: var(--crimson-dark);
+    min-height: 1em;
+  }
+
+  body.dark-mode .czar-now {
+    color: #e0785f;
+  }
+
+  .czar-line {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--crimson-dark);
+    margin: 0 0 6px;
+  }
+
+  body.dark-mode .czar-line {
+    color: #e0785f;
+  }
+
+  /* The Czar only sees the black card: bigger text, and on phones a
+     full-width portrait card. */
+  #cards-container.czar-view .card {
+    font-size: clamp(26px, 5vw, 32px);
+  }
+
+  @media (max-width: 768px) {
+    #cards-container.czar-view {
+      padding: 0 0 12px;
+    }
+
+    #cards-container.czar-view .card {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 5 / 7;
+      font-size: clamp(26px, 8vw, 40px);
+      padding: 22px;
+    }
+  }
+
+  /* ---------- Round history ---------- */
+  .round-history {
+    width: 100%;
+    max-width: 320px;
+    margin: 8px auto;
+    text-align: left;
+    font-size: 13px;
+    background-color: var(--paper-dim);
+    border: 1px dashed var(--ink-soft);
+    border-radius: 3px;
+  }
+
+  body.dark-mode .round-history {
+    background-color: #2c2419;
+    border-color: #b9ae9c;
+  }
+
+  .round-history summary {
     cursor: pointer;
-    box-shadow: 4px 4px 0 var(--ink);
-    transition: transform 0.12s ease, box-shadow 0.12s ease;
+    padding: 8px 10px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
   }
 
-  #setup-form button[type="submit"]:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: 6px 6px 0 var(--ink);
+  body.dark-mode .round-history summary {
+    color: #b9ae9c;
   }
 
-  body.dark-mode #setup-form button[type="submit"] {
-    box-shadow: 4px 4px 0 #f1ead9;
+  .history-list {
+    list-style: none;
+    max-height: 220px;
+    overflow-y: auto;
+    padding: 0 10px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
   }
 
-  body.dark-mode #setup-form button[type="submit"]:hover {
-    box-shadow: 6px 6px 0 #f1ead9;
+  .history-item {
+    display: flex;
+    gap: 8px;
   }
 
-  .setup-reset-row {
-    margin-top: 4px;
+  .history-round {
+    flex-shrink: 0;
+    min-width: 2.6em;
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--crimson);
+  }
+
+  body.dark-mode .history-round {
+    color: #e0785f;
+  }
+
+  .history-empty {
+    color: var(--ink-soft);
+  }
+
+  body.dark-mode .history-empty {
+    color: #b9ae9c;
+  }
+
+  .offline-status {
+    font-size: 12px;
+    color: var(--pine);
+    margin-bottom: 6px;
+  }
+
+  body.dark-mode .offline-status {
+    color: #8fb491;
   }
 
   /* ---------- Drawn cards ---------- */
@@ -759,6 +1182,8 @@
 
   /* ---------- Light/Dark Mode Toggle ---------- */
   #mode-toggle {
+    display: flex;
+    justify-content: center;
     margin: 20px 0;
   }
 
@@ -869,7 +1294,8 @@
     }
 
     #main-menu button.draw-black-card,
-    #main-menu button.draw-white-cards {
+    #main-menu button.draw-white-cards,
+    #main-menu button.draw-round-cards {
       width: 160px;
       height: 160px;
       font-size: 17px;
@@ -894,7 +1320,7 @@
     }
 
     #toggle-button {
-      width: 100%;
+      width: auto;
       padding: 10px;
       font-size: 14px;
     }
@@ -907,7 +1333,8 @@
     }
 
     #main-menu button.draw-black-card,
-    #main-menu button.draw-white-cards {
+    #main-menu button.draw-white-cards,
+    #main-menu button.draw-round-cards {
       font-size: 15px;
       padding: 10px;
       width: 140px;
@@ -979,10 +1406,18 @@
   <div class="main-menu" id="main-menu">
     <h1>Cards Against Humanity</h1>
 
+    <!-- Sync Mode toggle -->
+    <label class="sync-toggle" for="sync-toggle">
+      <input type="checkbox" id="sync-toggle" aria-controls="room-panel">
+      <span>Sync Mode</span>
+    </label>
+    <p class="sync-hint">Play together: one shared black card, and a different 7-card hand for each seat.</p>
+
     <!-- Button Container -->
     <div class="button-container">
       <button class="draw-black-card" id="draw-black-card" disabled>Draw Black Card</button>
       <button class="draw-white-cards" id="draw-white-cards" disabled>Draw White Cards</button>
+      <button class="draw-round-cards hidden" id="draw-round-cards" disabled>Draw Cards</button>
     </div>
 
     <!-- Deck Selection -->
@@ -994,12 +1429,96 @@
       <button class="small-button" id="select-none-decks">Select None</button>
     </div>
     <div id="pack-selection" role="group" aria-labelledby="pack-selection-label" aria-describedby="deck-hint"></div>
+    <p class="deck-totals" id="deck-totals" aria-live="polite"></p>
     <p class="deck-hint" id="deck-hint">Tap a deck to include or exclude it.</p>
 
     <!-- Hand size control -->
-    <div class="hand-size-row">
+    <div class="hand-size-row" id="hand-size-row">
       <label for="hand-size">White cards to draw:</label>
       <input type="number" id="hand-size" min="1" max="20" value="7">
+    </div>
+
+    <!-- Room panel (revealed when Sync Mode is on) -->
+    <div class="room-panel hidden" id="room-panel">
+
+      <!-- Not in a room yet -->
+      <div class="room-section" id="room-entry">
+        <div class="room-option">
+          <span class="room-option-title">Enter a room code</span>
+          <p>Choose any word or number, or type the code your group is using. Everyone who enters the same code gets the same cards in the same order.</p>
+          <form class="join-row" id="join-form">
+            <input class="room-input" type="text" id="join-code" maxlength="24" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="ROOM CODE" aria-label="Room code">
+            <button class="reveal-button" type="submit">Enter</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- In a room -->
+      <div class="room-section hidden" id="room-active">
+        <span class="room-option-title">Room code</span>
+        <div class="room-code-big" id="room-code-display" aria-live="polite">—</div>
+        <div class="deck-info">
+          <button class="deck-code" type="button" data-deck-toggle aria-expanded="false" aria-label="Show which decks are enabled">decks</button>
+          <div class="deck-list hidden"></div>
+        </div>
+        <div class="room-actions">
+          <button class="small-button" id="copy-room-code" type="button">Copy code</button>
+          <button class="small-button" id="leave-room" type="button">Leave room</button>
+        </div>
+
+        <!-- Invite: link + QR code for this room -->
+        <details class="invite" id="invite">
+          <summary>Invite players · link &amp; QR</summary>
+          <div class="invite-body">
+            <div class="qr-box" id="qr-box" role="img" aria-label="QR code that opens this room"></div>
+            <input class="room-input invite-link" type="text" id="invite-link" readonly aria-label="Invite link">
+            <div class="room-actions">
+              <button class="small-button" id="copy-invite-link" type="button">Copy link</button>
+              <button class="small-button hidden" id="share-invite-link" type="button">Share…</button>
+            </div>
+            <p class="invite-note" id="invite-note"></p>
+          </div>
+        </details>
+
+        <!-- Seats: every player gets their own hand -->
+        <div class="room-option">
+          <span class="room-option-title">Players &amp; seat</span>
+          <div class="seat-row">
+            <label for="player-count">Players
+              <input type="number" id="player-count" min="1" max="20" value="4">
+            </label>
+            <label for="my-seat">My seat
+              <select id="my-seat"></select>
+            </label>
+          </div>
+          <div class="seat-row">
+            <label for="czar-mode">Card Czar
+              <select id="czar-mode">
+                <option value="off">Off</option>
+                <option value="seq">Start at seat 1</option>
+                <option value="rand">Start at a random seat</option>
+              </select>
+            </label>
+          </div>
+          <p id="czar-now" class="czar-now"></p>
+          <p>Everyone shares the black card, but each seat gets a different hand. Agree the player count and Card Czar setting, then each pick your own seat. The invite link sets both for you.</p>
+        </div>
+
+        <div class="room-option">
+          <span class="room-option-title">Round</span>
+          <div class="round-row">
+            <button class="small-button" id="round-prev" type="button" aria-label="Previous round">◀ Prev</button>
+            <input type="number" id="sync-round" min="1" max="9999" value="1" aria-label="Round number">
+            <button class="small-button" id="round-next" type="button" aria-label="Next round">Next ▶</button>
+          </div>
+          <p>Everyone taps Next together to move on to the next round.</p>
+        </div>
+
+        <details class="round-history">
+          <summary>Round history <span class="history-count"></span></summary>
+          <ol class="history-list"></ol>
+        </details>
+      </div>
     </div>
 
     <p class="status-message" id="status-message" role="status" aria-live="polite"></p>
@@ -1007,7 +1526,32 @@
 
   <!-- Card Display -->
   <div id="card-display" style="display: none;">
+    <!-- Room code + deck code (Sync Mode only) -->
+    <div class="room-banner hidden" id="room-banner">
+      <span class="room-banner-label" id="banner-label">Room code</span>
+      <span class="room-banner-code" id="banner-code" aria-live="polite">—</span>
+      <div class="deck-info">
+        <button class="deck-code" type="button" data-deck-toggle aria-expanded="false" aria-label="Show which decks are enabled">decks</button>
+        <div class="deck-list deck-list-game hidden">
+          <div class="deck-qr hidden" id="game-qr">
+            <div class="qr-box" id="game-qr-box" role="img" aria-label="QR code that opens this room at this round"></div>
+            <p class="deck-qr-note" id="game-qr-note"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <h2 id="card-display-heading" aria-live="polite">Drawn Cards</h2>
+
+    <!-- Round controls (Sync Mode only) -->
+    <div class="round-bar hidden" id="round-bar">
+      <button class="small-button" id="round-prev-display" type="button">◀ Prev</button>
+      <span class="round-badge" id="round-badge">Round 1</span>
+      <button class="small-button" id="round-next-display" type="button">Next Round ▶</button>
+    </div>
+
+    <p class="czar-line hidden" id="czar-line" aria-live="polite"></p>
+
     <div id="cards-container"></div>
     <div class="selection-bar hidden" id="selection-bar">
       <span class="selection-count" id="selection-count">0 selected</span>
@@ -1016,6 +1560,10 @@
     <div class="black-card-bar hidden" id="black-card-bar">
       <button class="reveal-button" id="reveal-black-button">Show Full-Screen</button>
     </div>
+    <details class="round-history" id="card-history">
+      <summary>Round history <span class="history-count"></span></summary>
+      <ol class="history-list"></ol>
+    </details>
     <button id="back-to-menu">Back to Menu</button>
   </div>
 
@@ -1026,6 +1574,7 @@
   </div>
 
   <footer class="credit-message">
+    <p class="offline-status hidden" id="offline-status">✓ Ready to play offline</p>
     <!-- Light Mode / Dark Mode Toggle -->
     <div id="mode-toggle">
       <button class="mode-toggle" id="toggle-button" aria-pressed="false">
@@ -1046,35 +1595,89 @@
   const STORAGE_KEYS = {
     mode: 'mode',
     handSize: 'cah_handSize',
-    packs: 'cah_selectedPacks'
+    packs: 'cah_selectedPacks',
+    syncMode: 'cah_syncMode',
+    room: 'cah_room',
+    playerCount: 'cah_playerCount',
+    seat: 'cah_mySeat',
+    czar: 'cah_czarMode'
   };
 
   // Clean up keys left behind by the old turn/round system.
-  ['cah_numPlayers', 'cah_myPosition', 'cah_round'].forEach(key => {
+  ['cah_numPlayers', 'cah_myPosition', 'cah_round', 'cah_seedWord', 'cah_players', 'cah_syncRound'].forEach(key => {
     try { localStorage.removeItem(key); } catch (e) {}
   });
 
   // Chance (0–1) that a drawn white hand includes one editable blank card.
   const BLANK_CARD_CHANCE = 0.069;
 
+  // Sync Mode always deals one black card and this many white cards per round.
+  const SYNC_HAND_SIZE = 7;
+
   let cardsData = [];
   // Memoized lookup: Map<packName, { prompts: [...], responses: [...] }>
   // Built once when cards load so draws never re-filter the whole dataset.
   let packIndex = new Map();
 
-  // Tracks which cards have already been drawn this session, so the same card
-  // doesn't repeat until its pool is exhausted and reshuffled.
+  // Tracks which cards have already been drawn this session (normal mode only),
+  // so the same card doesn't repeat until its pool is exhausted and reshuffled.
   let drawnTracker = new Map();
+
+  // ---------- Sync Mode state ----------
+  let syncMode = false;
+  let syncRound = 1;        // 1-based round number, advanced manually
+  let roomCode = null;      // the shared room code (it IS the seed); null = not in a room
+  let playerCount = 4;      // players at the table — agreed outside the app (or via invite link)
+  let czarMode = 'off';     // 'off' | 'seq' (start at seat 1) | 'rand' (seeded random start seat)
+  let mySeat = 1;           // this device's seat, 1..playerCount — decides which hand it gets
+  // Cache of seeded, canonically-sorted decks: key -> shuffled card array.
+  let syncDeckCache = new Map();
 
   const mainMenu = document.getElementById('main-menu');
 
   const blackBtn = document.getElementById('draw-black-card');
   const whiteBtn = document.getElementById('draw-white-cards');
+  const roundBtn = document.getElementById('draw-round-cards');
+  const handSizeRow = document.getElementById('hand-size-row');
   const packSelect = document.getElementById('pack-selection');
   const selectAllBtn = document.getElementById('select-all-decks');
   const selectNoneBtn = document.getElementById('select-none-decks');
   const handSizeInput = document.getElementById('hand-size');
   const statusMessage = document.getElementById('status-message');
+
+  const syncToggle = document.getElementById('sync-toggle');
+  const roomPanel = document.getElementById('room-panel');
+  const roomEntry = document.getElementById('room-entry');
+  const roomActive = document.getElementById('room-active');
+  const joinForm = document.getElementById('join-form');
+  const joinInput = document.getElementById('join-code');
+  const roomCodeDisplay = document.getElementById('room-code-display');
+  const copyCodeBtn = document.getElementById('copy-room-code');
+  const leaveRoomBtn = document.getElementById('leave-room');
+  const syncRoundInput = document.getElementById('sync-round');
+  const roundPrevBtn = document.getElementById('round-prev');
+  const roundNextBtn = document.getElementById('round-next');
+
+  const roundBar = document.getElementById('round-bar');
+  const roundBadge = document.getElementById('round-badge');
+  const roomBanner = document.getElementById('room-banner');
+  const bannerCode = document.getElementById('banner-code');
+  const bannerLabel = document.getElementById('banner-label');
+  const playerCountInput = document.getElementById('player-count');
+  const mySeatSelect = document.getElementById('my-seat');
+  const czarSelect = document.getElementById('czar-mode');
+  const czarNow = document.getElementById('czar-now');
+  const czarLine = document.getElementById('czar-line');
+  const qrBox = document.getElementById('qr-box');
+  const inviteLinkInput = document.getElementById('invite-link');
+  const copyInviteBtn = document.getElementById('copy-invite-link');
+  const shareInviteBtn = document.getElementById('share-invite-link');
+  const inviteNote = document.getElementById('invite-note');
+  const gameQr = document.getElementById('game-qr');
+  const gameQrBox = document.getElementById('game-qr-box');
+  const gameQrNote = document.getElementById('game-qr-note');
+  const roundPrevDisplayBtn = document.getElementById('round-prev-display');
+  const roundNextDisplayBtn = document.getElementById('round-next-display');
 
   const cardDisplay = document.getElementById('card-display');
   const cardsContainer = document.getElementById('cards-container');
@@ -1155,9 +1758,15 @@
       cardsData = await response.json();
       buildPackIndex();
       populatePackSelection();
+      updateRoomUI();
       blackBtn.disabled = false;
       whiteBtn.disabled = false;
+      roundBtn.disabled = false;
       setStatus('');
+      applyInviteFromHash();
+      urlSyncReady = true;
+      refreshInvite();
+      syncAddressBar();
     } catch (error) {
       console.error('Error loading cards:', error);
       setStatus('Could not load cards.json. Make sure it sits in the same folder as this page.');
@@ -1179,6 +1788,7 @@
       }
     }
     drawnTracker = new Map();
+    syncDeckCache = new Map();
   }
 
   function getCardsForPacks(selectedPacks, kind) {
@@ -1191,10 +1801,10 @@
     return result;
   }
 
-  // Draws `count` cards from the given packs without repeating a card until
-  // every card of that kind across the selected packs has been seen once.
-  // Returns { cards, reshuffled } where reshuffled indicates the pool ran out
-  // and was refilled mid-draw.
+  // Normal mode: draws `count` cards from the given packs without repeating a
+  // card until every card of that kind across the selected packs has been seen
+  // once. Returns { cards, reshuffled } where reshuffled indicates the pool
+  // ran out and was refilled mid-draw.
   function drawWithoutRepeats(selectedPacks, kind, count) {
     const trackerKey = selectedPacks.slice().sort().join(',') + '|' + kind;
     let seen = drawnTracker.get(trackerKey);
@@ -1222,6 +1832,17 @@
     return { cards: picked, reshuffled };
   }
 
+  const numberFormat = new Intl.NumberFormat('en-GB');
+
+  function getPackCounts(name) {
+    const bucket = packIndex.get(name);
+    return { black: bucket ? bucket.prompts.length : 0, white: bucket ? bucket.responses.length : 0 };
+  }
+
+  function describeCounts(counts) {
+    return `${numberFormat.format(counts.black)} black · ${numberFormat.format(counts.white)} white`;
+  }
+
   function populatePackSelection() {
     const uniquePacks = [...packIndex.keys()].sort();
     const previouslySelected = new Set(JSON.parse(localStorage.getItem(STORAGE_KEYS.packs) || '[]'));
@@ -1241,11 +1862,19 @@
       input.checked = isSelected;
       input.addEventListener('change', () => {
         persistSelectedPacks();
+        updateRoomUI();
         setStatus('');
       });
 
       const span = document.createElement('span');
-      span.textContent = pack;
+      span.className = 'pack-text';
+      const nameEl = document.createElement('span');
+      nameEl.className = 'pack-name';
+      nameEl.textContent = pack;
+      const countsEl = document.createElement('span');
+      countsEl.className = 'pack-counts';
+      countsEl.textContent = describeCounts(getPackCounts(pack));
+      span.append(nameEl, countsEl);
 
       label.appendChild(input);
       label.appendChild(span);
@@ -1271,12 +1900,14 @@
   selectAllBtn.addEventListener('click', () => {
     packSelect.querySelectorAll('input').forEach(input => { input.checked = true; });
     persistSelectedPacks();
+    updateRoomUI();
     setStatus('');
   });
 
   selectNoneBtn.addEventListener('click', () => {
     packSelect.querySelectorAll('input').forEach(input => { input.checked = false; });
     persistSelectedPacks();
+    updateRoomUI();
     setStatus('');
   });
 
@@ -1296,10 +1927,687 @@
       handSizeInput.value = size;
     }
     localStorage.setItem(STORAGE_KEYS.handSize, String(size));
+    updateRoomUI();
   }
 
   handSizeInput.addEventListener('input', clampHandSizeInput);
   handSizeInput.addEventListener('change', clampHandSizeInput);
+
+  /* ============================================================
+     Seeded randomness (Sync Mode)
+     Every device that has the same room code, the same cards.json
+     and the same round number derives exactly the same cards.
+  ============================================================ */
+
+  // xmur3: turns any string into a 32-bit integer seed.
+  function xmur3(str) {
+    let h = 1779033703 ^ str.length;
+    for (let i = 0; i < str.length; i++) {
+      h = Math.imul(h ^ str.charCodeAt(i), 3432918353);
+      h = (h << 13) | (h >>> 19);
+    }
+    return function () {
+      h = Math.imul(h ^ (h >>> 16), 2246822507);
+      h = Math.imul(h ^ (h >>> 13), 3266489909);
+      h ^= h >>> 16;
+      return h >>> 0;
+    };
+  }
+
+  // mulberry32: tiny, fast seeded PRNG returning floats in [0, 1).
+  function mulberry32(seed) {
+    let a = seed >>> 0;
+    return function () {
+      a = (a + 0x6D2B79F5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function rngFromString(str) {
+    return mulberry32(xmur3(str)());
+  }
+
+  function seededShuffle(array, rng) {
+    const result = array.slice();
+    for (let i = result.length - 1; i > 0; i--) {
+      const j = Math.floor(rng() * (i + 1));
+      [result[i], result[j]] = [result[j], result[i]];
+    }
+    return result;
+  }
+
+  // Plain code-unit comparison (NOT localeCompare, which can differ by device
+  // language) so every device sorts the cards into the same canonical order.
+  function compareCards(a, b) {
+    if (a.Pack !== b.Pack) return a.Pack < b.Pack ? -1 : 1;
+    if (a.Text !== b.Text) return a.Text < b.Text ? -1 : 1;
+    return 0;
+  }
+
+  // Room codes are typed by people, so forgive case, spaces and punctuation.
+  function normalizeRoomCode(raw) {
+    return String(raw || '').toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 24);
+  }
+
+  // The room code IS the seed. Decks, hand size and player count are NOT part
+  // of it — players agree on those outside the app.
+  function getSyncCode() {
+    return roomCode;
+  }
+
+  // Returns the seeded shuffled deck for a kind ('prompts' | 'responses') and
+  // cycle number (each time the deck runs out, the next cycle reshuffles).
+  // The cache key includes the selected packs so changing decks can't serve
+  // a stale deck.
+  function getSyncDeck(code, kind, cycle) {
+    const packsKey = getSelectedPacks().slice().sort().join('|');
+    const cacheKey = `${code}|${kind}|${cycle}|${packsKey}`;
+    let deck = syncDeckCache.get(cacheKey);
+    if (!deck) {
+      const sorted = getCardsForPacks(getSelectedPacks(), kind).slice().sort(compareCards);
+      deck = seededShuffle(sorted, rngFromString(`${code}|${kind}|${cycle}`));
+      syncDeckCache.set(cacheKey, deck);
+    }
+    return deck;
+  }
+
+  function getSyncBlackCard(code, round) {
+    const r = round - 1;
+    const length = getCardsForPacks(getSelectedPacks(), 'prompts').length;
+    const cycle = Math.floor(r / length);
+    const deck = getSyncDeck(code, 'prompts', cycle);
+    return { card: deck[r % length], cycle };
+  }
+
+  // Every seat gets its own hand each round. Hands are consecutive blocks of
+  // SYNC_HAND_SIZE cards in the seeded deck, so no card is in two hands.
+  function getSyncWhiteHand(code, round, seat, players) {
+    const r = round - 1;
+    const handSize = SYNC_HAND_SIZE;
+    const length = getCardsForPacks(getSelectedPacks(), 'responses').length;
+    const roundsPerCycle = Math.floor(length / (handSize * players)); // >= 1 (checked before calling)
+    const cycle = Math.floor(r / roundsPerCycle);
+    const roundIndex = r % roundsPerCycle;
+    const start = (roundIndex * players + (seat - 1)) * handSize;
+    const deck = getSyncDeck(code, 'responses', cycle);
+    const cards = deck.slice(start, start + handSize);
+
+    // Blank-card roll is seeded per round AND seat, so it is repeatable too.
+    const blankRng = rngFromString(`${code}|blank|${r}|${seat}`);
+    if (blankRng() < BLANK_CARD_CHANCE) {
+      const position = Math.floor(blankRng() * cards.length);
+      cards[position] = { Pack: '', Type: 'Response', Text: '', Blank: true };
+    }
+    return { cards, cycle };
+  }
+
+  /* ============================================================
+     QR codes via qrcode.js (sits in the same folder as this page).
+     It is fetched the first time a QR code is needed, so the game
+     still works if the file is missing — the invite link just has
+     no QR picture. Supports the common qrcode.js builds:
+       - qrcode-generator  (global qrcode())
+       - node-qrcode       (global QRCode.toString)
+       - QRCode.js         (global QRCode constructor)
+  ============================================================ */
+  const QR = (() => {
+    const SCRIPT_URL = 'qrcode.js';
+    let loading = null;
+
+    function isReady() {
+      return typeof window.qrcode === 'function' || typeof window.QRCode !== 'undefined';
+    }
+
+    function load() {
+      if (isReady()) return Promise.resolve(true);
+      if (!loading) {
+        loading = new Promise(resolve => {
+          const script = document.createElement('script');
+          script.src = SCRIPT_URL;
+          script.onload = () => resolve(isReady());
+          script.onerror = () => { loading = null; resolve(false); };
+          document.head.appendChild(script);
+        });
+      }
+      return loading;
+    }
+
+    // Draws `text` as a QR code inside `box`.
+    // Resolves 'ok' | 'missing' (qrcode.js not found) | 'toolong' | 'unsupported'.
+    async function render(text, box) {
+      if (!(await load())) return 'missing';
+      box.innerHTML = '';
+      try {
+        if (typeof window.qrcode === 'function') {
+          const qr = window.qrcode(0, 'M');
+          qr.addData(text);
+          qr.make();
+          box.innerHTML = qr.createSvgTag
+            ? qr.createSvgTag({ cellSize: 4, margin: 0, scalable: true })
+            : qr.createImgTag(4, 0);
+          return 'ok';
+        }
+        if (window.QRCode && typeof window.QRCode.toString === 'function') {
+          box.innerHTML = await new Promise((resolve, reject) => {
+            window.QRCode.toString(text, { type: 'svg', margin: 0, errorCorrectionLevel: 'M' },
+              (err, svg) => (err ? reject(err) : resolve(svg)));
+          });
+          return 'ok';
+        }
+        if (typeof window.QRCode === 'function') {
+          const level = window.QRCode.CorrectLevel;
+          new window.QRCode(box, {
+            text,
+            width: 256,
+            height: 256,
+            correctLevel: level ? level.M : undefined
+          });
+          return 'ok';
+        }
+      } catch (e) {
+        box.innerHTML = '';
+        return 'toolong';
+      }
+      return 'unsupported';
+    }
+
+    return { render };
+  })();
+
+  /* ============================================================
+     Seats: each player gets their own hand
+  ============================================================ */
+  function persistSeat() {
+    try {
+      localStorage.setItem(STORAGE_KEYS.playerCount, String(playerCount));
+      localStorage.setItem(STORAGE_KEYS.seat, String(mySeat));
+      localStorage.setItem(STORAGE_KEYS.czar, czarMode);
+    } catch (e) {}
+  }
+
+  function restoreSeat() {
+    const savedPlayers = parseInt(localStorage.getItem(STORAGE_KEYS.playerCount), 10);
+    const savedSeat = parseInt(localStorage.getItem(STORAGE_KEYS.seat), 10);
+    if (Number.isFinite(savedPlayers)) playerCount = Math.max(1, Math.min(20, savedPlayers));
+    if (Number.isFinite(savedSeat)) mySeat = Math.max(1, Math.min(playerCount, savedSeat));
+    const savedCzar = localStorage.getItem(STORAGE_KEYS.czar);
+    if (savedCzar === 'seq' || savedCzar === 'rand') czarMode = savedCzar;
+  }
+
+  function setPlayerCount(value) {
+    let n = parseInt(value, 10);
+    if (!Number.isFinite(n) || n < 1) n = 1;
+    if (n > 20) n = 20;
+    playerCount = n;
+    if (mySeat > n) mySeat = n;
+    persistSeat();
+    updateRoomUI();
+  }
+
+  function setMySeat(value) {
+    let n = parseInt(value, 10);
+    if (!Number.isFinite(n) || n < 1) n = 1;
+    if (n > playerCount) n = playerCount;
+    mySeat = n;
+    persistSeat();
+    updateRoomUI();
+  }
+
+  function refreshSeatControls() {
+    playerCountInput.value = String(playerCount);
+    if (mySeatSelect.options.length !== playerCount) {
+      mySeatSelect.innerHTML = '';
+      for (let i = 1; i <= playerCount; i++) {
+        const option = document.createElement('option');
+        option.value = String(i);
+        option.textContent = `Seat ${i}`;
+        mySeatSelect.appendChild(option);
+      }
+    }
+    mySeatSelect.value = String(mySeat);
+  }
+
+  // ---------- Card Czar ----------
+  // Rotates through the seats one per round. "rand" picks the starting seat
+  // from the room code, so every device agrees without talking to each other.
+  function getCzarStartSeat() {
+    if (czarMode !== 'rand' || !roomCode) return 1;
+    return Math.floor(rngFromString(`${roomCode}|czar|${playerCount}`)() * playerCount) + 1;
+  }
+
+  function getCzarSeat(round) {
+    return ((getCzarStartSeat() - 1 + (round - 1)) % playerCount) + 1;
+  }
+
+  function isCzarThisRound() {
+    return syncMode && czarMode !== 'off' && Boolean(roomCode) && getCzarSeat(syncRound) === mySeat;
+  }
+
+  function refreshCzarUI() {
+    czarSelect.value = czarMode;
+    const active = czarMode !== 'off' && Boolean(roomCode);
+    const seat = active ? getCzarSeat(syncRound) : 0;
+    czarNow.textContent = active
+      ? `Round ${syncRound}: Seat ${seat} is the Card Czar${seat === mySeat ? ' (you)' : ''}`
+      : '';
+    czarLine.textContent = !active ? ''
+      : seat === mySeat ? '👑 You are the Card Czar this round' : `👑 Card Czar this round: Seat ${seat}`;
+    czarLine.classList.toggle('hidden', !syncMode || !active);
+  }
+
+  czarSelect.addEventListener('change', () => {
+    czarMode = czarSelect.value === 'seq' || czarSelect.value === 'rand' ? czarSelect.value : 'off';
+    persistSeat();
+    updateRoomUI();
+  });
+
+  playerCountInput.addEventListener('change', () => setPlayerCount(playerCountInput.value));
+  mySeatSelect.addEventListener('change', () => setMySeat(mySeatSelect.value));
+
+  /* ============================================================
+     Invite link + QR code
+     #room=CODE&d=<enabled decks, base-36 bitmask>&n=<deck count>&p=<players>&r=<round>[&c=s|r Card Czar]
+  ============================================================ */
+  let lastInviteLink = '';
+
+  function buildInviteLink() {
+    const base = location.href.split('#')[0];
+    const allPacks = [...packIndex.keys()].sort();
+    const enabled = new Set(getSelectedPacks());
+    let mask = 0n;
+    allPacks.forEach((name, i) => { if (enabled.has(name)) mask |= (1n << BigInt(i)); });
+    const params = new URLSearchParams({
+      room: roomCode,
+      d: mask.toString(36),
+      n: String(allPacks.length),
+      p: String(playerCount),
+      r: String(syncRound)
+    });
+    if (czarMode !== 'off') params.set('c', czarMode === 'seq' ? 's' : 'r');
+    return `${base}#${params.toString()}`;
+  }
+
+  let inviteRenderToken = 0;
+  let urlSyncReady = false; // true once an incoming #hash has been applied
+
+  // Keeps the address bar on the current invite link (room, decks, players
+  // and round), so reloading or copying the URL lands on this exact round.
+  function syncAddressBar() {
+    if (!urlSyncReady) return;
+    try {
+      const base = location.pathname + location.search;
+      if (roomCode && lastInviteLink) {
+        history.replaceState(null, '', base + '#' + lastInviteLink.split('#')[1]);
+      } else if (location.hash) {
+        history.replaceState(null, '', base);
+      }
+    } catch (e) {}
+  }
+
+  async function refreshInvite() {
+    if (!roomCode || packIndex.size === 0) {
+      lastInviteLink = '';
+      gameQr.classList.add('hidden');
+      syncAddressBar();
+      return;
+    }
+    const link = buildInviteLink();
+    inviteLinkInput.value = link;
+    const changed = link !== lastInviteLink;
+    lastInviteLink = link;
+    syncAddressBar();
+    if (!changed) return;
+
+    // The link changes every round, so the QR code is redrawn each time.
+    // QR rendering is async (qrcode.js is fetched on first use); ignore stale results.
+    const token = ++inviteRenderToken;
+    const [result, gameResult] = await Promise.all([QR.render(link, qrBox), QR.render(link, gameQrBox)]);
+    if (token !== inviteRenderToken) return;
+
+    // Same link (room + decks + players + round) in the in-game Decks dropdown.
+    gameQr.classList.toggle('hidden', gameResult !== 'ok');
+    gameQrNote.textContent = `Scan to join · round ${syncRound}`;
+
+    qrBox.classList.toggle('hidden', result !== 'ok');
+    if (result === 'missing') {
+      inviteNote.textContent = 'Could not load qrcode.js — keep it in the same folder as this page. You can still copy the link.';
+    } else if (result === 'toolong') {
+      inviteNote.textContent = 'This link is too long for a QR code — copy it instead.';
+    } else if (result === 'unsupported') {
+      inviteNote.textContent = 'qrcode.js loaded, but its format isn’t recognised — copy the link instead.';
+    } else if (location.protocol === 'file:') {
+      inviteNote.textContent = 'This page is open from a file, so other phones can’t open the link. Host the page online to share it.';
+    } else {
+      inviteNote.textContent = `Scan with a phone camera, or copy the link. It sets the room, decks, player count and round (now round ${syncRound}).`;
+    }
+  }
+
+  function parseBase36(text) {
+    let value = 0n;
+    for (const ch of text.toLowerCase()) {
+      const digit = parseInt(ch, 36);
+      if (Number.isNaN(digit)) throw new Error('bad deck code');
+      value = value * 36n + BigInt(digit);
+    }
+    return value;
+  }
+
+  // Opening an invite link joins its room, applies its decks + player count,
+  // and turns Sync Mode on. Your own seat is never changed by a link.
+  function applyInviteFromHash() {
+    const hash = location.hash.replace(/^#/, '');
+    if (!hash || packIndex.size === 0) return;
+
+    const params = new URLSearchParams(hash);
+    const code = normalizeRoomCode(params.get('room'));
+    if (code.length < ROOM_CODE_MIN_LENGTH) return;
+
+    const warnings = [];
+
+    const players = parseInt(params.get('p'), 10);
+    if (Number.isFinite(players)) {
+      playerCount = Math.max(1, Math.min(20, players));
+      mySeat = Math.min(mySeat, playerCount);
+      persistSeat();
+    }
+
+    // The link decides the Card Czar setting too (no c= means Czar is off).
+    const czarParam = params.get('c');
+    czarMode = czarParam === 's' ? 'seq' : czarParam === 'r' ? 'rand' : 'off';
+    persistSeat();
+
+    const allPacks = [...packIndex.keys()].sort();
+    const deckMask = params.get('d');
+    if (deckMask) {
+      if (parseInt(params.get('n'), 10) === allPacks.length) {
+        try {
+          const mask = parseBase36(deckMask);
+          packSelect.querySelectorAll('input').forEach(box => {
+            const index = allPacks.indexOf(box.value);
+            box.checked = index >= 0 && ((mask >> BigInt(index)) & 1n) === 1n;
+          });
+          persistSelectedPacks();
+        } catch (e) {
+          warnings.push('the deck list in the link was unreadable');
+        }
+      } else {
+        warnings.push('your cards file has a different number of decks, so choose the decks yourself');
+      }
+    }
+
+    if (roomCode !== code) enterRoom(code);
+
+    // Round from the link (e.g. r=5) so late joiners land on the right round.
+    const linkRound = parseInt(params.get('r'), 10);
+    if (Number.isFinite(linkRound) && linkRound >= 1) {
+      syncRound = Math.min(9999, linkRound);
+      persistRoom();
+    }
+    setSyncMode(true);
+
+    if (warnings.length > 0) {
+      setStatus(`Joined room ${code}, but ${warnings.join(' and ')}.`);
+    } else {
+      setStatus(`Joined room ${code}${syncRound > 1 ? ` at round ${syncRound}` : ''} from the link. Pick your seat below.`, true);
+    }
+
+  }
+
+  copyInviteBtn.addEventListener('click', () => {
+    if (!inviteLinkInput.value) return;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(inviteLinkInput.value)
+        .then(() => setStatus('Invite link copied.', true))
+        .catch(() => { inviteLinkInput.select(); setStatus('Press and hold the link to copy it.'); });
+    } else {
+      inviteLinkInput.select();
+      setStatus('Press and hold the link to copy it.');
+    }
+  });
+
+  shareInviteBtn.addEventListener('click', () => {
+    if (!inviteLinkInput.value || !navigator.share) return;
+    navigator.share({ title: 'Cards Against Humanity', text: `Join room ${roomCode}`, url: inviteLinkInput.value }).catch(() => {});
+  });
+
+  window.addEventListener('hashchange', applyInviteFromHash);
+
+  /* ============================================================
+     Sync Mode: rooms + round handling
+     The room code is the only shared value. Decks, hand size and
+     player count are agreed by the players outside the app.
+  ============================================================ */
+  const ROOM_CODE_MIN_LENGTH = 1;
+
+  function persistRoom() {
+    try {
+      if (roomCode) {
+        localStorage.setItem(STORAGE_KEYS.room, JSON.stringify({ code: roomCode, round: syncRound }));
+      } else {
+        localStorage.removeItem(STORAGE_KEYS.room);
+      }
+    } catch (e) {}
+  }
+
+  // After a refresh, drop back into the same room and round.
+  function restoreRoom() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEYS.room) || 'null');
+      const code = saved ? normalizeRoomCode(saved.code) : '';
+      if (code.length >= ROOM_CODE_MIN_LENGTH && Number.isFinite(saved.round) && saved.round >= 1) {
+        roomCode = code;
+        syncRound = Math.min(9999, Math.floor(saved.round));
+      }
+    } catch (e) {}
+  }
+
+  // Short fingerprint of the enabled decks (names + card counts). If the deck
+  // code on two phones matches, those phones have the same decks enabled.
+  function getDeckFingerprint() {
+    if (packIndex.size === 0) return '—';
+    const packs = getSelectedPacks().slice().sort();
+    if (packs.length === 0) return 'NONE';
+    const signature = packs.map(name => {
+      const bucket = packIndex.get(name);
+      return `${name}:${bucket ? bucket.prompts.length : 0}:${bucket ? bucket.responses.length : 0}`;
+    }).join('|');
+    return xmur3(signature)().toString(36).toUpperCase().padStart(5, '0').slice(-5);
+  }
+
+  // Fills every deck code button + drop-down list (menu panel and card screen).
+  function refreshDeckInfo() {
+    const allPacks = [...packIndex.keys()].sort();
+    const enabled = new Set(getSelectedPacks());
+    const label = `decks ${getDeckFingerprint()}`;
+
+    document.querySelectorAll('.deck-code').forEach(btn => { btn.textContent = label; });
+
+    const totals = { black: 0, white: 0 };
+    enabled.forEach(name => {
+      const c = getPackCounts(name);
+      totals.black += c.black;
+      totals.white += c.white;
+    });
+    document.getElementById('deck-totals').textContent = enabled.size === 0
+      ? 'No decks selected'
+      : `Selected: ${enabled.size} deck${enabled.size === 1 ? '' : 's'} · ${describeCounts(totals)}`;
+
+    document.querySelectorAll('.deck-list').forEach(list => {
+      const qr = list.querySelector('.deck-qr'); // stays at the bottom
+      Array.from(list.children).forEach(child => { if (child !== qr) child.remove(); });
+      const addRow = (el) => (qr ? list.insertBefore(el, qr) : list.appendChild(el));
+
+      const head = document.createElement('div');
+      head.className = 'deck-list-head';
+      head.textContent = `${enabled.size} of ${allPacks.length} decks enabled`;
+      addRow(head);
+
+      allPacks.forEach(name => {
+        const on = enabled.has(name);
+        const row = document.createElement('div');
+        row.className = `deck-item ${on ? 'on' : 'off'}`;
+        row.textContent = `${on ? '✓' : '✕'} ${name} `;
+        const count = document.createElement('span');
+        count.className = 'deck-count';
+        count.textContent = `· ${describeCounts(getPackCounts(name))}`;
+        row.appendChild(count);
+        row.setAttribute('aria-label', `${name}, ${on ? 'enabled' : 'not enabled'}`);
+        addRow(row);
+      });
+    });
+  }
+
+  // Single place that repaints everything Sync-related.
+  const HISTORY_LIMIT = 100;
+
+  // Lists the black cards of every earlier round (newest first), so a late
+  // joiner can catch up. Only rebuilt while a history box is open.
+  function refreshHistory() {
+    const past = syncRound - 1;
+    document.querySelectorAll('.round-history').forEach(box => {
+      box.querySelector('.history-count').textContent = past > 0 ? `(${past})` : '';
+      if (!box.open) return;
+
+      const list = box.querySelector('.history-list');
+      list.innerHTML = '';
+      const code = getSyncCode();
+      const packs = getSelectedPacks();
+      const canShow = code && packs.length > 0 && getCardsForPacks(packs, 'prompts').length > 0;
+
+      if (!canShow || past < 1) {
+        const empty = document.createElement('li');
+        empty.className = 'history-empty';
+        empty.textContent = 'No earlier rounds yet.';
+        list.appendChild(empty);
+        return;
+      }
+
+      const first = Math.max(1, past - HISTORY_LIMIT + 1);
+      for (let r = past; r >= first; r--) {
+        const item = document.createElement('li');
+        item.className = 'history-item';
+        const num = document.createElement('span');
+        num.className = 'history-round';
+        num.textContent = `R${r}`;
+        const text = document.createElement('span');
+        text.textContent = reduceUnderscores(getSyncBlackCard(code, r).card.Text);
+        item.append(num, text);
+        list.appendChild(item);
+      }
+      if (first > 1) {
+        const more = document.createElement('li');
+        more.className = 'history-empty';
+        more.textContent = `…and ${first - 1} earlier round${first - 1 === 1 ? '' : 's'}.`;
+        list.appendChild(more);
+      }
+    });
+  }
+
+  document.querySelectorAll('.round-history').forEach(box => box.addEventListener('toggle', refreshHistory));
+
+  function updateRoomUI() {
+    const inRoom = Boolean(roomCode);
+    roomEntry.classList.toggle('hidden', inRoom);
+    roomActive.classList.toggle('hidden', !inRoom);
+    roomCodeDisplay.textContent = roomCode || '—';
+    refreshDeckInfo();
+    refreshSeatControls();
+    refreshCzarUI();
+    refreshInvite();
+    refreshHistory();
+
+    syncRoundInput.value = String(syncRound);
+    roundBadge.textContent = `Round ${syncRound}`;
+    bannerCode.textContent = roomCode || '—';
+    bannerLabel.textContent = roomCode ? `Room code · Seat ${mySeat} of ${playerCount}` : 'Room code';
+    roomBanner.classList.toggle('hidden', !syncMode || !roomCode);
+  }
+
+  function setSyncMode(on) {
+    syncMode = on;
+    syncToggle.checked = on;
+    roomPanel.classList.toggle('hidden', !on);
+    // Sync Mode has one action: draw this round's cards (hand size is fixed at 7).
+    blackBtn.classList.toggle('hidden', on);
+    whiteBtn.classList.toggle('hidden', on);
+    roundBtn.classList.toggle('hidden', !on);
+    handSizeRow.classList.toggle('hidden', on);
+    localStorage.setItem(STORAGE_KEYS.syncMode, on ? '1' : '0');
+    updateRoomUI();
+    setStatus('');
+  }
+
+  function enterRoom(code) {
+    roomCode = code;
+    syncRound = 1;
+    syncDeckCache = new Map();
+    persistRoom();
+    updateRoomUI();
+  }
+
+  function leaveRoom() {
+    roomCode = null;
+    syncRound = 1;
+    syncDeckCache = new Map();
+    persistRoom();
+    updateRoomUI();
+  }
+
+  function setRound(value) {
+    let n = parseInt(value, 10);
+    if (!Number.isFinite(n) || n < 1) n = 1;
+    if (n > 9999) n = 9999;
+    syncRound = n;
+    persistRoom();
+    updateRoomUI();
+
+    // If cards are on screen, redraw them for the new round straight away.
+    if (cardDisplay.style.display === 'block') {
+      closeFullScreen();
+      drawSyncRound();
+    }
+  }
+
+  joinForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const code = normalizeRoomCode(joinInput.value);
+    if (code.length < ROOM_CODE_MIN_LENGTH) {
+      setStatus('Type a room code first — any letters or numbers.');
+      joinInput.focus();
+      return;
+    }
+    enterRoom(code);
+    joinInput.value = '';
+    setStatus(`Room ${code} ready. Check everyone has the same decks selected.`, true);
+  });
+
+  joinInput.addEventListener('input', () => setStatus(''));
+
+  copyCodeBtn.addEventListener('click', () => {
+    if (!roomCode) return;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(roomCode)
+        .then(() => setStatus('Room code copied.', true))
+        .catch(() => setStatus('Could not copy — read the code out instead.'));
+    } else {
+      setStatus('Copy isn’t available here — read the code out instead.');
+    }
+  });
+
+  leaveRoomBtn.addEventListener('click', () => {
+    leaveRoom();
+    setStatus('You left the room.', true);
+  });
+
+  syncToggle.addEventListener('change', () => setSyncMode(syncToggle.checked));
+
+  roundPrevBtn.addEventListener('click', () => setRound(syncRound - 1));
+  roundNextBtn.addEventListener('click', () => setRound(syncRound + 1));
+  roundPrevDisplayBtn.addEventListener('click', () => setRound(syncRound - 1));
+  roundNextDisplayBtn.addEventListener('click', () => setRound(syncRound + 1));
+  syncRoundInput.addEventListener('change', () => setRound(syncRoundInput.value));
 
   /* ============================================================
      Drawing cards
@@ -1315,6 +2623,52 @@
 
   function reduceUnderscores(text) {
     return text.replace(/_+/g, match => '_'.repeat(match.length));
+  }
+
+  // Sync Mode draw: shows the cards for the CURRENT round. Drawing again
+  // without changing the round shows the same cards.
+  // Sync Mode draw: the black card AND the seven white cards for the CURRENT
+  // round. Drawing again without changing the round shows the same cards.
+  function drawSyncRound() {
+    const selectedPacks = getSelectedPacks();
+    if (selectedPacks.length === 0) {
+      setStatus('Select at least one deck first.');
+      return;
+    }
+
+    const code = getSyncCode();
+    if (!code) {
+      setStatus('Enter a room code first.');
+      return;
+    }
+
+    if (getCardsForPacks(selectedPacks, 'prompts').length === 0) {
+      setStatus('No black cards found in the selected decks.');
+      return;
+    }
+
+    const totalWhite = getCardsForPacks(selectedPacks, 'responses').length;
+    const needed = SYNC_HAND_SIZE * playerCount;
+    if (totalWhite < needed) {
+      setStatus(`Selected decks only have ${totalWhite} white card(s), but ${playerCount} player${playerCount === 1 ? '' : 's'} need ${needed}. Add more decks or lower the player count.`);
+      return;
+    }
+
+    playFlipSound();
+    const black = getSyncBlackCard(code, syncRound);
+
+    // Card Czar's turn: just the black card, no hand.
+    if (isCzarThisRound()) {
+      displayCards([black.card], 'Czar');
+      setStatus(black.cycle > 0 ? 'The black deck has cycled — every device reshuffles it the same way.' : '', true);
+      return;
+    }
+
+    const white = getSyncWhiteHand(code, syncRound, mySeat, playerCount);
+    displayCards([black.card, ...white.cards], 'Round');
+
+    const cycled = Math.max(black.cycle, white.cycle) > 0;
+    setStatus(cycled ? 'A deck has cycled — every device reshuffles it the same way.' : '', true);
   }
 
   function drawBlackCard() {
@@ -1367,16 +2721,23 @@
 
   function displayCards(cards, heading) {
     mainMenu.classList.add('hidden');
-    isHandMode = heading === 'White Cards';
+    isHandMode = heading === 'White Cards' || heading === 'Round';
     currentHand = cards;
     selectedIndices = new Set();
 
-    cardDisplayHeading.textContent = heading === 'Black Card' ? 'Drawn Black Card' : 'Your Hand';
+    cardDisplayHeading.textContent = heading === 'Black Card' ? 'Drawn Black Card'
+      : heading === 'Czar' ? 'You’re the Card Czar'
+      : heading === 'Round' ? 'Black Card & Your Hand' : 'Your Hand';
+    cardsContainer.classList.toggle('czar-view', heading === 'Czar');
     renderHand();
 
     selectionBar.classList.toggle('hidden', !isHandMode);
     updateSelectionBar();
-    blackCardBar.classList.toggle('hidden', isHandMode);
+    blackCardBar.classList.toggle('hidden', isHandMode || heading === 'Czar');
+
+    // Round controls only appear in Sync Mode.
+    roundBar.classList.toggle('hidden', !syncMode);
+    updateRoomUI();
 
     cardDisplay.style.display = 'block';
     // Scroll the newly drawn cards into view, then focus the back button
@@ -1501,7 +2862,8 @@
 
   function showSelectedFullScreen() {
     const selectedCards = currentHand.filter((_, index) => selectedIndices.has(index));
-    showCardsFullScreen(selectedCards);
+    const prompt = currentHand.find(card => card.Type === 'Prompt');
+    showCardsFullScreen(syncMode && prompt ? [prompt, ...selectedCards] : selectedCards);
   }
 
   function showBlackCardFullScreen() {
@@ -1533,8 +2895,18 @@
   ============================================================ */
   blackBtn.addEventListener('click', drawBlackCard);
   whiteBtn.addEventListener('click', drawWhiteCards);
+  roundBtn.addEventListener('click', drawSyncRound);
   document.getElementById('back-to-menu').addEventListener('click', returnToMenu);
   toggleButton.addEventListener('click', toggleMode);
+
+  // Deck code buttons expand / collapse the list of enabled decks beneath them.
+  document.querySelectorAll('[data-deck-toggle]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const list = btn.nextElementSibling;
+      const isOpen = list.classList.toggle('hidden') === false;
+      btn.setAttribute('aria-expanded', String(isOpen));
+    });
+  });
 
   initMode();
 
@@ -1544,7 +2916,23 @@
     handSizeInput.value = Math.max(1, Math.min(20, savedHandSize));
   }
 
+  // Restore Sync Mode + the room you were in
+  restoreRoom();
+  restoreSeat();
+  if (navigator.share) shareInviteBtn.classList.remove('hidden');
+  setSyncMode(localStorage.getItem(STORAGE_KEYS.syncMode) === '1');
+
   loadCards();
+
+  // Offline support: the service worker caches the page, cards, QR library and fonts.
+  if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js')
+        .then(() => navigator.serviceWorker.ready)
+        .then(() => document.getElementById('offline-status').classList.remove('hidden'))
+        .catch(() => {});
+    });
+  }
 })();
 </script>
 </body>

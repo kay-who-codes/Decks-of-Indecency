@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Card Pack Counter</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 640px; margin: 2rem auto; padding: 0 1rem; background: #111; color: #eee; }
+  h1 { font-size: 1.5rem; }
+  table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+  th, td { padding: .5rem .75rem; text-align: left; border-bottom: 1px solid #333; }
+  th { cursor: pointer; user-select: none; }
+  th:hover { color: #fff; }
+  td.num, th.num { text-align: right; }
+  tfoot td { font-weight: bold; border-top: 2px solid #666; border-bottom: none; }
+  .status { padding: .75rem; border-radius: 6px; background: #222; margin-top: 1rem; }
+  .error { background: #4a1a1a; color: #ffb3b3; }
+  input[type=file] { margin-top: .5rem; }
+  .hidden { display: none; }
+  #search { width: 100%; box-sizing: border-box; margin-top: 1rem; padding: .65rem .75rem; font-size: 1rem; border-radius: 6px; border: 1px solid #444; background: #1c1c1c; color: #eee; }
+  #searchInfo { margin-top: .5rem; color: #aaa; font-size: .9rem; }
+  #results { list-style: none; padding: 0; margin: 1rem 0 0; }
+  #results li { padding: .6rem .75rem; border-bottom: 1px solid #333; }
+  #results .meta { display: block; font-size: .75rem; color: #999; margin-top: .2rem; }
+  mark { background: #f5d742; color: #111; border-radius: 2px; }
+  .dim { color: #888; }
+</style>
+</head>
+<body>
+<h1>Packs in cards.json</h1>
+<div id="status" class="status">Loading cards.json…</div>
+
+<div id="fallback" class="hidden">
+  <p>Browsers often block reading local files automatically. Select <b>cards.json</b> manually:</p>
+  <input type="file" id="file" accept=".json,application/json">
+</div>
+
+<div id="searchBox" class="hidden">
+  <input id="search" type="search" placeholder="Search all card text…" autocomplete="off">
+  <div id="searchInfo"></div>
+</div>
+
+<table id="table" class="hidden">
+  <thead>
+    <tr><th data-key="pack">Pack ▲</th><th class="num" data-key="count">Cards</th></tr>
+  </thead>
+  <tbody></tbody>
+  <tfoot><tr><td id="totalLabel"></td><td class="num" id="total"></td></tr></tfoot>
+</table>
+
+<ul id="results"></ul>
+
+<script>
+const statusEl = document.getElementById('status');
+const fallback = document.getElementById('fallback');
+const table = document.getElementById('table');
+let rows = [];
+let allCards = [];
+let query = '';
+const MAX_RESULTS = 200;
+let sortKey = 'pack', sortDir = 1;
+
+function process(data) {
+  if (!Array.isArray(data)) throw new Error('JSON is not an array of cards.');
+  const counts = new Map();
+  for (const card of data) {
+    const pack = (card && card.Pack != null && String(card.Pack).trim()) || '(No pack)';
+    counts.set(pack, (counts.get(pack) || 0) + 1);
+  }
+  allCards = data.map(c => ({
+    type: (c && c.Type) || '',
+    text: String((c && c.Text) ?? ''),
+    pack: (c && c.Pack != null && String(c.Pack).trim()) || '(No pack)'
+  }));
+  rows = [...counts].map(([pack, count]) => ({ pack, count, matches: count }));
+  document.getElementById('searchBox').classList.remove('hidden');
+  statusEl.textContent = `Loaded ${data.length.toLocaleString()} cards across ${rows.length} packs.`;
+  statusEl.classList.remove('error');
+  fallback.classList.add('hidden');
+  table.classList.remove('hidden');
+  document.getElementById('totalLabel').textContent = `Total (${rows.length} packs)`;
+  document.getElementById('total').textContent = data.length.toLocaleString();
+  runSearch();
+}
+
+function esc(t) { return t.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+function highlight(text, q) {
+  const lower = text.toLowerCase();
+  let out = '', i = 0, idx;
+  while ((idx = lower.indexOf(q, i)) !== -1) {
+    out += esc(text.slice(i, idx)) + '<mark>' + esc(text.slice(idx, idx + q.length)) + '</mark>';
+    i = idx + q.length;
+  }
+  return out + esc(text.slice(i));
+}
+
+function runSearch() {
+  const q = query.trim().toLowerCase();
+  const list = document.getElementById('results');
+  const info = document.getElementById('searchInfo');
+  list.innerHTML = '';
+  if (!q) {
+    rows.forEach(r => r.matches = r.count);
+    info.textContent = '';
+    render();
+    return;
+  }
+  const hits = allCards.filter(c => c.text.toLowerCase().includes(q));
+  const perPack = new Map();
+  hits.forEach(c => perPack.set(c.pack, (perPack.get(c.pack) || 0) + 1));
+  rows.forEach(r => r.matches = perPack.get(r.pack) || 0);
+  info.textContent = `${hits.length.toLocaleString()} matching card${hits.length === 1 ? '' : 's'}` +
+    (hits.length > MAX_RESULTS ? ` (showing first ${MAX_RESULTS})` : '');
+  const frag = document.createDocumentFragment();
+  for (const c of hits.slice(0, MAX_RESULTS)) {
+    const li = document.createElement('li');
+    li.innerHTML = highlight(c.text, q) + `<span class="meta">${esc(c.type)} · ${esc(c.pack)}</span>`;
+    frag.append(li);
+  }
+  list.append(frag);
+  render();
+}
+
+document.getElementById('search').addEventListener('input', e => { query = e.target.value; runSearch(); });
+
+function render() {
+  const searching = query.trim() !== '';
+  rows.sort((a, b) => {
+    const r = sortKey === 'pack' ? a.pack.localeCompare(b.pack) : (searching ? a.matches - b.matches : a.count - b.count);
+    return r * sortDir || a.pack.localeCompare(b.pack);
+  });
+  const tbody = table.querySelector('tbody');
+  tbody.innerHTML = '';
+  for (const r of rows) {
+    const tr = document.createElement('tr');
+    const a = document.createElement('td'); a.textContent = r.pack;
+    if (searching && r.matches === 0) tr.className = 'dim';
+    const b = document.createElement('td'); b.className = 'num';
+    b.textContent = searching ? `${r.matches.toLocaleString()} / ${r.count.toLocaleString()}` : r.count.toLocaleString();
+    tr.append(a, b);
+    tbody.append(tr);
+  }
+  table.querySelectorAll('th').forEach(th => {
+    const base = th.dataset.key === 'pack' ? 'Pack' : 'Cards';
+    th.textContent = base + (th.dataset.key === sortKey ? (sortDir === 1 ? ' ▲' : ' ▼') : '');
+  });
+}
+
+table.querySelectorAll('th').forEach(th => th.addEventListener('click', () => {
+  const k = th.dataset.key;
+  if (k === sortKey) sortDir *= -1; else { sortKey = k; sortDir = k === 'count' ? -1 : 1; }
+  render();
+}));
+
+function fail(msg) {
+  statusEl.textContent = msg;
+  statusEl.classList.add('error');
+  fallback.classList.remove('hidden');
+}
+
+document.getElementById('file').addEventListener('change', async e => {
+  const f = e.target.files[0];
+  if (!f) return;
+  try { process(JSON.parse(await f.text())); }
+  catch (err) { fail('Could not read file: ' + err.message); }
+});
+
+fetch('cards.json')
+  .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+  .then(process)
+  .catch(err => fail('Could not auto-load cards.json (' + err.message + ').'));
+</script>
+</body>
+</html>

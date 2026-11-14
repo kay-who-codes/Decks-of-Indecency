@@ -1,0 +1,15 @@
+{
+  "name": "Cards Against Humanity",
+  "short_name": "CAH",
+  "description": "Draw black and white cards, offline, with synced rooms.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#efe7d6",
+  "theme_color": "#1c1712",
+  "icons": [
+    { "src": "AppFiles/Logos/AppIcon192px.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "AppFiles/Logos/AppIcon512px.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}
