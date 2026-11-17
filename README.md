@@ -1,8 +1,8 @@
-# Cards Against Humanity
+# Decks of Indecency
 
-Play Cards Against Humanity for free in your browser.
+Play Decks of Indecency for free in your browser.
 
-[![App Image](Non-Game%20Files/App%20Image.png)](https://kay-who-codes.github.io/Cards-Against-Humanity/)
+[![App Image](Non-Game%20Files/App%20Image.png)](https://kay-who-codes.github.io/Decks-of-Indecency/)
 
 ## Features
 
@@ -12,7 +12,7 @@ Play Cards Against Humanity for free in your browser.
 
 ## Usage
 
-1. Open the app in a browser - **[LINK TO THE APP](https://kay-who-codes.github.io/Cards-Against-Humanity)**.
+1. Open the app in a browser - **[LINK TO THE APP](https://kay-who-codes.github.io/Decks-of-Indecency)**.
 2. Select the decks you want to use from the dropdown menu.
 3. Use the "Draw Black Card" button to draw a black card.
 4. Use the "Draw White Cards" button to draw white cards.
