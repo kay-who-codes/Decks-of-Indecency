@@ -1286,7 +1286,7 @@
     width: min(250px, 90%);
     height: auto;
     min-height: 150px;
-    font-size: 21px;
+    font-size: clamp(17px, 5vw, 40px);
   }
 
   .wiz-subhead {
@@ -1412,7 +1412,7 @@
   /* The Czar only sees the black card: bigger text, and on phones a
      full-width portrait card. */
   #cards-container.czar-view .card {
-    font-size: clamp(26px, 5vw, 32px);
+    font-size: (14px, 5vw, 26px);
   }
 
   @media (max-width: 768px) {
@@ -1424,7 +1424,7 @@
       width: 100%;
       height: auto;
       aspect-ratio: 5 / 7;
-      font-size: clamp(26px, 8vw, 40px);
+      font-size: clamp(20px, 8vw, 40px);
       padding: 22px;
     }
   }
