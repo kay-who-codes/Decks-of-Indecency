@@ -15,7 +15,7 @@
 <link rel="apple-touch-icon" href="AppFiles/Logos/AppIcon192px.png">
 <!-- End app icons -->
 
-<title>Cards Against Humanity</title>
+<title>Decks of Indecency</title>
 
 <style>
 
@@ -2176,7 +2176,7 @@
 
   <!-- Main Menu -->
   <div class="main-menu" id="main-menu">
-    <h1>Cards Against Humanity</h1>
+    <h1>Decks of Indecency</h1>
 
     <!-- Host / Join: the way into a game with friends -->
     <div class="home" id="home">
@@ -2434,7 +2434,7 @@
         <span class="visually-hidden">Toggle light or dark mode</span>
       </button>
     </div>
-    Inspired by <a href="https://www.cardsagainsthumanity.com/" target="_blank" rel="noopener">Cards Against Humanity</a>,
+    Inspired by <a href="https://www.cardsagainsthumanity.com/" target="_blank" rel="noopener">Decks of Indecency</a>,
     Created by <a href="https://linktr.ee/kaywhocreates" target="_blank" rel="noopener">Kay 🧡</a>
   </footer>
 
@@ -3346,7 +3346,7 @@
     qrBox.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
     if (button.dataset.action === 'share') {
       if (navigator.share) {
-        navigator.share({ title: 'Cards Against Humanity', text: `Join room ${roomCode} in seat ${seat}`, url: link }).catch(() => {});
+        navigator.share({ title: 'Decks of Indecency', text: `Join room ${roomCode} in seat ${seat}`, url: link }).catch(() => {});
       }
     } else {
       copyTextWithFallback(link, button, 'Copied ✓');
@@ -3550,7 +3550,7 @@
 
   shareInviteBtn.addEventListener('click', () => {
     if (!inviteLinkInput.value || !navigator.share) return;
-    navigator.share({ title: 'Cards Against Humanity', text: `Join room ${roomCode}`, url: inviteLinkInput.value }).catch(() => {});
+    navigator.share({ title: 'Decks of Indecency', text: `Join room ${roomCode}`, url: inviteLinkInput.value }).catch(() => {});
   });
 
   showGeneralBtn.addEventListener('click', () => {
@@ -4972,7 +4972,7 @@
   function buildDiscordMessages() {
     const czarText = czarMode === 'seq' ? 'Czar rotates in seat order'
       : czarMode === 'rand' ? 'Czar rotates from a random seat' : 'No Card Czar';
-    const head = `🃏 **Cards Against Humanity**: game \`${roomCode}\`\n` +
+    const head = `🃏 **Decks of Indecency**: game \`${roomCode}\`\n` +
       `${playerCount} players${botCount > 0 ? ` + ${botCount} bot${botCount === 1 ? '' : 's'}` : ''} · ${czarText}\n` +
       'Tap the link next to YOUR name. Each link puts you in your own seat, so please don’t use anyone else’s.\n';
 
@@ -5025,7 +5025,7 @@
         const share = elt('button', 'small-button', 'Share…');
         share.type = 'button';
         share.addEventListener('click', () => {
-          navigator.share({ title: 'Cards Against Humanity', text: `Join game ${roomCode}${seatName(seat) ? ` as ${seatName(seat)}` : ''}`, url: buildInviteLink(seat) }).catch(() => {});
+          navigator.share({ title: 'Decks of Indecency', text: `Join game ${roomCode}${seatName(seat) ? ` as ${seatName(seat)}` : ''}`, url: buildInviteLink(seat) }).catch(() => {});
         });
         buttons.appendChild(share);
       }
