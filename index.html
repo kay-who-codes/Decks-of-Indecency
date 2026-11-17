@@ -788,6 +788,564 @@
     color: #b9ae9c;
   }
 
+  /* ---------- Personal (per-seat) links ---------- */
+  .seat-links {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--ink-soft);
+    text-align: left;
+  }
+
+  body.dark-mode .seat-links {
+    border-top-color: #b9ae9c;
+  }
+
+  .seat-links-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 17px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  .seat-links-note {
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+
+  body.dark-mode .seat-links-note {
+    color: #b9ae9c;
+  }
+
+  .seat-link-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .seat-link-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px 8px;
+  }
+
+  .seat-name-input {
+    flex: 1 1 100%;
+    min-width: 0;
+    padding: 6px 8px;
+    font-size: 15px;
+    font-family: var(--font-body);
+    border: 2px solid var(--ink);
+    border-radius: 4px;
+    background-color: var(--card-white);
+    color: var(--ink);
+  }
+
+  body.dark-mode .seat-name-input {
+    background-color: #201a14;
+    color: #f1ead9;
+    border-color: #f1ead9;
+  }
+
+  /* ---------- Host / Join home buttons ---------- */
+  .home {
+    width: 100%;
+    max-width: 360px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  .home-buttons {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .home-btn {
+    width: 100%;
+    min-height: 104px;
+    padding: 14px 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    cursor: pointer;
+    border: 2px solid var(--ink);
+    border-radius: 14px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .home-btn-title {
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    line-height: 1;
+  }
+
+  .home-btn-sub {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: none;
+    opacity: 0.85;
+  }
+
+  .home-host {
+    background-color: var(--crimson);
+    color: #ffffff;
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+
+  .home-join {
+    background-color: var(--ink);
+    color: var(--paper);
+    box-shadow: 6px 6px 0 var(--crimson);
+  }
+
+  .home-btn:hover {
+    transform: translate(-3px, -3px);
+  }
+
+  .home-host:hover { box-shadow: 9px 9px 0 var(--ink); }
+  .home-join:hover { box-shadow: 9px 9px 0 var(--crimson); }
+
+  .home-btn:active {
+    transform: translate(0, 0);
+    box-shadow: 3px 3px 0 var(--ink);
+  }
+
+  .home-btn:focus-visible {
+    outline: 3px solid var(--crimson);
+    outline-offset: 3px;
+  }
+
+  body.dark-mode .home-btn { border-color: #f1ead9; }
+  body.dark-mode .home-host { box-shadow: 6px 6px 0 #f1ead9; }
+  body.dark-mode .home-host:hover { box-shadow: 9px 9px 0 #f1ead9; }
+  body.dark-mode .home-join { background-color: #060504; color: #f1ead9; }
+
+  .rejoin {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+
+  .home-rejoin {
+    background-color: var(--card-white);
+    color: var(--ink);
+    box-shadow: 6px 6px 0 var(--pine);
+  }
+
+  .home-rejoin:hover { box-shadow: 9px 9px 0 var(--pine); }
+
+  body.dark-mode .home-rejoin {
+    background-color: #201a14;
+    color: #f1ead9;
+    box-shadow: 6px 6px 0 #8fb491;
+  }
+
+  body.dark-mode .home-rejoin:hover { box-shadow: 9px 9px 0 #8fb491; }
+
+  .home-solo {
+    margin-top: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-soft);
+  }
+
+  body.dark-mode .home-solo { color: #b9ae9c; }
+
+  /* ---------- Wizard ---------- */
+  .wizard {
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto;
+    padding: 28px 20px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    text-align: left;
+  }
+
+  .wizard-progress {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--crimson-dark);
+  }
+
+  body.dark-mode .wizard-progress { color: #e0785f; }
+
+  .wizard-title {
+    margin: 0;
+    font-size: 34px;
+    line-height: 1;
+  }
+
+  .wizard-title:focus { outline: none; }
+
+  .wizard-body {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .wizard .room-code-big {
+    font-size: clamp(22px, 8vw, 38px);
+    letter-spacing: 0.05em;
+    padding: 14px 10px;
+  }
+
+  .wizard-lead {
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+
+  body.dark-mode .wizard-lead { color: #b9ae9c; }
+
+  .wizard-error {
+    min-height: 0;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--crimson-dark);
+  }
+
+  body.dark-mode .wizard-error { color: #e0785f; }
+
+  .wizard-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-top: 6px;
+  }
+
+  .wizard-nav .reveal-button { flex: 1; }
+
+  .wiz-input {
+    width: 100%;
+    min-width: 0;
+    padding: 10px 12px;
+    font-family: var(--font-body);
+    font-size: 16px;
+    border: 2px solid var(--ink);
+    border-radius: 4px;
+    background-color: var(--card-white);
+    color: var(--ink);
+  }
+
+  body.dark-mode .wiz-input {
+    background-color: #201a14;
+    color: #f1ead9;
+    border-color: #f1ead9;
+  }
+
+  .wiz-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink-soft);
+  }
+
+  body.dark-mode .wiz-field { color: #b9ae9c; }
+
+  .wiz-stepper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+  }
+
+  .wiz-stepper .small-button {
+    width: 48px;
+    height: 48px;
+    font-size: 24px;
+    padding: 0;
+  }
+
+  .wiz-count {
+    min-width: 2.2ch;
+    text-align: center;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 52px;
+    line-height: 1;
+  }
+
+  .wiz-names {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .wiz-deck-actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  .wiz-decks {
+    max-height: 320px;
+    overflow-y: auto;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    background-color: var(--card-white);
+    border: 2px solid var(--ink);
+    border-radius: 4px;
+  }
+
+  body.dark-mode .wiz-decks {
+    background-color: #201a14;
+    border-color: #f1ead9;
+  }
+
+  .wiz-note {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-soft);
+  }
+
+  .wiz-note.problem { color: var(--crimson-dark); }
+
+  body.dark-mode .wiz-note { color: #b9ae9c; }
+  body.dark-mode .wiz-note.problem { color: #e0785f; }
+
+  .wiz-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px;
+    cursor: pointer;
+    background-color: var(--card-white);
+    border: 2px solid var(--ink);
+    border-radius: 6px;
+  }
+
+  .wiz-option input {
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+    accent-color: var(--crimson);
+  }
+
+  .wiz-option.selected {
+    border-color: var(--crimson);
+    box-shadow: 4px 4px 0 var(--crimson);
+  }
+
+  body.dark-mode .wiz-option {
+    background-color: #201a14;
+    border-color: #f1ead9;
+  }
+
+  body.dark-mode .wiz-option.selected { border-color: var(--crimson); }
+
+  .wiz-option-title {
+    display: block;
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  .wiz-option-sub {
+    display: block;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  body.dark-mode .wiz-option-sub { color: #b9ae9c; }
+
+  .wiz-link-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .wiz-link-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    padding: 8px 10px;
+    background-color: var(--card-white);
+    border: 2px solid var(--ink);
+    border-radius: 4px;
+  }
+
+  body.dark-mode .wiz-link-row {
+    background-color: #201a14;
+    border-color: #f1ead9;
+  }
+
+  .wiz-link-name {
+    font-weight: 700;
+    font-size: 15px;
+    overflow-wrap: anywhere;
+  }
+
+  .wiz-link-buttons {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .wiz-discord {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .wiz-qr {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .wiz-seat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+  }
+
+  .wiz-seat-grid .reveal-button { width: 100%; }
+
+  /* ---------- Bots ---------- */
+  .bot-hint {
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+
+  body.dark-mode .bot-hint { color: #b9ae9c; }
+
+  .bot-box {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 0 20px 12px;
+  }
+
+  .bot-plays {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 26px;
+  }
+
+  .bot-play {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    max-width: 100%;
+  }
+
+  .bot-play-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  .bot-play-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+    max-width: 100%;
+  }
+
+  .card.bot-card {
+    width: min(250px, 90%);
+    height: auto;
+    min-height: 150px;
+    font-size: 21px;
+  }
+
+  .wiz-subhead {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-top: 6px;
+  }
+
+  .wiz-count.small {
+    font-size: 36px;
+  }
+
+  /* ---------- Mismatch warnings ---------- */
+  .warn-box {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    text-align: left;
+  }
+
+  #game-warnings {
+    max-width: 560px;
+    margin: 0 auto 10px;
+    padding: 0 20px;
+  }
+
+  .warn-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 10px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.35;
+    background-color: var(--card-white);
+    border: 2px solid var(--crimson);
+    border-left-width: 8px;
+    border-radius: 4px;
+  }
+
+  body.dark-mode .warn-item {
+    background-color: #201a14;
+  }
+
+  .seat-link-name {
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .seat-link-buttons {
+    display: flex;
+    gap: 6px;
+  }
+
   /* Prominent room code on the card screen */
   .room-banner {
     display: flex;
@@ -869,6 +1427,129 @@
       font-size: clamp(26px, 8vw, 40px);
       padding: 22px;
     }
+  }
+
+  /* ---------- What to do now ---------- */
+  .todo {
+    width: 100%;
+    max-width: 560px;
+    margin: 0 auto 10px;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .todo-panel {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .todo-text {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.3;
+    text-align: left;
+    background-color: var(--card-white);
+    border: 2px solid var(--ink);
+    border-left: 8px solid var(--crimson);
+    border-radius: 4px;
+  }
+
+  body.dark-mode .todo-text {
+    background-color: #201a14;
+    border-color: #f1ead9;
+    border-left-color: var(--crimson);
+  }
+
+  .todo-steps {
+    width: 100%;
+    list-style: none;
+    counter-reset: todo-step;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px;
+    text-align: left;
+    font-size: 14px;
+    background-color: var(--paper-dim);
+    border: 1px dashed var(--ink-soft);
+    border-radius: 3px;
+  }
+
+  body.dark-mode .todo-steps {
+    background-color: #2c2419;
+    border-color: #b9ae9c;
+  }
+
+  .todo-steps li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 6px 8px;
+    border-radius: 3px;
+    opacity: 0.6;
+  }
+
+  .todo-steps li::before {
+    counter-increment: todo-step;
+    content: counter(todo-step);
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: var(--ink);
+    color: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  body.dark-mode .todo-steps li::before {
+    background-color: #f1ead9;
+    color: #161210;
+  }
+
+  .todo-steps li.current {
+    opacity: 1;
+    font-weight: 700;
+    background-color: var(--card-white);
+    outline: 2px solid var(--crimson);
+  }
+
+  body.dark-mode .todo-steps li.current {
+    background-color: #201a14;
+  }
+
+  /* ---------- Chosen answers filled into the black card ---------- */
+  .filled {
+    white-space: pre-wrap;
+  }
+
+  /* .card is a flex container, which would turn every text piece and
+     answer into its own column. A filled card flows as normal text. */
+  .card.filled,
+  #fullscreen-reveal .fullscreen-card.fullscreen-filled {
+    display: block;
+    overflow-wrap: anywhere;
+  }
+
+  .fill-answer {
+    color: #ffffff;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+
+  .fill-empty {
+    opacity: 0.5;
   }
 
   /* ---------- Round history ---------- */
@@ -991,6 +1672,18 @@
     background-color: var(--ink);
     color: var(--paper);
     border-color: var(--ink);
+  }
+
+  /* Once the right number of answers is chosen, the black card itself opens full-screen. */
+  .black-card.tappable {
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .black-card.tappable:hover {
+    transform: translateY(-5px);
+    box-shadow: 7px 10px 0 var(--shadow-ink);
   }
 
   /* ---------- Selectable hand cards ---------- */
@@ -1133,6 +1826,85 @@
     background-color: var(--ink);
     color: var(--paper);
     box-shadow: 6px 6px 0 var(--pine);
+    border: 2px solid var(--paper);
+  }
+
+  /* The black card with the chosen answers written into it is shown as one
+     portrait black card (like the Card Czar's view) on the page background.
+     Its size and text size are set by script so it is as large as will fit. */
+  #fullscreen-reveal.is-filled {
+    background-color: var(--paper);
+    background-image: radial-gradient(circle at 1px 1px, rgba(28,23,18,0.05) 1px, transparent 0);
+    background-size: 22px 22px;
+    padding: 16px;
+    gap: 12px;
+    justify-content: flex-start;
+  }
+
+  body.dark-mode #fullscreen-reveal.is-filled {
+    background-color: #161210;
+    background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0);
+  }
+
+  #fullscreen-reveal.is-filled .fullscreen-cards {
+    flex: 1;
+    width: 100%;
+    min-height: 0;
+    max-height: none;
+    padding: 0;
+    overflow: hidden;
+    align-items: center;
+  }
+
+  #fullscreen-reveal .fullscreen-card.fullscreen-filled {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    width: 300px;
+    height: 420px;
+    min-height: 0;
+    border: 3px solid var(--ink);
+    border-radius: 14px;
+    box-shadow: 6px 6px 0 var(--shadow-ink);
+    padding: 24px;
+    font-size: 30px;
+    line-height: 1.25;
+    overflow: hidden;
+    animation: dealIn 0.35s ease backwards;
+  }
+
+  body.dark-mode #fullscreen-reveal .fullscreen-card.fullscreen-filled {
+    border-color: #f1ead9;
+    box-shadow: 6px 6px 0 #000;
+  }
+
+  #fullscreen-reveal.is-filled .fullscreen-close {
+    margin: 0;
+    flex-shrink: 0;
+    background-color: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+
+  body.dark-mode #fullscreen-reveal.is-filled .fullscreen-close {
+    background-color: #f1ead9;
+    color: #161210;
+    border-color: #f1ead9;
+  }
+
+  #fullscreen-reveal .fullscreen-fill-text {
+    display: block;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    word-break: normal;
+    hyphens: manual;
+    text-wrap: pretty;
+  }
+
+  #fullscreen-reveal.is-filled .fullscreen-close {
+    margin: 12px 0 18px;
+    flex-shrink: 0;
   }
 
   #fullscreen-reveal .fullscreen-close {
@@ -1406,12 +2178,35 @@
   <div class="main-menu" id="main-menu">
     <h1>Cards Against Humanity</h1>
 
-    <!-- Sync Mode toggle -->
-    <label class="sync-toggle" for="sync-toggle">
+    <!-- Host / Join: the way into a game with friends -->
+    <div class="home" id="home">
+      <div class="rejoin hidden" id="rejoin">
+        <button class="home-btn home-rejoin" id="rejoin-btn" type="button">
+          <span class="home-btn-title">Rejoin last game</span>
+          <span class="home-btn-sub" id="rejoin-sub"></span>
+        </button>
+        <button class="small-button" id="rejoin-forget" type="button">Forget this game</button>
+      </div>
+
+      <div class="home-buttons">
+        <button class="home-btn home-host" id="host-btn" type="button">
+          <span class="home-btn-title">Host a game</span>
+          <span class="home-btn-sub">Set it up, then send everyone a link</span>
+        </button>
+        <button class="home-btn home-join" id="join-btn" type="button">
+          <span class="home-btn-title">Join a game</span>
+          <span class="home-btn-sub">Use a link or the game name</span>
+        </button>
+      </div>
+      <p class="home-solo">Or just draw cards on your own:</p>
+    </div>
+
+    <!-- Sync Mode toggle (now driven by Host / Join; kept so older code paths still work) -->
+    <label class="sync-toggle hidden" for="sync-toggle">
       <input type="checkbox" id="sync-toggle" aria-controls="room-panel">
       <span>Sync Mode</span>
     </label>
-    <p class="sync-hint">Play together: one shared black card, and a different 7-card hand for each seat.</p>
+    <p class="sync-hint hidden">Play together: one shared black card, and a different 7-card hand for each seat.</p>
 
     <!-- Button Container -->
     <div class="button-container">
@@ -1466,15 +2261,28 @@
           <button class="small-button" id="leave-room" type="button">Leave room</button>
         </div>
 
-        <!-- Invite: link + QR code for this room -->
-        <details class="invite" id="invite">
-          <summary>Invite players · link &amp; QR</summary>
+        <!-- Mismatch warnings -->
+        <div class="warn-box hidden" id="sync-warnings" role="alert"></div>
+
+        <!-- Invite: personal link per seat + general link + QR code for this room -->
+        <details class="invite" id="invite" open>
+          <summary>Invite players · links &amp; QR</summary>
           <div class="invite-body">
+
+            <!-- One link per seat: opening it puts that friend in the right seat -->
+            <div class="seat-links" id="seat-links">
+              <span class="seat-links-title">Personal links</span>
+              <p class="seat-links-note">Type each friend's name, then send them their own link. It joins the room, copies your decks and names, and puts them in the right seat automatically.</p>
+              <ul class="seat-link-list" id="seat-link-list"></ul>
+            </div>
+
+            <span class="seat-links-title" id="qr-title">Room link &amp; QR</span>
             <div class="qr-box" id="qr-box" role="img" aria-label="QR code that opens this room"></div>
             <input class="room-input invite-link" type="text" id="invite-link" readonly aria-label="Invite link">
             <div class="room-actions">
               <button class="small-button" id="copy-invite-link" type="button">Copy link</button>
               <button class="small-button hidden" id="share-invite-link" type="button">Share…</button>
+              <button class="small-button hidden" id="show-general-link" type="button">Back to room link</button>
             </div>
             <p class="invite-note" id="invite-note"></p>
           </div>
@@ -1500,8 +2308,14 @@
               </select>
             </label>
           </div>
+          <div class="seat-row">
+            <label for="bot-count">Bots
+              <input type="number" id="bot-count" min="0" max="20" value="0">
+            </label>
+          </div>
+          <p class="bot-hint">Bots are computer players. Each plays random white card(s) every round, and the Card Czar can reveal their answers below the black card.</p>
           <p id="czar-now" class="czar-now"></p>
-          <p>Everyone shares the black card, but each seat gets a different hand. Agree the player count and Card Czar setting, then each pick your own seat. The invite link sets both for you.</p>
+          <p>Everyone shares the black card, but each seat gets a different hand. Set the player count and Card Czar here first, then send each friend their personal link above so their seat is chosen for them.</p>
         </div>
 
         <div class="room-option">
@@ -1522,6 +2336,15 @@
     </div>
 
     <p class="status-message" id="status-message" role="status" aria-live="polite"></p>
+  </div>
+
+  <!-- Host / Join wizard -->
+  <div class="wizard hidden" id="wizard" role="region" aria-labelledby="wiz-title">
+    <p class="wizard-progress" id="wiz-progress"></p>
+    <h2 class="wizard-title" id="wiz-title" tabindex="-1"></h2>
+    <div class="wizard-body" id="wiz-body"></div>
+    <p class="wizard-error" id="wiz-error" role="alert"></p>
+    <div class="wizard-nav" id="wiz-nav"></div>
   </div>
 
   <!-- Card Display -->
@@ -1552,8 +2375,33 @@
 
     <p class="czar-line hidden" id="czar-line" aria-live="polite"></p>
 
+    <div class="warn-box hidden" id="game-warnings" role="alert"></div>
+
+    <!-- What to do now (Sync Mode only) -->
+    <div class="todo hidden" id="todo-box">
+      <button class="small-button" id="todo-help-btn" type="button" aria-expanded="false" aria-controls="todo-panel">❓ What do I do now?</button>
+      <div class="todo-panel hidden" id="todo-panel">
+        <p class="todo-text" id="todo-text" aria-live="polite"></p>
+        <ol class="todo-steps" id="todo-steps">
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ol>
+      </div>
+    </div>
+
     <div id="cards-container"></div>
+
+    <!-- Bot answers (revealed below the black card) -->
+    <div class="bot-box hidden" id="bot-box">
+      <button class="reveal-button" id="bot-reveal-btn" type="button" aria-expanded="false">🤖 Reveal bot answers</button>
+      <div class="bot-plays hidden" id="bot-plays"></div>
+    </div>
+
     <div class="selection-bar hidden" id="selection-bar">
+      <button class="small-button" id="redraw-btn" type="button">↻ Redraw hand</button>
       <span class="selection-count" id="selection-count">0 selected</span>
       <button class="reveal-button" id="reveal-selected-button" disabled>Show Full-Screen</button>
     </div>
@@ -1600,8 +2448,18 @@
     room: 'cah_room',
     playerCount: 'cah_playerCount',
     seat: 'cah_mySeat',
-    czar: 'cah_czarMode'
+    czar: 'cah_czarMode',
+    names: 'cah_names',
+    seatOk: 'cah_seatOk',
+    join: 'cah_join',
+    bots: 'cah_bots',
+    redraw: 'cah_redraw',
+    last: 'cah_lastGame'
   };
+
+  // Bump this whenever dealing/seating logic changes, so friends on an older
+  // copy of the game are warned instead of silently getting different hands.
+  const APP_VERSION = '3';
 
   // Clean up keys left behind by the old turn/round system.
   ['cah_numPlayers', 'cah_myPosition', 'cah_round', 'cah_seedWord', 'cah_players', 'cah_syncRound'].forEach(key => {
@@ -1613,6 +2471,9 @@
 
   // Sync Mode always deals one black card and this many white cards per round.
   const SYNC_HAND_SIZE = 7;
+
+  // Most answers a single black card can ask for.
+  const MAX_PICK = 5;
 
   let cardsData = [];
   // Memoized lookup: Map<packName, { prompts: [...], responses: [...] }>
@@ -1632,6 +2493,13 @@
   let mySeat = 1;           // this device's seat, 1..playerCount — decides which hand it gets
   // Cache of seeded, canonically-sorted decks: key -> shuffled card array.
   let syncDeckCache = new Map();
+  let contentHashCache = new Map();  // selected decks -> fingerprint of the actual card text
+  let botCount = 0;         // computer players: each plays random white card(s) every round
+  let botPlays = [];        // this round's bot answers: one array of card texts per bot
+  let botsRevealed = false;
+  let playerNames = [];     // index 0 = seat 1; travels inside invite links
+  let seatOk = true;        // false until this player has confirmed which seat is theirs
+  let joinInfo = null;      // settings from the invite link this device joined with (for mismatch warnings)
 
   const mainMenu = document.getElementById('main-menu');
 
@@ -1664,6 +2532,7 @@
   const bannerCode = document.getElementById('banner-code');
   const bannerLabel = document.getElementById('banner-label');
   const playerCountInput = document.getElementById('player-count');
+  const botCountInput = document.getElementById('bot-count');
   const mySeatSelect = document.getElementById('my-seat');
   const czarSelect = document.getElementById('czar-mode');
   const czarNow = document.getElementById('czar-now');
@@ -1673,11 +2542,22 @@
   const copyInviteBtn = document.getElementById('copy-invite-link');
   const shareInviteBtn = document.getElementById('share-invite-link');
   const inviteNote = document.getElementById('invite-note');
+  const seatLinkList = document.getElementById('seat-link-list');
+  const warnBox = document.getElementById('sync-warnings');
+  const gameWarnBox = document.getElementById('game-warnings');
+  const qrTitle = document.getElementById('qr-title');
+  const showGeneralBtn = document.getElementById('show-general-link');
   const gameQr = document.getElementById('game-qr');
   const gameQrBox = document.getElementById('game-qr-box');
   const gameQrNote = document.getElementById('game-qr-note');
   const roundPrevDisplayBtn = document.getElementById('round-prev-display');
   const roundNextDisplayBtn = document.getElementById('round-next-display');
+
+  const todoBox = document.getElementById('todo-box');
+  const todoText = document.getElementById('todo-text');
+  const todoHelpBtn = document.getElementById('todo-help-btn');
+  const todoSteps = document.getElementById('todo-steps');
+  const todoPanel = document.getElementById('todo-panel');
 
   const cardDisplay = document.getElementById('card-display');
   const cardsContainer = document.getElementById('cards-container');
@@ -1687,6 +2567,10 @@
   const revealSelectedButton = document.getElementById('reveal-selected-button');
   const blackCardBar = document.getElementById('black-card-bar');
   const revealBlackButton = document.getElementById('reveal-black-button');
+  const botBox = document.getElementById('bot-box');
+  const botRevealBtn = document.getElementById('bot-reveal-btn');
+  const botPlaysEl = document.getElementById('bot-plays');
+  const redrawBtn = document.getElementById('redraw-btn');
 
   const fullscreenReveal = document.getElementById('fullscreen-reveal');
   const fullscreenCards = document.getElementById('fullscreen-cards');
@@ -1696,9 +2580,15 @@
 
   // State for the currently displayed hand of white cards, so cards can be
   // multi-selected and then shown full-screen for the table to read.
+  // selectedIndices is a Set, which remembers the order cards were chosen in —
+  // that order decides which blank each answer fills.
   let currentHand = [];
   let selectedIndices = new Set();
   let isHandMode = false;
+  let currentHeading = '';      // 'Black Card' | 'White Cards' | 'Round' | 'Czar'
+  let currentPrompt = null;     // the black card on screen, if any
+  let pickLimit = null;         // how many white cards must be chosen (Sync rounds only); null = no limit
+  let blackEl = null;           // the black card's element, so it can show the chosen answers live
 
   // Flip sound is optional — if flip.mp3 isn't present alongside this file,
   // playback errors are swallowed instead of breaking the buttons.
@@ -1763,7 +2653,7 @@
       whiteBtn.disabled = false;
       roundBtn.disabled = false;
       setStatus('');
-      applyInviteFromHash();
+      applyInviteFromHash(true);
       urlSyncReady = true;
       refreshInvite();
       syncAddressBar();
@@ -1789,6 +2679,7 @@
     }
     drawnTracker = new Map();
     syncDeckCache = new Map();
+    contentHashCache = new Map();
   }
 
   function getCardsForPacks(selectedPacks, kind) {
@@ -1997,6 +2888,38 @@
     return roomCode;
   }
 
+  // Fingerprint of the actual card text in the selected decks. Two devices only
+  // deal the same hands if this matches, so it catches an old cached cards.json.
+  function getContentHash() {
+    const packs = getSelectedPacks().slice().sort();
+    const key = packs.join('|');
+    let hash = contentHashCache.get(key);
+    if (!hash) {
+      const rows = getCardsForPacks(packs, 'prompts').concat(getCardsForPacks(packs, 'responses'))
+        .map(card => `${card.Pack}\u0001${card.Type}\u0001${card.Text}\u0001${card.Pick || ''}`)
+        .sort();
+      hash = xmur3(rows.join('\u0002'))().toString(36).toUpperCase().padStart(5, '0').slice(-5);
+      contentHashCache.set(key, hash);
+    }
+    return hash;
+  }
+
+  // Same bitmask the invite link carries, for comparing the current decks with it.
+  function getDeckMaskString() {
+    const all = [...packIndex.keys()].sort();
+    const enabled = new Set(getSelectedPacks());
+    let mask = 0n;
+    all.forEach((name, i) => { if (enabled.has(name)) mask |= (1n << BigInt(i)); });
+    return mask.toString(36);
+  }
+
+  // Short code covering everything that decides what cards you get this round.
+  // If two phones show a different code on the same round, something differs.
+  function getGameCheckCode() {
+    const text = `${APP_VERSION}|${roomCode}|${getContentHash()}|${playerCount}|${czarMode}|${botCount}|${syncRound}`;
+    return xmur3(text)().toString(36).toUpperCase().padStart(5, '0').slice(-5);
+  }
+
   // Returns the seeded shuffled deck for a kind ('prompts' | 'responses') and
   // cycle number (each time the deck runs out, the next cycle reshuffles).
   // The cache key includes the selected packs so changing decks can't serve
@@ -2124,16 +3047,76 @@
       localStorage.setItem(STORAGE_KEYS.playerCount, String(playerCount));
       localStorage.setItem(STORAGE_KEYS.seat, String(mySeat));
       localStorage.setItem(STORAGE_KEYS.czar, czarMode);
+      localStorage.setItem(STORAGE_KEYS.seatOk, seatOk ? '1' : '0');
+      localStorage.setItem(STORAGE_KEYS.bots, String(botCount));
     } catch (e) {}
   }
 
+  function cleanName(value) {
+    return String(value || '').replace(/[\r\n]+/g, ' ').trim().slice(0, 16);
+  }
+
+  function seatName(seat) {
+    return playerNames[seat - 1] || '';
+  }
+
+  // "Alex (Seat 2)" when the seat has a name, otherwise "Seat 2".
+  function seatLabel(seat) {
+    const name = seatName(seat);
+    return name ? `${name} (Seat ${seat})` : `Seat ${seat}`;
+  }
+
+  function loadNames() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEYS.names) || '[]');
+      playerNames = Array.isArray(saved) ? saved.map(cleanName) : [];
+    } catch (e) { playerNames = []; }
+  }
+
+  function persistNames() {
+    try { localStorage.setItem(STORAGE_KEYS.names, JSON.stringify(playerNames)); } catch (e) {}
+  }
+
+  function setSeatName(seat, value) {
+    while (playerNames.length < seat) playerNames.push('');
+    playerNames[seat - 1] = cleanName(value);
+    persistNames();
+  }
+
+  function saveJoin() {
+    try {
+      if (joinInfo) localStorage.setItem(STORAGE_KEYS.join, JSON.stringify(joinInfo));
+      else localStorage.removeItem(STORAGE_KEYS.join);
+    } catch (e) {}
+  }
+
+  function loadJoin() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEYS.join) || 'null');
+      return saved && typeof saved === 'object' ? saved : null;
+    } catch (e) { return null; }
+  }
+
   function restoreSeat() {
+    loadNames();
+    seatOk = localStorage.getItem(STORAGE_KEYS.seatOk) !== '0';
     const savedPlayers = parseInt(localStorage.getItem(STORAGE_KEYS.playerCount), 10);
     const savedSeat = parseInt(localStorage.getItem(STORAGE_KEYS.seat), 10);
     if (Number.isFinite(savedPlayers)) playerCount = Math.max(1, Math.min(20, savedPlayers));
     if (Number.isFinite(savedSeat)) mySeat = Math.max(1, Math.min(playerCount, savedSeat));
     const savedCzar = localStorage.getItem(STORAGE_KEYS.czar);
     if (savedCzar === 'seq' || savedCzar === 'rand') czarMode = savedCzar;
+    const savedBots = parseInt(localStorage.getItem(STORAGE_KEYS.bots), 10);
+    if (Number.isFinite(savedBots)) botCount = Math.max(0, Math.min(20, savedBots));
+  }
+
+  function setBotCount(value) {
+    let n = parseInt(value, 10);
+    if (!Number.isFinite(n) || n < 0) n = 0;
+    if (n > 20) n = 20;
+    botCount = n;
+    persistSeat();
+    updateRoomUI();
   }
 
   function setPlayerCount(value) {
@@ -2151,12 +3134,14 @@
     if (!Number.isFinite(n) || n < 1) n = 1;
     if (n > playerCount) n = playerCount;
     mySeat = n;
+    seatOk = true; // the player has chosen
     persistSeat();
     updateRoomUI();
   }
 
   function refreshSeatControls() {
     playerCountInput.value = String(playerCount);
+    botCountInput.value = String(botCount);
     if (mySeatSelect.options.length !== playerCount) {
       mySeatSelect.innerHTML = '';
       for (let i = 1; i <= playerCount; i++) {
@@ -2166,6 +3151,7 @@
         mySeatSelect.appendChild(option);
       }
     }
+    Array.from(mySeatSelect.options).forEach((option, i) => { option.textContent = seatLabel(i + 1); });
     mySeatSelect.value = String(mySeat);
   }
 
@@ -2190,10 +3176,10 @@
     const active = czarMode !== 'off' && Boolean(roomCode);
     const seat = active ? getCzarSeat(syncRound) : 0;
     czarNow.textContent = active
-      ? `Round ${syncRound}: Seat ${seat} is the Card Czar${seat === mySeat ? ' (you)' : ''}`
+      ? `Round ${syncRound}: ${seatLabel(seat)} is the Card Czar${seat === mySeat ? ' (you)' : ''}`
       : '';
     czarLine.textContent = !active ? ''
-      : seat === mySeat ? '👑 You are the Card Czar this round' : `👑 Card Czar this round: Seat ${seat}`;
+      : seat === mySeat ? '👑 You are the Card Czar this round' : `👑 Card Czar this round: ${seatLabel(seat)}`;
     czarLine.classList.toggle('hidden', !syncMode || !active);
   }
 
@@ -2204,15 +3190,19 @@
   });
 
   playerCountInput.addEventListener('change', () => setPlayerCount(playerCountInput.value));
+  botCountInput.addEventListener('change', () => setBotCount(botCountInput.value));
   mySeatSelect.addEventListener('change', () => setMySeat(mySeatSelect.value));
 
   /* ============================================================
      Invite link + QR code
-     #room=CODE&d=<enabled decks, base-36 bitmask>&n=<deck count>&p=<players>&r=<round>[&c=s|r Card Czar]
+     #room=CODE&d=<enabled decks, base-36 bitmask>&n=<deck count>&p=<players>&r=<round>[&c=s|r Card Czar][&s=<seat>]
+     The general room link has no s=. Each personal link adds s=<seat>.
   ============================================================ */
-  let lastInviteLink = '';
+  let lastInviteLink = '';   // link currently shown in the QR box (general, or one seat's personal link)
+  let qrSeat = null;         // seat whose personal link the QR box shows; null = the general room link
+  let lastOwnLink = '';      // the same link plus this device's seat — kept in the address bar
 
-  function buildInviteLink() {
+  function buildInviteLink(seat) {
     const base = location.href.split('#')[0];
     const allPacks = [...packIndex.keys()].sort();
     const enabled = new Set(getSelectedPacks());
@@ -2226,35 +3216,161 @@
       r: String(syncRound)
     });
     if (czarMode !== 'off') params.set('c', czarMode === 'seq' ? 's' : 'r');
+    if (botCount > 0) params.set('b', String(botCount));
+    params.set('v', APP_VERSION);
+    params.set('f', getContentHash());
+    const names = [];
+    for (let i = 0; i < playerCount; i++) names.push(cleanName(playerNames[i]));
+    while (names.length && !names[names.length - 1]) names.pop();
+    if (names.length) params.set('m', names.map(encodeURIComponent).join(','));
+    if (seat) params.set('s', String(seat));
     return `${base}#${params.toString()}`;
   }
 
   let inviteRenderToken = 0;
   let urlSyncReady = false; // true once an incoming #hash has been applied
 
-  // Keeps the address bar on the current invite link (room, decks, players
-  // and round), so reloading or copying the URL lands on this exact round.
+  // Keeps the address bar on this player's own link (room, decks, players,
+  // round and seat), so reloading or copying the URL lands on this exact
+  // round in this exact seat.
   function syncAddressBar() {
     if (!urlSyncReady) return;
     try {
       const base = location.pathname + location.search;
-      if (roomCode && lastInviteLink) {
-        history.replaceState(null, '', base + '#' + lastInviteLink.split('#')[1]);
+      if (roomCode && lastOwnLink) {
+        history.replaceState(null, '', base + '#' + lastOwnLink.split('#')[1]);
       } else if (location.hash) {
         history.replaceState(null, '', base);
       }
     } catch (e) {}
   }
 
+  // Copies text, falling back to a prompt box where the clipboard is blocked.
+  function copyTextWithFallback(text, button, doneLabel) {
+    const original = button.textContent;
+    const done = () => {
+      button.textContent = doneLabel;
+      setTimeout(() => { button.textContent = original; }, 1500);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done).catch(() => window.prompt('Copy this link:', text));
+    } else {
+      window.prompt('Copy this link:', text);
+    }
+  }
+
+  // One row per seat: a name field plus that seat's own link. Opening the link
+  // puts the friend straight into that seat, so nobody has to pick one.
+  // Rows are only rebuilt when the room, player count or your seat changes, so
+  // typing a name never loses focus.
+  let seatLinksKey = '';
+
+  function refreshSeatLinks() {
+    if (!roomCode || packIndex.size === 0) {
+      seatLinkList.innerHTML = '';
+      seatLinksKey = '';
+      return;
+    }
+
+    const key = `${roomCode}|${playerCount}|${mySeat}`;
+    if (key !== seatLinksKey) {
+      seatLinksKey = key;
+      seatLinkList.innerHTML = '';
+
+      for (let seat = 1; seat <= playerCount; seat++) {
+        const item = document.createElement('li');
+        item.className = 'seat-link-item';
+
+        const name = document.createElement('span');
+        name.className = 'seat-link-name';
+        name.textContent = seat === mySeat ? `Seat ${seat} (you)` : `Seat ${seat}`;
+
+        const buttons = document.createElement('span');
+        buttons.className = 'seat-link-buttons';
+
+        const copy = document.createElement('button');
+        copy.type = 'button';
+        copy.className = 'small-button';
+        copy.dataset.seat = String(seat);
+        copy.dataset.action = 'copy';
+        copy.textContent = 'Copy link';
+        copy.setAttribute('aria-label', `Copy the personal link for seat ${seat}`);
+        buttons.appendChild(copy);
+
+        if (navigator.share) {
+          const share = document.createElement('button');
+          share.type = 'button';
+          share.className = 'small-button';
+          share.dataset.seat = String(seat);
+          share.dataset.action = 'share';
+          share.textContent = 'Share…';
+          share.setAttribute('aria-label', `Share the personal link for seat ${seat}`);
+          buttons.appendChild(share);
+        }
+
+        const nameInput = document.createElement('input');
+        nameInput.type = 'text';
+        nameInput.className = 'seat-name-input';
+        nameInput.dataset.seat = String(seat);
+        nameInput.maxLength = 16;
+        nameInput.placeholder = seat === mySeat ? 'Your name' : `Name for seat ${seat} (optional)`;
+        nameInput.autocomplete = 'off';
+        nameInput.setAttribute('aria-label', `Name for seat ${seat}`);
+
+        item.append(name, buttons, nameInput);
+        seatLinkList.appendChild(item);
+      }
+    }
+
+    // Keep the name fields in step with the saved names (never touch the one being typed in).
+    seatLinkList.querySelectorAll('.seat-name-input').forEach(input => {
+      if (document.activeElement !== input) input.value = seatName(parseInt(input.dataset.seat, 10));
+    });
+  }
+
+  seatLinkList.addEventListener('input', (e) => {
+    const input = e.target.closest('.seat-name-input');
+    if (!input) return;
+    setSeatName(parseInt(input.dataset.seat, 10), input.value);
+    updateRoomUI(); // refreshes the Czar line, seat list, link and QR with the new name
+  });
+
+  seatLinkList.addEventListener('click', (e) => {
+    const button = e.target.closest('button[data-seat]');
+    if (!button || !roomCode) return;
+    const seat = parseInt(button.dataset.seat, 10);
+    const link = buildInviteLink(seat);
+    // Point the QR code and link box at this seat's personal link.
+    qrSeat = seat;
+    refreshInvite();
+    qrBox.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    if (button.dataset.action === 'share') {
+      if (navigator.share) {
+        navigator.share({ title: 'Cards Against Humanity', text: `Join room ${roomCode} in seat ${seat}`, url: link }).catch(() => {});
+      }
+    } else {
+      copyTextWithFallback(link, button, 'Copied ✓');
+    }
+  });
+
   async function refreshInvite() {
     if (!roomCode || packIndex.size === 0) {
       lastInviteLink = '';
+      lastOwnLink = '';
       gameQr.classList.add('hidden');
+      refreshSeatLinks();
       syncAddressBar();
       return;
     }
-    const link = buildInviteLink();
+    if (qrSeat && qrSeat > playerCount) qrSeat = null;
+    const generalLink = buildInviteLink();
+    const link = qrSeat ? buildInviteLink(qrSeat) : generalLink;
+    lastOwnLink = buildInviteLink(mySeat);
     inviteLinkInput.value = link;
+    qrBox.setAttribute('aria-label', qrSeat ? `QR code for the personal link of seat ${qrSeat}` : 'QR code that opens this room');
+    qrTitle.textContent = qrSeat ? `QR · Seat ${qrSeat}'s personal link` : 'Room link & QR';
+    showGeneralBtn.classList.toggle('hidden', !qrSeat);
+    refreshSeatLinks();
     const changed = link !== lastInviteLink;
     lastInviteLink = link;
     syncAddressBar();
@@ -2263,7 +3379,8 @@
     // The link changes every round, so the QR code is redrawn each time.
     // QR rendering is async (qrcode.js is fetched on first use); ignore stale results.
     const token = ++inviteRenderToken;
-    const [result, gameResult] = await Promise.all([QR.render(link, qrBox), QR.render(link, gameQrBox)]);
+    // The in-game QR always carries the general link, so a personal link is never scanned by accident.
+    const [result, gameResult] = await Promise.all([QR.render(link, qrBox), QR.render(generalLink, gameQrBox)]);
     if (token !== inviteRenderToken) return;
 
     // Same link (room + decks + players + round) in the in-game Decks dropdown.
@@ -2279,8 +3396,10 @@
       inviteNote.textContent = 'qrcode.js loaded, but its format isn’t recognised — copy the link instead.';
     } else if (location.protocol === 'file:') {
       inviteNote.textContent = 'This page is open from a file, so other phones can’t open the link. Host the page online to share it.';
+    } else if (qrSeat) {
+      inviteNote.textContent = `This QR code and link are for Seat ${qrSeat} only. Whoever scans it joins the room in that seat, so don't share it with more than one person.`;
     } else {
-      inviteNote.textContent = `Scan with a phone camera, or copy the link. It sets the room, decks, player count and round (now round ${syncRound}).`;
+      inviteNote.textContent = `Scan with a phone camera, or copy the link. It sets the room, decks, player count and round (now round ${syncRound}) but not a seat, so use the personal links above to avoid two people sharing a hand.`;
     }
   }
 
@@ -2295,8 +3414,16 @@
   }
 
   // Opening an invite link joins its room, applies its decks + player count,
-  // and turns Sync Mode on. Your own seat is never changed by a link.
-  function applyInviteFromHash() {
+  // and turns Sync Mode on. A personal link (s=) also sets your seat; the
+  // general room link leaves your seat alone.
+  function isReloadNavigation() {
+    try {
+      const nav = performance.getEntriesByType('navigation')[0];
+      return Boolean(nav) && nav.type === 'reload';
+    } catch (e) { return false; }
+  }
+
+  function applyInviteFromHash(fromLoad) {
     const hash = location.hash.replace(/^#/, '');
     if (!hash || packIndex.size === 0) return;
 
@@ -2306,12 +3433,40 @@
 
     const warnings = [];
 
+    // A reload re-opens the link this page wrote itself, so the settings the
+    // player ORIGINALLY joined with are kept for the mismatch checks.
+    const isReload = fromLoad === true && isReloadNavigation();
+
+    const linkVersion = params.get('v');
+    if (linkVersion && linkVersion !== APP_VERSION) {
+      warnings.push('the link was made by a different version of the game, so cards may not match. Refresh the page (and clear its cache) before playing');
+    }
+
+    const namesParam = params.get('m');
+    if (namesParam !== null) {
+      playerNames = namesParam.split(',').map(part => {
+        try { return cleanName(decodeURIComponent(part)); } catch (e) { return ''; }
+      });
+      persistNames();
+    }
+
     const players = parseInt(params.get('p'), 10);
     if (Number.isFinite(players)) {
       playerCount = Math.max(1, Math.min(20, players));
       mySeat = Math.min(mySeat, playerCount);
       persistSeat();
     }
+
+    // Personal link: the seat comes from the link.
+    const linkSeat = parseInt(params.get('s'), 10);
+    const hasSeat = Number.isFinite(linkSeat) && linkSeat >= 1;
+    if (hasSeat) {
+      mySeat = Math.max(1, Math.min(playerCount, linkSeat));
+      persistSeat();
+    }
+
+    // Bots (no b= means none).
+    botCount = Math.max(0, Math.min(20, parseInt(params.get('b'), 10) || 0));
 
     // The link decides the Card Czar setting too (no c= means Czar is off).
     const czarParam = params.get('c');
@@ -2320,6 +3475,8 @@
 
     const allPacks = [...packIndex.keys()].sort();
     const deckMask = params.get('d');
+    let deckProblem = false;
+    let joinMask = null;
     if (deckMask) {
       if (parseInt(params.get('n'), 10) === allPacks.length) {
         try {
@@ -2329,12 +3486,21 @@
             box.checked = index >= 0 && ((mask >> BigInt(index)) & 1n) === 1n;
           });
           persistSelectedPacks();
+          joinMask = mask.toString(36);
         } catch (e) {
+          deckProblem = true;
           warnings.push('the deck list in the link was unreadable');
         }
       } else {
-        warnings.push('your cards file has a different number of decks, so choose the decks yourself');
+        deckProblem = true;
+        warnings.push('your cards file has a different number of decks from the link’s, so refresh the page or clear its cache, then choose the decks yourself');
       }
+    }
+
+    // Same decks by name isn't enough: compare the actual card text too.
+    const linkHash = params.get('f');
+    if (linkHash && !deckProblem && linkHash !== getContentHash()) {
+      warnings.push('your cards don’t match the host’s (an older or newer cards file), so your hands won’t line up. Refresh the page or clear its cache');
     }
 
     if (roomCode !== code) enterRoom(code);
@@ -2345,12 +3511,27 @@
       syncRound = Math.min(9999, linkRound);
       persistRoom();
     }
+
+    // Remember what the link said so later changes can be flagged.
+    let info = { room: code, mask: joinMask, p: Number.isFinite(players) ? playerCount : null, c: czarMode, b: botCount, warnings: warnings.slice() };
+    if (isReload) {
+      const stored = loadJoin();
+      if (stored && stored.room === code) info = stored;
+    }
+    joinInfo = info;
+    saveJoin();
+    if (!isReload) seatOk = hasSeat;
+    persistSeat();
+
     setSyncMode(true);
 
+    const roundText = syncRound > 1 ? ` at round ${syncRound}` : '';
     if (warnings.length > 0) {
       setStatus(`Joined room ${code}, but ${warnings.join(' and ')}.`);
+    } else if (hasSeat) {
+      setStatus(`Joined room ${code}${roundText} as ${seatLabel(mySeat)}. Tap Draw Cards to start.`, true);
     } else {
-      setStatus(`Joined room ${code}${syncRound > 1 ? ` at round ${syncRound}` : ''} from the link. Pick your seat below.`, true);
+      setStatus(`Joined room ${code}${roundText} from the link. Pick your seat below.`, true);
     }
 
   }
@@ -2372,7 +3553,115 @@
     navigator.share({ title: 'Cards Against Humanity', text: `Join room ${roomCode}`, url: inviteLinkInput.value }).catch(() => {});
   });
 
-  window.addEventListener('hashchange', applyInviteFromHash);
+  showGeneralBtn.addEventListener('click', () => {
+    qrSeat = null;
+    refreshInvite();
+  });
+
+  window.addEventListener('hashchange', () => applyInviteFromHash(false));
+
+  /* ============================================================
+     Mismatch warnings
+     Without a server a phone can't see the others, so it checks what it
+     CAN know: the invite link it joined with (version, card text, decks,
+     player count, Czar setting) against its own current settings, and
+     whether it has confirmed its seat.
+  ============================================================ */
+  function sentence(text) {
+    return text.charAt(0).toUpperCase() + text.slice(1) + '.';
+  }
+
+  function computeWarnings() {
+    const list = [];
+    if (!roomCode || packIndex.size === 0) return list;
+
+    if (!seatOk) {
+      list.push({
+        text: `You haven’t chosen your seat yet, so you’re ${seatLabel(mySeat)}. Everyone needs a different seat. Use your personal link, or pick yours in “Players & seat”.`,
+        action: 'keep-seat',
+        label: `Keep ${seatLabel(mySeat)}`
+      });
+    }
+
+    if (joinInfo && joinInfo.room === roomCode) {
+      (joinInfo.warnings || []).forEach(w => list.push({ text: sentence(w) }));
+
+      const diffs = [];
+      if (joinInfo.mask && getDeckMaskString() !== joinInfo.mask) diffs.push('decks');
+      if (Number.isFinite(joinInfo.p) && joinInfo.p !== playerCount) diffs.push('player count');
+      if (joinInfo.c && joinInfo.c !== czarMode) diffs.push('Card Czar setting');
+      if (Number.isFinite(joinInfo.b) && joinInfo.b !== botCount) diffs.push('bots');
+      if (diffs.length) {
+        list.push({
+          text: `Some of your settings (${diffs.join(', ')}) don’t match the invite link you joined with. Your hands and the Czar rotation won’t line up with your friends’.`,
+          action: 'restore',
+          label: 'Match the invite'
+        });
+      }
+    }
+    return list;
+  }
+
+  function renderWarnings() {
+    const list = computeWarnings();
+    [warnBox, gameWarnBox].forEach(box => {
+      box.innerHTML = '';
+      box.classList.toggle('hidden', list.length === 0 || (box === gameWarnBox && !syncMode));
+      list.forEach(item => {
+        const row = document.createElement('div');
+        row.className = 'warn-item';
+        const text = document.createElement('span');
+        text.textContent = `⚠️ ${item.text}`;
+        row.appendChild(text);
+        if (item.action) {
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className = 'small-button';
+          button.dataset.warnAction = item.action;
+          button.textContent = item.label;
+          row.appendChild(button);
+        }
+        box.appendChild(row);
+      });
+    });
+  }
+
+  // Puts decks, player count and Czar mode back to what the invite link said.
+  function restoreJoinSettings() {
+    if (!joinInfo) return;
+    if (joinInfo.mask) {
+      const all = [...packIndex.keys()].sort();
+      try {
+        const mask = parseBase36(joinInfo.mask);
+        packSelect.querySelectorAll('input').forEach(box => {
+          const index = all.indexOf(box.value);
+          box.checked = index >= 0 && ((mask >> BigInt(index)) & 1n) === 1n;
+        });
+        persistSelectedPacks();
+      } catch (e) {}
+    }
+    if (Number.isFinite(joinInfo.p)) {
+      playerCount = Math.max(1, Math.min(20, joinInfo.p));
+      mySeat = Math.min(mySeat, playerCount);
+    }
+    if (joinInfo.c === 'seq' || joinInfo.c === 'rand' || joinInfo.c === 'off') czarMode = joinInfo.c;
+    if (Number.isFinite(joinInfo.b)) botCount = Math.max(0, Math.min(20, joinInfo.b));
+    persistSeat();
+    updateRoomUI();
+    setStatus('Settings restored to match the invite link. Tap Draw Cards again if your hand is showing.', true);
+  }
+
+  document.addEventListener('click', (e) => {
+    const button = e.target.closest('[data-warn-action]');
+    if (!button) return;
+    if (button.dataset.warnAction === 'keep-seat') {
+      seatOk = true;
+      persistSeat();
+      updateRoomUI();
+    } else if (button.dataset.warnAction === 'restore') {
+      restoreJoinSettings();
+    }
+  });
 
   /* ============================================================
      Sync Mode: rooms + round handling
@@ -2443,6 +3732,13 @@
       head.className = 'deck-list-head';
       head.textContent = `${enabled.size} of ${allPacks.length} decks enabled`;
       addRow(head);
+
+      if (roomCode) {
+        const check = document.createElement('div');
+        check.className = 'deck-list-head';
+        check.textContent = `Game check: ${getGameCheckCode()} · should match on every phone this round`;
+        addRow(check);
+      }
 
       allPacks.forEach(name => {
         const on = enabled.has(name);
@@ -2517,16 +3813,22 @@
     refreshCzarUI();
     refreshInvite();
     refreshHistory();
+    renderWarnings();
+    saveLastGame();
+    refreshRejoin();
 
     syncRoundInput.value = String(syncRound);
     roundBadge.textContent = `Round ${syncRound}`;
     bannerCode.textContent = roomCode || '—';
-    bannerLabel.textContent = roomCode ? `Room code · Seat ${mySeat} of ${playerCount}` : 'Room code';
+    bannerLabel.textContent = !roomCode ? 'Room code'
+      : seatName(mySeat) ? `Room code · ${seatName(mySeat)} · Seat ${mySeat} of ${playerCount}`
+      : `Room code · Seat ${mySeat} of ${playerCount}`;
     roomBanner.classList.toggle('hidden', !syncMode || !roomCode);
   }
 
   function setSyncMode(on) {
     syncMode = on;
+    home.classList.toggle('hidden', on);
     syncToggle.checked = on;
     roomPanel.classList.toggle('hidden', !on);
     // Sync Mode has one action: draw this round's cards (hand size is fixed at 7).
@@ -2540,6 +3842,11 @@
   }
 
   function enterRoom(code) {
+    qrSeat = null;
+    joinInfo = null;
+    saveJoin();
+    seatOk = false; // a new room: the player still has to confirm their seat
+    persistSeat();
     roomCode = code;
     syncRound = 1;
     syncDeckCache = new Map();
@@ -2548,6 +3855,9 @@
   }
 
   function leaveRoom() {
+    qrSeat = null;
+    joinInfo = null;
+    saveJoin();
     roomCode = null;
     syncRound = 1;
     syncDeckCache = new Map();
@@ -2598,7 +3908,8 @@
 
   leaveRoomBtn.addEventListener('click', () => {
     leaveRoom();
-    setStatus('You left the room.', true);
+    setSyncMode(false); // back to the Host / Join home screen
+    setStatus('You left the game.', true);
   });
 
   syncToggle.addEventListener('change', () => setSyncMode(syncToggle.checked));
@@ -2625,6 +3936,245 @@
     return text.replace(/_+/g, match => '_'.repeat(match.length));
   }
 
+  // ---------- Bots ----------
+  // Sorted (not shuffled) white cards of the selected decks, so every device
+  // indexes the same list. Cached like the seeded decks.
+  function getSortedResponses() {
+    const packsKey = getSelectedPacks().slice().sort().join('|');
+    const cacheKey = `sorted|responses|${packsKey}`;
+    let pool = syncDeckCache.get(cacheKey);
+    if (!pool) {
+      pool = getCardsForPacks(getSelectedPacks(), 'responses').slice().sort(compareCards);
+      syncDeckCache.set(cacheKey, pool);
+    }
+    return pool;
+  }
+
+  // Each bot plays random white card(s) for the round: as many as the black card
+  // asks for. The picks are seeded by room, round and bot number, so every
+  // device works out the same answers. Bots never play a card that is in a
+  // player's dealt hand, or one another bot is already playing.
+  function getBotPlays(code, round, blackCard) {
+    if (botCount < 1) return [];
+    const pool = getSortedResponses();
+    if (pool.length === 0) return [];
+
+    const cardKey = (card) => `${card.Pack}|${card.Text}`;
+    const taken = new Set();
+    for (let seat = 1; seat <= playerCount; seat++) {
+      getSyncWhiteHand(code, round, seat, playerCount).cards.forEach(card => {
+        if (!card.Blank) taken.add(cardKey(card));
+      });
+    }
+
+    const need = getPickCount(blackCard);
+    const plays = [];
+    for (let bot = 0; bot < botCount; bot++) {
+      const rng = rngFromString(`${code}|bot|${round}|${bot}`);
+      const texts = [];
+      let guard = 0;
+      while (texts.length < need && guard < 5000) {
+        guard++;
+        const card = pool[Math.floor(rng() * pool.length)];
+        const key = cardKey(card);
+        if (taken.has(key)) continue;
+        taken.add(key);
+        texts.push(card.Text);
+      }
+      plays.push(texts);
+    }
+    return plays;
+  }
+
+  // Bot answers show on the Card Czar's screen. With no Czar, everybody sees them.
+  function updateBotBox(heading) {
+    botsRevealed = false;
+    const show = botPlays.length > 0 && (heading === 'Czar' || (heading === 'Round' && czarMode === 'off'));
+    botBox.classList.toggle('hidden', !show);
+    botPlaysEl.classList.add('hidden');
+    botPlaysEl.innerHTML = '';
+    botRevealBtn.textContent = '🤖 Reveal bot answers';
+    botRevealBtn.setAttribute('aria-expanded', 'false');
+  }
+
+  function renderBotPlays() {
+    botPlaysEl.innerHTML = '';
+    botPlays.forEach((texts, index) => {
+      const play = document.createElement('div');
+      play.className = 'bot-play';
+
+      const name = document.createElement('span');
+      name.className = 'bot-play-name';
+      name.textContent = `Bot ${index + 1}`;
+
+      const cards = document.createElement('div');
+      cards.className = 'bot-play-cards';
+      texts.forEach((text, i) => {
+        const card = document.createElement('div');
+        card.className = 'card bot-card';
+        card.style.animationDelay = `${(index * 2 + i) * 60}ms`;
+        card.textContent = text;
+        cards.appendChild(card);
+      });
+
+      const full = document.createElement('button');
+      full.type = 'button';
+      full.className = 'small-button';
+      full.textContent = 'Show full-screen';
+      full.addEventListener('click', () => {
+        if (currentPrompt) showFilledFullScreen(currentPrompt, texts);
+      });
+
+      play.append(name, cards, full);
+      botPlaysEl.appendChild(play);
+    });
+  }
+
+  botRevealBtn.addEventListener('click', () => {
+    botsRevealed = !botsRevealed;
+    if (botsRevealed) renderBotPlays();
+    botPlaysEl.classList.toggle('hidden', !botsRevealed);
+    botRevealBtn.textContent = botsRevealed ? '🙈 Hide bot answers' : '🤖 Reveal bot answers';
+    botRevealBtn.setAttribute('aria-expanded', String(botsRevealed));
+  });
+
+  // ---------- Redraw: swap the whole hand once per round ----------
+  // The new hand is seeded by room, round and seat, so it is the same if the
+  // page reloads. It never repeats a card from anyone's dealt hand or a bot's.
+  function getSyncRedrawHand(code, round, seat, players, blackCard) {
+    const pool = getSortedResponses();
+    const r = round - 1;
+    const taken = new Set();
+    for (let s = 1; s <= players; s++) {
+      getSyncWhiteHand(code, round, s, players).cards.forEach(card => { if (!card.Blank) taken.add(card.Text); });
+    }
+    getBotPlays(code, round, blackCard).forEach(texts => texts.forEach(text => taken.add(text)));
+
+    const rng = rngFromString(`${code}|redraw|${r}|${seat}`);
+    const cards = [];
+    let guard = 0;
+    while (cards.length < SYNC_HAND_SIZE && guard < 5000 && pool.length > 0) {
+      guard++;
+      const card = pool[Math.floor(rng() * pool.length)];
+      if (taken.has(card.Text)) continue;
+      taken.add(card.Text);
+      cards.push(card);
+    }
+
+    // A fresh roll for the blank card, also seeded.
+    const blankRng = rngFromString(`${code}|redrawblank|${r}|${seat}`);
+    if (cards.length > 0 && blankRng() < BLANK_CARD_CHANCE) {
+      cards[Math.floor(blankRng() * cards.length)] = { Pack: '', Type: 'Response', Text: '', Blank: true };
+    }
+    return cards;
+  }
+
+  function redrawRecordKey() {
+    return `${roomCode}|${syncRound}|${mySeat}`;
+  }
+
+  function hasRedrawn() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEYS.redraw) || '[]');
+      return Array.isArray(saved) && saved.includes(redrawRecordKey());
+    } catch (e) { return false; }
+  }
+
+  function markRedrawn() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEYS.redraw) || '[]');
+      const list = Array.isArray(saved) ? saved : [];
+      list.push(redrawRecordKey());
+      localStorage.setItem(STORAGE_KEYS.redraw, JSON.stringify(list.slice(-60)));
+    } catch (e) {}
+  }
+
+  let redrawConfirmTimer = null;
+
+  function updateRedrawButton(heading) {
+    clearTimeout(redrawConfirmTimer);
+    const show = heading === 'Round' && syncMode;
+    redrawBtn.classList.toggle('hidden', !show);
+    if (!show) return;
+    const used = hasRedrawn();
+    redrawBtn.disabled = used;
+    redrawBtn.textContent = used ? 'Hand redrawn ✓' : '↻ Redraw hand';
+    redrawBtn.title = used ? 'You can redraw once per round' : 'Swap all your white cards for new ones (once per round)';
+  }
+
+  // First tap asks "are you sure?", second tap swaps the hand.
+  redrawBtn.addEventListener('click', () => {
+    if (redrawBtn.disabled || hasRedrawn()) return;
+    if (!redrawBtn.dataset.confirm) {
+      redrawBtn.dataset.confirm = '1';
+      redrawBtn.textContent = 'Tap again to swap all 7 cards';
+      redrawConfirmTimer = setTimeout(() => {
+        delete redrawBtn.dataset.confirm;
+        redrawBtn.textContent = '↻ Redraw hand';
+      }, 4000);
+      return;
+    }
+    clearTimeout(redrawConfirmTimer);
+    delete redrawBtn.dataset.confirm;
+    markRedrawn();
+    drawSyncRound(); // deals this round again, now using the redrawn hand
+  });
+
+  // How many white cards a black card needs. Uses a numeric "Pick" field if
+  // cards.json has one; otherwise counts the blanks (a question with no
+  // blank takes one answer).
+  function getPickCount(card) {
+    const field = parseInt(card && card.Pick, 10);
+    if (Number.isFinite(field) && field >= 1) return Math.min(field, MAX_PICK);
+    const blanks = ((card && card.Text) || '').match(/_+/g);
+    return Math.max(1, Math.min(blanks ? blanks.length : 0, MAX_PICK));
+  }
+
+  // Builds the black card's text with the chosen answers written into its
+  // blanks, in the order they were chosen. Answers are highlighted. A black
+  // card with no blank (a question) gets the answer underneath instead.
+  function buildFilledFragment(text, answers) {
+    const frag = document.createDocumentFragment();
+    const parts = String(text).split(/_+/);
+    const blanks = parts.length - 1;
+
+    const addAnswer = (answer, followingText) => {
+      const span = document.createElement('span');
+      const trimmed = (answer || '').trim();
+      if (!trimmed) {
+        span.className = 'fill-empty';
+        span.textContent = '________';
+      } else {
+        span.className = 'fill-answer';
+        // Drop the answer's full stop when more sentence follows it, so
+        // "Dancing. is my secret shame" reads as "Dancing is my secret shame".
+        const endsSentence = followingText.trim() === '';
+        span.textContent = endsSentence ? trimmed : trimmed.replace(/\.+$/, '');
+      }
+      frag.appendChild(span);
+    };
+
+    if (blanks === 0) {
+      frag.appendChild(document.createTextNode(parts[0]));
+      answers.forEach(answer => {
+        frag.appendChild(document.createTextNode('\n\n'));
+        addAnswer(answer, '');
+      });
+      return frag;
+    }
+
+    parts.forEach((part, i) => {
+      frag.appendChild(document.createTextNode(part));
+      if (i < blanks) addAnswer(answers[i], parts[i + 1]);
+    });
+    // Any extra answers beyond the blanks go underneath.
+    for (let i = blanks; i < answers.length; i++) {
+      frag.appendChild(document.createTextNode('\n'));
+      addAnswer(answers[i], '');
+    }
+    return frag;
+  }
+
   // Sync Mode draw: shows the cards for the CURRENT round. Drawing again
   // without changing the round shows the same cards.
   // Sync Mode draw: the black card AND the seven white cards for the CURRENT
@@ -2648,14 +4198,15 @@
     }
 
     const totalWhite = getCardsForPacks(selectedPacks, 'responses').length;
-    const needed = SYNC_HAND_SIZE * playerCount;
+    const needed = SYNC_HAND_SIZE * playerCount + botCount * 3;
     if (totalWhite < needed) {
-      setStatus(`Selected decks only have ${totalWhite} white card(s), but ${playerCount} player${playerCount === 1 ? '' : 's'} need ${needed}. Add more decks or lower the player count.`);
+      setStatus(`Selected decks only have ${totalWhite} white card(s), but ${playerCount} player${playerCount === 1 ? '' : 's'}${botCount > 0 ? ` and ${botCount} bot${botCount === 1 ? '' : 's'}` : ''} need ${needed}. Add more decks or lower the player or bot count.`);
       return;
     }
 
     playFlipSound();
     const black = getSyncBlackCard(code, syncRound);
+    botPlays = getBotPlays(code, syncRound, black.card);
 
     // Card Czar's turn: just the black card, no hand.
     if (isCzarThisRound()) {
@@ -2665,6 +4216,7 @@
     }
 
     const white = getSyncWhiteHand(code, syncRound, mySeat, playerCount);
+    if (hasRedrawn()) white.cards = getSyncRedrawHand(code, syncRound, mySeat, playerCount, black.card);
     displayCards([black.card, ...white.cards], 'Round');
 
     const cycled = Math.max(black.cycle, white.cycle) > 0;
@@ -2721,9 +4273,14 @@
 
   function displayCards(cards, heading) {
     mainMenu.classList.add('hidden');
+    if (heading !== 'Czar' && heading !== 'Round') botPlays = []; // bots only play in Sync rounds
     isHandMode = heading === 'White Cards' || heading === 'Round';
     currentHand = cards;
     selectedIndices = new Set();
+    currentHeading = heading;
+    currentPrompt = cards.find(card => card.Type === 'Prompt') || null;
+    // Only a Sync round has a black card to answer, so only then is the number of picks fixed.
+    pickLimit = heading === 'Round' && currentPrompt ? getPickCount(currentPrompt) : null;
 
     cardDisplayHeading.textContent = heading === 'Black Card' ? 'Drawn Black Card'
       : heading === 'Czar' ? 'You’re the Card Czar'
@@ -2733,6 +4290,9 @@
 
     selectionBar.classList.toggle('hidden', !isHandMode);
     updateSelectionBar();
+    updateTodo();
+    updateBotBox(heading);
+    updateRedrawButton(heading);
     blackCardBar.classList.toggle('hidden', isHandMode || heading === 'Czar');
 
     // Round controls only appear in Sync Mode.
@@ -2754,6 +4314,7 @@
   function renderHand() {
     cardsContainer.innerHTML = '';
     handElements = [];
+    blackEl = null;
 
     currentHand.forEach((card, index) => {
       const cardElement = document.createElement('div');
@@ -2763,6 +4324,17 @@
       if (card.Type === 'Prompt') {
         cardElement.classList.add('black-card');
         cardElement.textContent = reduceUnderscores(card.Text);
+        blackEl = cardElement;
+        // In a Sync round the black card opens full-screen, same as the button.
+        if (pickLimit !== null) {
+          cardElement.addEventListener('click', openFullScreenFromBlackCard);
+          cardElement.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              openFullScreenFromBlackCard();
+            }
+          });
+        }
       } else {
         if (card.Blank) {
           cardElement.classList.add('blank-card');
@@ -2776,7 +4348,11 @@
           // Minimal inline styles so the field blends into the card.
           field.style.cssText = 'width:100%;background:transparent;border:none;outline:none;' +
             'resize:none;font:inherit;color:inherit;text-align:inherit;';
-          field.addEventListener('input', () => { card.Text = field.value; });
+          field.addEventListener('input', () => {
+            card.Text = field.value;
+            // If this blank card is already chosen, keep the black card's wording current.
+            updateFilledPreview();
+          });
           // Typing/tapping in the field must not toggle card selection.
           field.addEventListener('click', (e) => e.stopPropagation());
           cardElement.appendChild(field);
@@ -2814,34 +4390,157 @@
     });
   }
 
-  function toggleCardSelection(index) {
-    const isSelected = selectedIndices.has(index);
-    if (isSelected) {
-      selectedIndices.delete(index);
-    } else {
-      selectedIndices.add(index);
-    }
-
-    // Update only the affected card, not the whole hand.
+  function setCardSelected(index, selected) {
     const el = handElements[index];
-    if (el) {
-      const nowSelected = !isSelected;
-      el.classList.toggle('selected', nowSelected);
-      el.setAttribute('aria-checked', String(nowSelected));
+    if (!el) return;
+    el.classList.toggle('selected', selected);
+    el.setAttribute('aria-checked', String(selected));
+  }
+
+  // When a black card needs several answers, the badge shows the order they
+  // were chosen in (1, 2, 3…) because that is the order they fill the blanks.
+  function updateBadges() {
+    const numbered = pickLimit !== null && pickLimit > 1;
+    let position = 0;
+    selectedIndices.forEach(index => {
+      position++;
+      const badge = handElements[index] && handElements[index].querySelector('.card-select-badge');
+      if (badge) badge.textContent = numbered ? String(position) : '✓';
+    });
+  }
+
+  function toggleCardSelection(index) {
+    if (selectedIndices.has(index)) {
+      selectedIndices.delete(index);
+      setCardSelected(index, false);
+    } else {
+      // Choosing past the limit swaps out the card chosen longest ago,
+      // so the player can never pick the wrong number of cards.
+      if (pickLimit !== null) {
+        while (selectedIndices.size >= pickLimit) {
+          const oldest = selectedIndices.values().next().value;
+          selectedIndices.delete(oldest);
+          setCardSelected(oldest, false);
+        }
+      }
+      selectedIndices.add(index);
+      setCardSelected(index, true);
     }
 
+    updateBadges();
     updateSelectionBar();
+    updateFilledPreview();
+    updateTodo();
+  }
+
+  // Same as tapping Show Full-Screen: only works once the right number of answers is chosen.
+  function openFullScreenFromBlackCard() {
+    if (!revealSelectedButton.disabled) showSelectedFullScreen();
   }
 
   function updateSelectionBar() {
     const count = selectedIndices.size;
-    selectionCount.textContent = count === 1 ? '1 selected' : `${count} selected`;
-    revealSelectedButton.disabled = count === 0;
+    if (pickLimit !== null) {
+      selectionCount.textContent = `${count} of ${pickLimit} chosen`;
+      revealSelectedButton.disabled = count !== pickLimit;
+      if (blackEl) {
+        const ready = count === pickLimit;
+        blackEl.classList.toggle('tappable', ready);
+        if (ready) {
+          blackEl.setAttribute('role', 'button');
+          blackEl.setAttribute('tabindex', '0');
+          blackEl.setAttribute('aria-label', 'Show your answer full-screen');
+        } else {
+          blackEl.removeAttribute('role');
+          blackEl.removeAttribute('tabindex');
+          blackEl.removeAttribute('aria-label');
+        }
+      }
+    } else {
+      selectionCount.textContent = count === 1 ? '1 selected' : `${count} selected`;
+      revealSelectedButton.disabled = count === 0;
+    }
   }
 
+  function getSelectedAnswers() {
+    return Array.from(selectedIndices).map(index => (currentHand[index] && currentHand[index].Text) || '');
+  }
+
+  // Shows the chosen answers written into the black card on screen.
+  function updateFilledPreview() {
+    if (!blackEl || !currentPrompt) return;
+    blackEl.textContent = '';
+    if (pickLimit === null || selectedIndices.size === 0) {
+      blackEl.classList.remove('filled');
+      blackEl.textContent = reduceUnderscores(currentPrompt.Text);
+      return;
+    }
+    blackEl.classList.add('filled');
+    blackEl.appendChild(buildFilledFragment(currentPrompt.Text, getSelectedAnswers()));
+  }
+
+  /* ============================================================
+     "What do I do now?" — a plain-language instruction for the
+     current moment of the round, plus the five steps of a round.
+  ============================================================ */
+  function updateTodo() {
+    const active = syncMode && currentPrompt && (currentHeading === 'Round' || currentHeading === 'Czar');
+    todoBox.classList.toggle('hidden', !active);
+    if (!active) return;
+
+    const needed = getPickCount(currentPrompt);
+    const cardWord = needed === 1 ? 'card' : 'cards';
+    const hasBlanks = /_/.test(currentPrompt.Text);
+    const czarOn = czarMode !== 'off';
+    const isCzar = currentHeading === 'Czar';
+    const chosen = selectedIndices.size;
+
+    let text;
+    let step;
+    if (isCzar) {
+      text = '👑 You’re the Card Czar: read the black card out loud, wait for everyone’s answers' +
+        (botCount > 0 ? ', tap “Reveal bot answers” below the black card to show the bots’' : '') +
+        ', then pick your favourite.';
+      step = 1;
+    } else if (chosen === 0) {
+      text = `Pick ${needed} white ${cardWord} ${hasBlanks ? `to fill the blank${needed === 1 ? '' : 's'}` : 'to answer the question'}. Tap a card to choose it.`;
+      step = 2;
+    } else if (chosen < needed) {
+      const left = needed - chosen;
+      text = `Pick ${left} more white ${left === 1 ? 'card' : 'cards'}. Your answer appears on the black card as you choose.`;
+      step = 2;
+    } else {
+      text = 'Happy with your answer? Tap “Show Full-Screen”, then read it out to the group.';
+      step = 3;
+    }
+    todoText.textContent = text;
+
+    const steps = [
+      czarOn ? 'The Card Czar reads the black card out loud.' : 'Someone reads the black card out loud.',
+      `${czarOn ? 'Everyone else' : 'Everyone'} picks ${needed} white ${cardWord} from their hand by tapping ${needed === 1 ? 'it' : 'them'}. Don’t like your hand? “Redraw hand” swaps it once per round.`,
+      'Tap “Show Full-Screen” and read your answer out, or hold up your phone.',
+      czarOn ? `The Card Czar picks the funniest answer${botCount > 0 ? ', bots’ included' : ''}. That player wins the round.` : 'Decide together which answer is funniest. That player wins the round.',
+      'Everyone taps “Next Round” to move on.'
+    ];
+    Array.from(todoSteps.children).forEach((li, i) => {
+      li.textContent = steps[i];
+      li.classList.toggle('current', i + 1 === step);
+    });
+  }
+
+  todoHelpBtn.addEventListener('click', () => {
+    const open = todoPanel.classList.toggle('hidden') === false;
+    todoHelpBtn.setAttribute('aria-expanded', String(open));
+    todoHelpBtn.textContent = open ? 'Hide steps' : '❓ What do I do now?';
+  });
+
+  /* ============================================================
+     Full-screen reveal
+  ============================================================ */
   function showCardsFullScreen(cards) {
     if (cards.length === 0) return;
 
+    fullscreenReveal.classList.remove('is-filled');
     fullscreenCards.innerHTML = '';
     cards.forEach((card, index) => {
       const el = document.createElement('div');
@@ -2860,10 +4559,66 @@
     fullscreenClose.focus();
   }
 
+  // Sync rounds: one black card with the chosen answers written into it.
+  function showFilledFullScreen(prompt, answers) {
+    fullscreenCards.innerHTML = '';
+    const el = document.createElement('div');
+    el.className = 'fullscreen-card fullscreen-black-card fullscreen-filled';
+    const text = document.createElement('div');
+    text.className = 'fullscreen-fill-text';
+    text.appendChild(buildFilledFragment(prompt.Text, answers));
+    el.appendChild(text);
+    fullscreenCards.appendChild(el);
+
+    fullscreenReveal.classList.add('is-filled');
+    fullscreenReveal.classList.remove('hidden');
+    fitFilledText();
+    fullscreenClose.focus();
+  }
+
+  // Sizes the black card to the biggest 5:7 portrait card that fits the
+  // screen, then sets the text to a preset size, shrinking it only if needed.
+  function fitFilledText() {
+    const card = fullscreenCards.querySelector('.fullscreen-filled');
+    const text = card && card.querySelector('.fullscreen-fill-text');
+    if (!card || !text || fullscreenReveal.classList.contains('hidden')) return;
+
+    // Leave room for the card's offset shadow.
+    const availW = fullscreenCards.clientWidth - 10;
+    const availH = fullscreenCards.clientHeight - 10;
+    const width = Math.max(160, Math.floor(Math.min(availW, availH * 5 / 7)));
+    const height = Math.floor(width * 7 / 5);
+    card.style.width = `${width}px`;
+    card.style.height = `${height}px`;
+    card.style.padding = `${Math.round(width * 0.08)}px`;
+
+    const style = getComputedStyle(card);
+    const room = card.clientHeight - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom);
+    // Preset size (like the other cards); only shrinks when the text won't fit.
+    const preset = Math.max(22, Math.min(36, Math.round(width * 0.1)));
+    card.style.fontSize = `${preset}px`;
+    if (text.offsetHeight <= room) return;
+
+    let low = 12;
+    let high = preset;
+    for (let i = 0; i < 12; i++) {
+      const mid = (low + high) / 2;
+      card.style.fontSize = `${mid}px`;
+      if (text.offsetHeight <= room) low = mid; else high = mid;
+    }
+    card.style.fontSize = `${Math.floor(low)}px`;
+  }
+
+  window.addEventListener('resize', fitFilledText);
+
   function showSelectedFullScreen() {
+    if (syncMode && currentPrompt && pickLimit !== null) {
+      if (selectedIndices.size !== pickLimit) return;
+      showFilledFullScreen(currentPrompt, getSelectedAnswers());
+      return;
+    }
     const selectedCards = currentHand.filter((_, index) => selectedIndices.has(index));
-    const prompt = currentHand.find(card => card.Type === 'Prompt');
-    showCardsFullScreen(syncMode && prompt ? [prompt, ...selectedCards] : selectedCards);
+    showCardsFullScreen(selectedCards);
   }
 
   function showBlackCardFullScreen() {
@@ -2872,6 +4627,7 @@
 
   function closeFullScreen() {
     fullscreenReveal.classList.add('hidden');
+    fullscreenReveal.classList.remove('is-filled');
   }
 
   revealSelectedButton.addEventListener('click', showSelectedFullScreen);
@@ -2887,8 +4643,658 @@
     cardDisplay.style.display = 'none';
     mainMenu.classList.remove('hidden');
     handElements = [];
+    blackEl = null;
     closeFullScreen();
   }
+
+  /* ============================================================
+     Host / Join wizard
+     Host: players + names -> decks -> Card Czar -> send links.
+     Join: paste a link or type the game name -> pick your seat.
+  ============================================================ */
+  const home = document.getElementById('home');
+  const hostBtn = document.getElementById('host-btn');
+  const joinBtn = document.getElementById('join-btn');
+  const wizardEl = document.getElementById('wizard');
+  const wizProgress = document.getElementById('wiz-progress');
+  const wizTitle = document.getElementById('wiz-title');
+  const wizBody = document.getElementById('wiz-body');
+  const wizError = document.getElementById('wiz-error');
+  const wizNav = document.getElementById('wiz-nav');
+
+  const ROOM_WORDS_A = ['Purple', 'Silver', 'Crimson', 'Golden', 'Mellow', 'Rowdy', 'Sneaky', 'Jolly', 'Cosmic', 'Fuzzy',
+    'Brave', 'Dizzy', 'Lucky', 'Spicy', 'Sleepy', 'Wobbly', 'Cheeky', 'Mighty', 'Quirky', 'Salty'];
+  const ROOM_WORDS_B = ['Otter', 'Badger', 'Walrus', 'Pickle', 'Llama', 'Mango', 'Falcon', 'Biscuit', 'Turnip', 'Penguin',
+    'Noodle', 'Goblin', 'Pigeon', 'Muffin', 'Yeti', 'Gecko', 'Cactus', 'Waffle', 'Moose', 'Donut'];
+
+  const HOST_STEPS = ['players', 'cards', 'czar', 'links'];
+  const JOIN_STEPS = ['find', 'seat'];
+  const DISCORD_LIMIT = 1900; // Discord allows 2000 characters per message
+
+  let wiz = null; // { mode, step, players, names, czar, code, qrSeat, byCode }
+
+  // Room codes are made for people: two words and a number, so nobody types one.
+  function generateRoomCode() {
+    const pick = (list) => list[Math.floor(Math.random() * list.length)];
+    return normalizeRoomCode(pick(ROOM_WORDS_A) + pick(ROOM_WORDS_B) + String(10 + Math.floor(Math.random() * 90)));
+  }
+
+  function elt(tag, className, text) {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text !== undefined) node.textContent = text;
+    return node;
+  }
+
+  function wizardSteps() {
+    return wiz && wiz.mode === 'join' ? JOIN_STEPS : HOST_STEPS;
+  }
+
+  function openWizard(mode) {
+    wiz = {
+      mode,
+      step: 0,
+      players: Math.max(2, playerCount),
+      names: playerNames.slice(),
+      czar: czarMode === 'off' ? 'seq' : czarMode,
+      bots: botCount,
+      code: '',
+      qrSeat: null,
+      byCode: false
+    };
+    renderWizard();
+    window.scrollTo(0, 0);
+  }
+
+  function closeWizard() {
+    wiz = null;
+    wizardEl.classList.add('hidden');
+    mainMenu.classList.remove('hidden');
+  }
+
+  function wizError_(message) {
+    wizError.textContent = message || '';
+  }
+
+  // Adds Back / primary buttons to the bottom of the wizard. Returns the primary button.
+  function wizardNav(backLabel, onBack, nextLabel, onNext) {
+    wizNav.innerHTML = '';
+    const back = elt('button', 'small-button', backLabel);
+    back.type = 'button';
+    back.addEventListener('click', onBack);
+    wizNav.appendChild(back);
+    let next = null;
+    if (nextLabel) {
+      next = elt('button', 'reveal-button', nextLabel);
+      next.type = 'button';
+      next.addEventListener('click', onNext);
+      wizNav.appendChild(next);
+    }
+    return next;
+  }
+
+  function renderWizard() {
+    if (!wiz) return;
+    const steps = wizardSteps();
+    const key = steps[wiz.step];
+
+    wizError_('');
+    wizBody.innerHTML = '';
+    wizNav.innerHTML = '';
+    wizProgress.textContent = wiz.mode === 'host' ? `Step ${wiz.step + 1} of ${steps.length}` : 'Join a game';
+
+    ({ players: wizStepPlayers, cards: wizStepCards, czar: wizStepCzar, links: wizStepLinks, find: wizStepFind, seat: wizStepSeat })[key]();
+
+    mainMenu.classList.add('hidden');
+    wizardEl.classList.remove('hidden');
+    wizTitle.focus({ preventScroll: true });
+  }
+
+  function wizGo(delta) {
+    wiz.step = Math.max(0, Math.min(wizardSteps().length - 1, wiz.step + delta));
+    renderWizard();
+    window.scrollTo(0, 0);
+  }
+
+  // Backing out of the first host step abandons a game that was already created.
+  function cancelWizard() {
+    if (wiz && wiz.code && roomCode === wiz.code) {
+      leaveRoom();
+      setSyncMode(false);
+    }
+    closeWizard();
+  }
+
+  /* ---------- Host step 1: who's playing ---------- */
+  function wizStepPlayers() {
+    wizTitle.textContent = 'Who’s playing?';
+    wizBody.appendChild(elt('p', 'wizard-lead', 'How many people are playing, including you? Add names so the game can say “Alex is the Czar”. Names are optional.'));
+
+    const stepper = elt('div', 'wiz-stepper');
+    const minus = elt('button', 'small-button', '−');
+    minus.type = 'button';
+    minus.setAttribute('aria-label', 'One fewer player');
+    const count = elt('span', 'wiz-count', String(wiz.players));
+    count.setAttribute('aria-live', 'polite');
+    const plus = elt('button', 'small-button', '+');
+    plus.type = 'button';
+    plus.setAttribute('aria-label', 'One more player');
+    stepper.append(minus, count, plus);
+    wizBody.appendChild(stepper);
+
+    // Bots
+    wizBody.appendChild(elt('p', 'wiz-subhead', 'Bots'));
+    wizBody.appendChild(elt('p', 'wizard-lead', 'Bots are computer players. Each plays a random white card every round, and the Card Czar can reveal their answers. Add as many as you like, or none.'));
+    const botStepper = elt('div', 'wiz-stepper');
+    const botMinus = elt('button', 'small-button', '−');
+    botMinus.type = 'button';
+    botMinus.setAttribute('aria-label', 'One fewer bot');
+    const botNum = elt('span', 'wiz-count small', String(wiz.bots));
+    botNum.setAttribute('aria-live', 'polite');
+    const botPlus = elt('button', 'small-button', '+');
+    botPlus.type = 'button';
+    botPlus.setAttribute('aria-label', 'One more bot');
+    botStepper.append(botMinus, botNum, botPlus);
+    wizBody.appendChild(botStepper);
+    botMinus.addEventListener('click', () => { if (wiz.bots > 0) { wiz.bots--; botNum.textContent = String(wiz.bots); } });
+    botPlus.addEventListener('click', () => { if (wiz.bots < 20) { wiz.bots++; botNum.textContent = String(wiz.bots); } });
+
+    wizBody.appendChild(elt('p', 'wiz-subhead', 'Names'));
+    const namesBox = elt('div', 'wiz-names');
+    wizBody.appendChild(namesBox);
+
+    function renderNames() {
+      namesBox.innerHTML = '';
+      for (let i = 0; i < wiz.players; i++) {
+        const field = elt('label', 'wiz-field', i === 0 ? 'You (Seat 1)' : `Player ${i + 1} (Seat ${i + 1})`);
+        const input = elt('input', 'wiz-input');
+        input.type = 'text';
+        input.maxLength = 16;
+        input.autocomplete = 'off';
+        input.placeholder = i === 0 ? 'Your name' : 'Name (optional)';
+        input.value = wiz.names[i] || '';
+        input.addEventListener('input', () => { wiz.names[i] = input.value; });
+        field.appendChild(input);
+        namesBox.appendChild(field);
+      }
+    }
+    renderNames();
+
+    minus.addEventListener('click', () => {
+      if (wiz.players > 2) { wiz.players--; count.textContent = String(wiz.players); renderNames(); }
+    });
+    plus.addEventListener('click', () => {
+      if (wiz.players < 20) { wiz.players++; count.textContent = String(wiz.players); renderNames(); }
+    });
+
+    wizardNav('Back', cancelWizard, 'Next', () => wizGo(1));
+  }
+
+  /* ---------- Host step 2: which cards ---------- */
+  function wizDeckProblem() {
+    const packs = getSelectedPacks();
+    if (packs.length === 0) return 'Choose at least one deck.';
+    if (getCardsForPacks(packs, 'prompts').length === 0) return 'These decks have no black cards. Add another deck.';
+    const white = getCardsForPacks(packs, 'responses').length;
+    const need = SYNC_HAND_SIZE * wiz.players + wiz.bots * 3;
+    if (white < need) {
+      return `${wiz.players} players${wiz.bots > 0 ? ` and ${wiz.bots} bot${wiz.bots === 1 ? '' : 's'}` : ''} need ${need} white cards, but these decks only have ${white}. Add more decks, or go back and lower the player or bot count.`;
+    }
+    return '';
+  }
+
+  function wizStepCards() {
+    wizTitle.textContent = 'Which cards?';
+    wizBody.appendChild(elt('p', 'wizard-lead', 'Tick the decks for this game. Your friends get the same ones automatically from their link.'));
+
+    const actions = elt('div', 'wiz-deck-actions');
+    const all = elt('button', 'small-button', 'Select all');
+    const none = elt('button', 'small-button', 'Select none');
+    all.type = none.type = 'button';
+    actions.append(all, none);
+    wizBody.appendChild(actions);
+
+    const list = elt('div', 'wiz-decks');
+    list.setAttribute('role', 'group');
+    list.setAttribute('aria-label', 'Decks');
+    wizBody.appendChild(list);
+
+    const note = elt('p', 'wiz-note');
+    wizBody.appendChild(note);
+
+    const next = wizardNav('Back', () => wizGo(-1), 'Next', () => wizGo(1));
+
+    const selected = new Set(getSelectedPacks());
+    const boxes = [];
+
+    function syncDecks() {
+      packSelect.querySelectorAll('input').forEach(input => {
+        const box = boxes.find(b => b.value === input.value);
+        if (box) input.checked = box.checked;
+      });
+      persistSelectedPacks();
+      updateRoomUI();
+      refreshNote();
+    }
+
+    function refreshNote() {
+      const problem = wizDeckProblem();
+      const packs = getSelectedPacks();
+      const totals = { black: 0, white: 0 };
+      packs.forEach(name => {
+        const c = getPackCounts(name);
+        totals.black += c.black;
+        totals.white += c.white;
+      });
+      note.classList.toggle('problem', Boolean(problem));
+      note.textContent = problem || `Selected: ${packs.length} deck${packs.length === 1 ? '' : 's'} · ${describeCounts(totals)}`;
+      next.disabled = Boolean(problem);
+    }
+
+    [...packIndex.keys()].sort().forEach(name => {
+      const label = elt('label', 'pack-checkbox');
+      const input = document.createElement('input');
+      input.type = 'checkbox';
+      input.value = name;
+      input.checked = selected.has(name);
+      input.addEventListener('change', syncDecks);
+      boxes.push(input);
+      const text = elt('span', 'pack-text');
+      text.append(elt('span', 'pack-name', name), elt('span', 'pack-counts', describeCounts(getPackCounts(name))));
+      label.append(input, text);
+      list.appendChild(label);
+    });
+
+    all.addEventListener('click', () => { boxes.forEach(b => { b.checked = true; }); syncDecks(); });
+    none.addEventListener('click', () => { boxes.forEach(b => { b.checked = false; }); syncDecks(); });
+    refreshNote();
+  }
+
+  /* ---------- Host step 3: Card Czar ---------- */
+  function wizStepCzar() {
+    wizTitle.textContent = 'Card Czar?';
+    wizBody.appendChild(elt('p', 'wizard-lead', 'The Czar reads the black card out loud and picks the funniest answer, instead of playing a hand.'));
+
+    const options = [
+      ['seq', 'Czar rotates in seat order', 'Starts with you (Seat 1), then Seat 2, and so on.'],
+      ['rand', 'Czar rotates from a random seat', 'Same rotation, but the first Czar is picked for you.'],
+      ['off', 'Everyone plays, nobody judges', 'Good if your group decides the winner together out loud.']
+    ];
+
+    options.forEach(([value, title, sub]) => {
+      const label = elt('label', 'wiz-option');
+      const input = document.createElement('input');
+      input.type = 'radio';
+      input.name = 'wiz-czar';
+      input.value = value;
+      input.checked = wiz.czar === value;
+      label.classList.toggle('selected', input.checked);
+      input.addEventListener('change', () => {
+        wiz.czar = value;
+        wizBody.querySelectorAll('.wiz-option').forEach(o => o.classList.remove('selected'));
+        label.classList.add('selected');
+      });
+      const text = elt('span');
+      text.append(elt('span', 'wiz-option-title', title), elt('span', 'wiz-option-sub', sub));
+      label.append(input, text);
+      wizBody.appendChild(label);
+    });
+
+    wizardNav('Back', () => wizGo(-1), 'Next', () => wizGo(1));
+  }
+
+  /* ---------- Host step 4: send the links ---------- */
+  // Creates the room from the wizard's answers. Safe to run again after going back.
+  function finaliseHostedGame() {
+    playerCount = wiz.players;
+    czarMode = wiz.czar;
+    botCount = wiz.bots;
+    playerNames = [];
+    for (let i = 0; i < wiz.players; i++) playerNames.push(cleanName(wiz.names[i]));
+    persistNames();
+    if (!wiz.code) wiz.code = generateRoomCode();
+    if (roomCode !== wiz.code) enterRoom(wiz.code);
+    mySeat = 1;
+    seatOk = true;
+    joinInfo = null;
+    saveJoin();
+    persistSeat();
+    setSyncMode(true);
+    updateRoomUI();
+  }
+
+  function discordEscape(text) {
+    return text.replace(/([\\*_`~|>])/g, '\\$1');
+  }
+
+  // One message per 1,900 characters, since Discord rejects anything over 2,000.
+  // Links are wrapped in <> so Discord doesn't turn each one into a big preview.
+  function buildDiscordMessages() {
+    const czarText = czarMode === 'seq' ? 'Czar rotates in seat order'
+      : czarMode === 'rand' ? 'Czar rotates from a random seat' : 'No Card Czar';
+    const head = `🃏 **Cards Against Humanity**: game \`${roomCode}\`\n` +
+      `${playerCount} players${botCount > 0 ? ` + ${botCount} bot${botCount === 1 ? '' : 's'}` : ''} · ${czarText}\n` +
+      'Tap the link next to YOUR name. Each link puts you in your own seat, so please don’t use anyone else’s.\n';
+
+    const lines = [];
+    for (let seat = 1; seat <= playerCount; seat++) {
+      const name = seatName(seat);
+      const who = name ? `**${discordEscape(name)}** (Seat ${seat})` : `**Seat ${seat}**`;
+      lines.push(`${who}: <${buildInviteLink(seat)}>`);
+    }
+
+    const messages = [];
+    let current = head;
+    lines.forEach(line => {
+      if (current.length + line.length + 1 > DISCORD_LIMIT && current !== head && !current.endsWith('(continued)\n')) {
+        messages.push(current);
+        current = '(continued)\n';
+      }
+      current += '\n' + line;
+    });
+    messages.push(current);
+    return messages;
+  }
+
+  function wizStepLinks() {
+    finaliseHostedGame();
+
+    wizTitle.textContent = 'Send everyone their link';
+    wizBody.appendChild(elt('p', 'wizard-lead', `Your game is ready. Each link puts that person in their own seat with the right cards, so send each friend only their own.`));
+
+    const code = elt('div', 'room-code-big', roomCode);
+    code.setAttribute('aria-label', `Game name ${roomCode}`);
+    wizBody.appendChild(code);
+
+    // Per-player links
+    const list = elt('ul', 'wiz-link-list');
+    for (let seat = 1; seat <= playerCount; seat++) {
+      const row = elt('li', 'wiz-link-row');
+      row.appendChild(elt('span', 'wiz-link-name', seat === 1 ? `${seatName(1) || 'You'} (Seat 1, you)` : (seatName(seat) ? `${seatName(seat)} (Seat ${seat})` : `Seat ${seat}`)));
+
+      const buttons = elt('span', 'wiz-link-buttons');
+      const copy = elt('button', 'small-button', 'Copy link');
+      copy.type = 'button';
+      copy.addEventListener('click', () => copyTextWithFallback(buildInviteLink(seat), copy, 'Copied ✓'));
+      const qr = elt('button', 'small-button', 'Show QR');
+      qr.type = 'button';
+      qr.addEventListener('click', () => { showWizQr(seat); qrCaption.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); });
+      buttons.append(copy, qr);
+
+      if (navigator.share) {
+        const share = elt('button', 'small-button', 'Share…');
+        share.type = 'button';
+        share.addEventListener('click', () => {
+          navigator.share({ title: 'Cards Against Humanity', text: `Join game ${roomCode}${seatName(seat) ? ` as ${seatName(seat)}` : ''}`, url: buildInviteLink(seat) }).catch(() => {});
+        });
+        buttons.appendChild(share);
+      }
+
+      row.appendChild(buttons);
+      list.appendChild(row);
+    }
+    wizBody.appendChild(list);
+
+    // Copy everything for Discord
+    const discord = elt('div', 'wiz-discord');
+    const messages = buildDiscordMessages();
+    messages.forEach((message, index) => {
+      const label = messages.length === 1
+        ? 'Copy all for Discord'
+        : `Copy all for Discord (${index + 1} of ${messages.length})`;
+      const button = elt('button', 'reveal-button', label);
+      button.type = 'button';
+      button.addEventListener('click', () => copyTextWithFallback(message, button, 'Copied ✓'));
+      discord.appendChild(button);
+    });
+    discord.appendChild(elt('p', 'wiz-note', messages.length === 1
+      ? 'One message with every player’s name and link, ready to paste into a Discord channel.'
+      : 'That’s too long for one Discord message, so it’s split into parts. Paste them in order.'));
+    wizBody.appendChild(discord);
+
+    // QR for in-person play
+    const qrWrap = elt('div', 'wiz-qr');
+    const qrBoxEl = elt('div', 'qr-box');
+    qrBoxEl.setAttribute('role', 'img');
+    const qrCaption = elt('p', 'wiz-note');
+    qrWrap.append(qrBoxEl, qrCaption);
+    wizBody.appendChild(qrWrap);
+
+    async function showWizQr(seat) {
+      wiz.qrSeat = seat;
+      const label = seatName(seat) ? `${seatName(seat)} (Seat ${seat})` : `Seat ${seat}`;
+      qrBoxEl.setAttribute('aria-label', `QR code for the personal link of ${label}`);
+      qrCaption.textContent = `QR code for ${label}. Only that person should scan it.`;
+      const result = await QR.render(buildInviteLink(seat), qrBoxEl);
+      if (wiz && wiz.qrSeat === seat) {
+        qrBoxEl.classList.toggle('hidden', result !== 'ok');
+        if (result !== 'ok') qrCaption.textContent = 'QR codes aren’t available here (qrcode.js is missing or the link is too long). Use the links above.';
+      }
+    }
+    showWizQr(wiz.qrSeat && wiz.qrSeat <= playerCount ? wiz.qrSeat : (playerCount >= 2 ? 2 : 1));
+
+    wizardNav('Back', () => wizGo(-1), 'Start game', () => {
+      closeWizard();
+      drawSyncRound();
+    });
+  }
+
+  /* ---------- Join step 1: link or game name ---------- */
+  function wizStepFind() {
+    wizTitle.textContent = 'Join a game';
+    wizBody.appendChild(elt('p', 'wizard-lead', 'Paste the link your host sent you, or type the game name they gave you.'));
+
+    const form = elt('form');
+    form.addEventListener('submit', (e) => { e.preventDefault(); wizJoinFromInput(input.value); });
+    const input = elt('input', 'wiz-input');
+    input.type = 'text';
+    input.autocomplete = 'off';
+    input.autocapitalize = 'off';
+    input.spellcheck = false;
+    input.placeholder = 'Link or game name';
+    input.setAttribute('aria-label', 'Link or game name');
+    form.appendChild(input);
+    wizBody.appendChild(form);
+
+    wizardNav('Back', closeWizard, 'Join', () => wizJoinFromInput(input.value));
+    input.focus({ preventScroll: true });
+  }
+
+  function wizJoinFromInput(value) {
+    const raw = String(value || '').trim();
+    if (!raw) { wizError_('Paste your link or type the game name first.'); return; }
+
+    const hashIndex = raw.indexOf('#');
+    if (hashIndex >= 0) {
+      const params = new URLSearchParams(raw.slice(hashIndex + 1));
+      const code = normalizeRoomCode(params.get('room'));
+      if (!code) { wizError_('That doesn’t look like a game link. Paste the whole link your host sent.'); return; }
+
+      history.replaceState(null, '', location.pathname + location.search + raw.slice(hashIndex));
+      applyInviteFromHash(false);
+      if (roomCode !== code) { wizError_('That link couldn’t be opened. Ask your host to send it again.'); return; }
+      wiz.byCode = false;
+      if (Number.isFinite(parseInt(params.get('s'), 10))) { finishJoin(); return; }
+      wiz.step = 1;
+      renderWizard();
+      return;
+    }
+
+    if (/:\/\/|\//.test(raw)) { wizError_('That link is missing its game details. Paste the whole link your host sent.'); return; }
+    const code = normalizeRoomCode(raw);
+    if (!code) { wizError_('Type the game name using letters and numbers.'); return; }
+    enterRoom(code);
+    setSyncMode(true);
+    wiz.byCode = true;
+    wiz.step = 1;
+    renderWizard();
+  }
+
+  /* ---------- Join step 2: which one are you ---------- */
+  function wizStepSeat() {
+    wizTitle.textContent = 'Which one are you?';
+    wizBody.appendChild(elt('p', 'wizard-lead', wiz.byCode
+      ? `You’re joining ${roomCode}. Say how many people are playing, then pick your own seat. Make sure nobody else picks the same one, and that your decks match your host’s.`
+      : `You’re joining ${roomCode}. Pick your name below.`));
+
+    const grid = elt('div', 'wiz-seat-grid');
+
+    function renderSeats() {
+      grid.innerHTML = '';
+      for (let seat = 1; seat <= playerCount; seat++) {
+        const button = elt('button', 'reveal-button', seatLabel(seat));
+        button.type = 'button';
+        button.addEventListener('click', () => { setMySeat(seat); finishJoin(); });
+        grid.appendChild(button);
+      }
+    }
+
+    if (wiz.byCode) {
+      const stepper = elt('div', 'wiz-stepper');
+      const minus = elt('button', 'small-button', '−');
+      const count = elt('span', 'wiz-count', String(playerCount));
+      const plus = elt('button', 'small-button', '+');
+      minus.type = plus.type = 'button';
+      minus.setAttribute('aria-label', 'One fewer player');
+      plus.setAttribute('aria-label', 'One more player');
+      count.setAttribute('aria-live', 'polite');
+      minus.addEventListener('click', () => { setPlayerCount(playerCount - 1); count.textContent = String(playerCount); renderSeats(); });
+      plus.addEventListener('click', () => { setPlayerCount(playerCount + 1); count.textContent = String(playerCount); renderSeats(); });
+      stepper.append(minus, count, plus);
+      wizBody.appendChild(stepper);
+    }
+
+    renderSeats();
+    wizBody.appendChild(grid);
+
+    wizardNav('Back', () => {
+      leaveRoom();
+      setSyncMode(false);
+      wiz.step = 0;
+      renderWizard();
+    });
+  }
+
+  function finishJoin() {
+    closeWizard();
+    drawSyncRound();
+  }
+
+  /* ============================================================
+     Remember the most recent game, and rejoin it from the home screen.
+     Saved whenever you're in a game; it stays after you leave, until you
+     start another game or tap "Forget this game".
+  ============================================================ */
+  const rejoinEl = document.getElementById('rejoin');
+  const rejoinBtn = document.getElementById('rejoin-btn');
+  const rejoinSub = document.getElementById('rejoin-sub');
+  const rejoinForget = document.getElementById('rejoin-forget');
+  let lastGameJson = '';
+
+  function loadLastGame() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEYS.last) || 'null');
+      return saved && typeof saved === 'object' && normalizeRoomCode(saved.room) ? saved : null;
+    } catch (e) { return null; }
+  }
+
+  function saveLastGame() {
+    if (!roomCode || packIndex.size === 0) return;
+    const snapshot = {
+      room: roomCode,
+      round: syncRound,
+      seat: mySeat,
+      players: playerCount,
+      czar: czarMode,
+      bots: botCount,
+      names: playerNames.slice(0, playerCount),
+      mask: getDeckMaskString(),
+      n: packIndex.size,
+      f: getContentHash()
+    };
+    const json = JSON.stringify(snapshot);
+    if (json === lastGameJson) return;
+    lastGameJson = json;
+    try {
+      localStorage.setItem(STORAGE_KEYS.last, JSON.stringify({ ...snapshot, savedAt: Date.now() }));
+    } catch (e) {}
+  }
+
+  function timeAgo(ms) {
+    const minutes = Math.round((Date.now() - ms) / 60000);
+    if (!(minutes >= 1)) return 'just now';
+    if (minutes < 60) return `${minutes} min ago`;
+    const hours = Math.round(minutes / 60);
+    if (hours < 24) return `${hours} hour${hours === 1 ? '' : 's'} ago`;
+    const days = Math.round(hours / 24);
+    return `${days} day${days === 1 ? '' : 's'} ago`;
+  }
+
+  function refreshRejoin() {
+    const game = !roomCode ? loadLastGame() : null;
+    rejoinEl.classList.toggle('hidden', !game);
+    if (!game) return;
+    const names = Array.isArray(game.names) ? game.names : [];
+    const me = cleanName(names[game.seat - 1]) || `Seat ${game.seat}`;
+    const when = Number.isFinite(game.savedAt) ? ` · ${timeAgo(game.savedAt)}` : '';
+    rejoinSub.textContent = `${game.room} · ${me} · Round ${game.round}${when}`;
+  }
+
+  // Sets the decks to a saved base-36 bitmask. Returns false if it can't.
+  function applyDeckMaskString(maskText) {
+    try {
+      const all = [...packIndex.keys()].sort();
+      const mask = parseBase36(maskText);
+      packSelect.querySelectorAll('input').forEach(box => {
+        const index = all.indexOf(box.value);
+        box.checked = index >= 0 && ((mask >> BigInt(index)) & 1n) === 1n;
+      });
+      persistSelectedPacks();
+      return true;
+    } catch (e) { return false; }
+  }
+
+  function rejoinLastGame() {
+    const game = loadLastGame();
+    if (!game) return;
+    const warnings = [];
+
+    let maskOk = false;
+    if (game.mask && game.n === packIndex.size) maskOk = applyDeckMaskString(game.mask);
+    if (!maskOk) warnings.push('your cards file has changed since you last played, so check the decks match your friends’');
+
+    playerCount = Math.max(1, Math.min(20, parseInt(game.players, 10) || 4));
+    czarMode = game.czar === 'seq' || game.czar === 'rand' ? game.czar : 'off';
+    botCount = Math.max(0, Math.min(20, parseInt(game.bots, 10) || 0));
+    playerNames = (Array.isArray(game.names) ? game.names : []).map(cleanName);
+    persistNames();
+
+    if (maskOk && game.f && game.f !== getContentHash()) {
+      warnings.push('your cards don’t match the ones you last played with (an older or newer cards file), so your hands may not line up with your friends’. Refresh the page or clear its cache');
+    }
+
+    enterRoom(game.room);
+    syncRound = Math.max(1, Math.min(9999, parseInt(game.round, 10) || 1));
+    persistRoom();
+    mySeat = Math.max(1, Math.min(playerCount, parseInt(game.seat, 10) || 1));
+    seatOk = true;
+    joinInfo = { room: roomCode, mask: maskOk ? game.mask : null, p: playerCount, c: czarMode, b: botCount, warnings };
+    saveJoin();
+    persistSeat();
+    setSyncMode(true);
+    updateRoomUI();
+    drawSyncRound();
+  }
+
+  rejoinBtn.addEventListener('click', rejoinLastGame);
+  rejoinForget.addEventListener('click', () => {
+    try { localStorage.removeItem(STORAGE_KEYS.last); } catch (e) {}
+    lastGameJson = '';
+    refreshRejoin();
+  });
+
+  hostBtn.addEventListener('click', () => openWizard('host'));
+  joinBtn.addEventListener('click', () => openWizard('join'));
 
   /* ============================================================
      Wire up events + init
@@ -2919,8 +5325,10 @@
   // Restore Sync Mode + the room you were in
   restoreRoom();
   restoreSeat();
+  joinInfo = loadJoin();
+  if (joinInfo && joinInfo.room !== roomCode) joinInfo = null;
   if (navigator.share) shareInviteBtn.classList.remove('hidden');
-  setSyncMode(localStorage.getItem(STORAGE_KEYS.syncMode) === '1');
+  setSyncMode(localStorage.getItem(STORAGE_KEYS.syncMode) === '1' && Boolean(roomCode));
 
   loadCards();
 
