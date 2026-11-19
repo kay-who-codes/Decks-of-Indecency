@@ -2126,6 +2126,14 @@
     }
   }
 
+    .online-box { width:100%; max-width:560px; margin:0 auto 10px; padding:0 20px; display:flex; flex-direction:column; gap:8px; align-items:center; }
+  .online-line, .online-scores { font-size:14px; font-weight:700; }
+  .online-warn { color:var(--crimson-dark); font-weight:700; font-size:14px; }
+  .online-winner { font-family:var(--font-display); font-size:22px; text-transform:uppercase; color:var(--crimson-dark); }
+  .online-subs { display:flex; flex-wrap:wrap; justify-content:center; gap:16px; width:100%; }
+  .online-cell { display:flex; flex-direction:column; align-items:center; gap:8px; width:min(250px,90%); }
+  .online-card { width:100%; height:auto; min-height:150px; font-size:19px; }
+
   /* ---------- Footer ---------- */
   .credit-message {
     font-size: 13px;
@@ -2391,6 +2399,8 @@
         </ol>
       </div>
     </div>
+
+    <div class="online-box hidden" id="online-box"></div>
 
     <div id="cards-container"></div>
 
@@ -3869,6 +3879,7 @@
     let n = parseInt(value, 10);
     if (!Number.isFinite(n) || n < 1) n = 1;
     if (n > 9999) n = 9999;
+    if (window.CAHOnline) window.CAHOnline.onRound(n);
     syncRound = n;
     persistRoom();
     updateRoomUI();
@@ -4304,6 +4315,7 @@
     // without letting that focus itself yank the scroll position back down.
     cardDisplay.scrollIntoView({ behavior: 'smooth', block: 'start' });
     document.getElementById('back-to-menu').focus({ preventScroll: true });
+    if (window.CAHOnline) window.CAHOnline.onDraw();
   }
 
   // Renders cardsContainer from currentHand once per draw. Element references
@@ -4440,6 +4452,7 @@
 
   function updateSelectionBar() {
     const count = selectedIndices.size;
+    if (window.CAHOnline) window.CAHOnline.onSelect();
     if (pickLimit !== null) {
       selectionCount.textContent = `${count} of ${pickLimit} chosen`;
       revealSelectedButton.disabled = count !== pickLimit;
@@ -5330,6 +5343,17 @@
   if (navigator.share) shareInviteBtn.classList.remove('hidden');
   setSyncMode(localStorage.getItem(STORAGE_KEYS.syncMode) === '1' && Boolean(roomCode));
 
+  window.CAH = {
+    state: () => ({ room: roomCode, round: syncRound, seat: mySeat, players: playerCount,
+      czarMode, isCzar: isCzarThisRound(), prompt: currentPrompt, pick: pickLimit,
+      syncMode, heading: currentHeading }),
+    selectedAnswers: getSelectedAnswers,
+    setRound,
+    seatLabel,
+    botPlays: () => botPlays,
+    fillFragment: buildFilledFragment
+  };
+
   loadCards();
 
   // Offline support: the service worker caches the page, cards, QR library and fonts.
@@ -5343,5 +5367,9 @@
   }
 })();
 </script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script src="firebase-sync.js"></script>
 </body>
 </html>
