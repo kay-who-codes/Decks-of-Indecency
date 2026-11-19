@@ -1,6 +1,6 @@
 /* Service worker: makes the game work with no signal.
    Bump VERSION whenever you change files, so phones drop the old copies. */
-const VERSION = 'v1';
+const VERSION = 'v2';
 const CACHE = `cah-${VERSION}`;
 
 // Must cache, or installation fails (the game can't run offline without them).
@@ -8,6 +8,7 @@ const ESSENTIAL = ['./', 'index.html', 'cards.json'];
 
 // Cached if present; a missing file (e.g. no flip.mp3) is simply skipped.
 const OPTIONAL = [
+  'firebase-sync.js',
   'qrcode.js',
   'manifest.webmanifest',
   'flip.mp3',
@@ -40,8 +41,9 @@ self.addEventListener('activate', (event) => {
   })());
 });
 
-// Pages and card data: try the network first (so every phone gets the same,
-// newest cards.json when online), fall back to the cache after a short wait.
+// Pages, card data and the online-sync script: try the network first so every
+// phone runs the same, newest code and cards when online; fall back to the
+// cache after a short wait.
 async function networkFirst(request) {
   const cache = await caches.open(CACHE);
   const update = fetch(request).then(response => {
@@ -118,5 +120,6 @@ self.addEventListener('fetch', (event) => {
 
   const isPage = request.mode === 'navigate' || url.pathname.endsWith('/index.html');
   const isCards = url.pathname.endsWith('/cards.json');
-  event.respondWith(isPage || isCards ? networkFirst(request) : staleWhileRevalidate(event));
+  const isSync = url.pathname.endsWith('/firebase-sync.js');
+  event.respondWith(isPage || isCards || isSync ? networkFirst(request) : staleWhileRevalidate(event));
 });
