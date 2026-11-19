@@ -1,9 +1,9 @@
-/* firebase-sync.js: online multiplayer for Decks of Indecency (v2).
-   - Status badge: connection state, room code and how many seats are online.
-   - Roster: every seat with an online dot, Czar crown and "submitted" tick.
-   - Czar view: submissions (players + bots) as face-down WHITE cards, flipped one at a time.
-   - Tapping a flipped card previews its text on the black card; "Pick winner" locks it in
-     and the winning answer fills the black card on every device.
+/* firebase-sync.js: online multiplayer for Decks of Indecency (v3).
+   - Joins the online room as soon as you're in a room (not only after drawing cards).
+   - Lobby panel on the menu: "Join online room" button, connection state, who is here.
+   - Status badge, roster with online dots / Czar crown / submitted ticks.
+   - Czar judging view sits BELOW the black card: face-down white cards, flip, select, pick.
+   - The winning answer fills the black card on every device.
    Works with the existing index.html (needs window.CAH, #online-box and window.CAHOnline hooks). */
 (() => {
   const firebaseConfig = {
@@ -31,6 +31,8 @@
     .roster-chip.off{opacity:.6}
     .online-sub{display:flex;flex-direction:column;align-items:center;gap:8px;width:100%}
     .online-sub-cards{display:flex;flex-direction:column;gap:10px;width:100%;align-items:center}
+    /* No deal-in animation here: the judging view is rebuilt on updates and must not flicker. */
+    #online-box .card,#online-judge .card{animation:none}
     .card.online-white{width:100%;height:auto;min-height:150px;font-size:19px;background:#fffdf6;color:#1c1712;cursor:default}
     .card.online-white.flippable,.card.online-white.pickable{cursor:pointer}
     .card.online-white.online-back{background:#fffdf6;color:#b9331f;align-items:center;justify-content:center;
@@ -40,6 +42,10 @@
     .online-hint{font-size:12px;color:var(--ink-soft)}
     body.dark-mode .online-hint{color:#b9ae9c}
     .online-badge-pad{height:44px}
+    .online-lobby{width:100%;max-width:360px;margin:10px auto 0;padding:12px;display:flex;flex-direction:column;align-items:center;gap:8px;
+      background:var(--card-white);color:var(--ink);border:2px solid var(--ink);border-radius:6px}
+    body.dark-mode .online-lobby{background:#201a14;color:#f1ead9;border-color:#f1ead9}
+    .lobby-title{font-family:var(--font-display);font-weight:700;font-size:19px;text-transform:uppercase;letter-spacing:.02em}
   `;
   document.head.appendChild(style);
 
@@ -47,7 +53,7 @@
   const badge = el('div');
   badge.style.cssText = 'position:fixed;left:8px;bottom:calc(8px + env(safe-area-inset-bottom));z-index:2000;padding:5px 10px;border-radius:999px;font:700 12px sans-serif;color:#fff;background:#555;max-width:90vw;';
   document.body.appendChild(badge);
-  const pad = el('div', 'online-badge-pad'); document.body.appendChild(pad);
+  document.body.appendChild(el('div', 'online-badge-pad'));
 
   let conn = 'connecting', errText = '', seatsNow = {};
   function updateBadge() {
@@ -58,10 +64,7 @@
     else if (conn === 'ok') {
       ok = true;
       text = 'Online ✓';
-      if (st.syncMode && st.room) {
-        const n = Object.keys(seatsNow).length;
-        text += ' · ' + st.room + ' · ' + n + '/' + st.players + ' here';
-      }
+      if (st.syncMode && st.room) text += ' · ' + st.room + ' · ' + Object.keys(seatsNow).length + '/' + st.players + ' here';
     } else text = 'Online: connecting…';
     badge.textContent = text;
     badge.style.background = ok === true ? '#2e7d32' : ok === false ? '#b9331f' : '#555';
@@ -73,11 +76,25 @@
   if (!CAH) { conn = 'error'; errText = 'window.CAH missing from index.html'; updateBadge(); return; }
   if (!box) { conn = 'error'; errText = '#online-box missing from index.html'; updateBadge(); return; }
 
+  // The judging view has its own box BELOW the black card; the old bot reveal is redundant now.
+  const judge = el('div', 'online-box hidden');
+  judge.id = 'online-judge';
+  const cardsContainerEl = document.getElementById('cards-container');
+  cardsContainerEl.after(judge);
+  const hideBots = document.createElement('style');
+  hideBots.textContent = '#bot-box{display:none !important}';
+  document.head.appendChild(hideBots);
+
+  // Lobby panel on the menu
+  const lobby = el('div', 'online-lobby');
+  const menuTitle = document.querySelector('#main-menu h1');
+  if (menuTitle) menuTitle.after(lobby); else document.getElementById('main-menu').prepend(lobby);
+
   firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
   let uid = null;
   const ready = firebase.auth().signInAnonymously()
-    .then(c => { uid = c.user.uid; conn = 'ok'; updateBadge(); })
+    .then(c => { uid = c.user.uid; conn = 'ok'; scheduleRender(); })
     .catch(e => { conn = 'error'; errText = 'sign-in failed (' + (e.code || e.message) + ')'; updateBadge(); console.error('Firebase auth', e); });
 
   let attached = '', refs = [], all = {}, remoteRound = null, seatClash = false, claimed = null;
@@ -93,7 +110,7 @@
   }
   function detach() { refs.forEach(([r, h]) => r.off('value', h)); refs = []; releaseSeat(); }
 
-  // Claims this phone's seat. Called on attach AND on every reconnect, because
+  // Claims this phone's seat. Runs on attach AND on every reconnect, because
   // onDisconnect removes the seat when the connection drops.
   function claimSeat() {
     if (!uid || !attached) return;
@@ -108,7 +125,7 @@
   db.ref('.info/connected').on('value', s => {
     if (!uid) return;
     if (s.val()) { conn = 'ok'; claimSeat(); } else conn = 'reconnecting';
-    updateBadge();
+    scheduleRender();
   });
 
   async function attach() {
@@ -127,26 +144,28 @@
       remoteRound = v;
       if (v !== local) CAH.setRound(v);
     });
-    listen(base.child('rounds'), snap => { all = snap.val() || {}; render(); });
+    listen(base.child('rounds'), snap => { all = snap.val() || {}; scheduleRender(); });
     listen(base.child('seats'), snap => {
       seatsNow = snap.val() || {};
       const mine = seatsNow[CAH.state().seat];
       seatClash = Boolean(mine && mine !== uid);
-      render();
+      scheduleRender();
     });
     claimSeat();
   }
 
   const who = k => String(k)[0] === 'b' ? 'Bot ' + (parseInt(String(k).slice(1), 10) + 1) : CAH.seatLabel(parseInt(k, 10));
-
-  // Stable shuffle so submissions aren't listed in seat order (which would give away who wrote what).
   function hashStr(s) { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+
+  // Submissions are stored as { a: [answers], h: hash of the black card text } so a phone
+  // that is on a different black card (different round or decks) is spotted, not mixed in.
+  const normSub = v => (Array.isArray(v) ? { a: v, h: null } : (v && typeof v === 'object' ? { a: Array.isArray(v.a) ? v.a : [], h: v.h || null } : { a: [], h: null }));
 
   // Czar-side local UI state
   const flipped = new Set();   // `${room}|${round}|${key}`
-  let chosen = null;           // `${room}|${round}|${key}` currently previewed on the black card
+  let chosen = null;
 
-  function blackEl() { return document.querySelector('#cards-container .black-card'); }
+  const blackEl = () => document.querySelector('#cards-container .black-card');
   function fillBlack(answers) {
     const b = blackEl(), st = CAH.state();
     if (!b || !st.prompt) return;
@@ -161,18 +180,73 @@
     return c;
   }
 
+  /* ---------- Lobby (menu) ---------- */
+  function renderLobby(st) {
+    lobby.innerHTML = '';
+    if (!st.room) {
+      lobby.appendChild(el('span', 'lobby-title', '🌐 Online play'));
+      lobby.appendChild(el('p', 'online-hint', 'Playing with friends on their own phones? Join your host’s room with their link or game name.'));
+      const join = el('button', 'reveal-button', 'Join online room');
+      join.type = 'button';
+      join.addEventListener('click', () => { const b = document.getElementById('join-btn'); if (b) b.click(); });
+      lobby.appendChild(join);
+      return;
+    }
+    const here = Object.keys(seatsNow).length;
+    lobby.appendChild(el('span', 'lobby-title', '🌐 Online room ' + st.room));
+    lobby.appendChild(el('p', 'online-line',
+      conn === 'ok' && attached ? 'Connected · ' + here + ' of ' + st.players + ' seats here'
+      : conn === 'error' ? 'Not connected: ' + errText
+      : conn === 'reconnecting' ? 'Reconnecting…' : 'Connecting…'));
+    const roster = el('div', 'online-roster');
+    for (let s = 1; s <= st.players; s++) {
+      const on = Boolean(seatsNow[s]);
+      const chip = el('span', 'roster-chip ' + (on ? 'on' : 'off') + (s === st.seat ? ' me' : ''));
+      chip.appendChild(el('span', 'roster-dot'));
+      chip.appendChild(document.createTextNode(CAH.seatLabel(s) + (s === st.seat ? ' (you)' : '')));
+      roster.appendChild(chip);
+    }
+    lobby.appendChild(roster);
+    if (seatClash) lobby.appendChild(el('p', 'online-warn', '⚠️ Another phone is already in ' + CAH.seatLabel(st.seat) + '. Use your own personal link or pick a different seat.'));
+    if (!(conn === 'ok' && attached)) {
+      const retry = el('button', 'reveal-button', 'Join online room');
+      retry.type = 'button';
+      retry.addEventListener('click', () => { attached = ''; attach().then(scheduleRender); scheduleRender(); });
+      lobby.appendChild(retry);
+    }
+  }
+
+  /* ---------- Rendering (coalesced; skipped when nothing changed) ---------- */
+  let lastSig = '', rafPending = false;
+  function scheduleRender(force) {
+    if (force) lastSig = '';
+    if (rafPending) return;
+    rafPending = true;
+    requestAnimationFrame(() => { rafPending = false; render(); });
+  }
+
   function render() {
     updateBadge();
     const st = CAH.state();
+    const sig = JSON.stringify([st.room, st.seat, st.players, st.syncMode, st.heading, st.round, st.isCzar, st.pick, st.czarMode,
+      st.prompt && st.prompt.Text, conn, attached, seatClash, seatsNow, all, chosen, Array.from(flipped).join(','),
+      CAH.selectedAnswers(), CAH.botPlays()]);
+    if (sig === lastSig) return;
+    lastSig = sig;
+
+    renderLobby(st);
     box.innerHTML = '';
-    if (!st.syncMode || !st.room || !st.prompt || !(st.heading === 'Round' || st.heading === 'Czar')) { box.classList.add('hidden'); return; }
+    judge.innerHTML = '';
+    const active = st.syncMode && st.room && st.prompt && (st.heading === 'Round' || st.heading === 'Czar');
+    if (!active) { box.classList.add('hidden'); judge.classList.add('hidden'); return; }
     box.classList.remove('hidden');
 
     const cur = all[st.round] || {}, subs = cur.subs || {}, result = cur.result;
     const czarOn = st.czarMode !== 'off';
-    // The Czar tells everyone which seat they are (index.html doesn't expose it).
-    if (st.isCzar && cur.czar !== st.seat && uid) roomRef().child('rounds/' + st.round + '/czar').set(st.seat);
+    // The Czar tells everyone which seat they are. Written once, so two phones can never fight over it.
+    if (st.isCzar && cur.czar == null && uid && attached) roomRef().child('rounds/' + st.round + '/czar').transaction(v => (v == null ? st.seat : v));
     const czarSeat = czarOn ? (st.isCzar ? st.seat : cur.czar) : null;
+    const promptHash = hashStr(st.prompt.Text);
 
     // ----- Roster -----
     const humans = Object.keys(subs).filter(k => !(czarOn && czarSeat != null && String(k) === String(czarSeat)));
@@ -185,15 +259,14 @@
       const chip = el('span', 'roster-chip ' + (on ? 'on' : 'off') + (s === st.seat ? ' me' : ''));
       chip.appendChild(el('span', 'roster-dot'));
       let label = CAH.seatLabel(s) + (s === st.seat ? ' (you)' : '');
-      if (isCzarSeat) label += ' 👑';
-      else if (subs[s]) label += ' ✓';
+      if (isCzarSeat) label += ' 👑'; else if (subs[s]) label += ' ✓';
       chip.appendChild(document.createTextNode(label));
       chip.setAttribute('aria-label', label + (on ? ', online' : ', offline'));
       roster.appendChild(chip);
     }
     box.appendChild(roster);
 
-    // ----- Scores -----
+    // ----- Scores / warnings -----
     const tally = {};
     Object.values(all).forEach(r => { if (r && r.result) tally[r.result.key] = (tally[r.result.key] || 0) + 1; });
     const ks = Object.keys(tally).sort((a, b) => tally[b] - tally[a]);
@@ -207,91 +280,103 @@
       const btn = el('button', 'reveal-button', subs[st.seat] ? 'Answer sent ✓ (tap to change)' : 'Submit answer');
       btn.type = 'button';
       btn.disabled = Boolean(result) || answers.length !== st.pick;
-      btn.addEventListener('click', () => roomRef().child('rounds/' + st.round + '/subs/' + st.seat).set(answers));
+      btn.addEventListener('click', () => roomRef().child('rounds/' + st.round + '/subs/' + st.seat).set({ a: answers, h: promptHash }));
       box.appendChild(btn);
     }
 
-    // ----- Judge view (Czar, or everyone when there is no Czar) -----
-    if (st.isCzar || !czarOn) {
-      const entries = Object.keys(subs)
-        .filter(k => !(czarOn && String(k) === String(st.seat)))
-        .map(k => ({ k, texts: subs[k] || [] }));
-      CAH.botPlays().forEach((t, i) => entries.push({ k: 'b' + i, texts: t }));
-      entries.sort((a, b) => hashStr(st.room + st.round + a.k) - hashStr(st.room + st.round + b.k));
+    // ----- Judge view, BELOW the black card (Czar, or everyone when there is no Czar) -----
+    if (!(st.isCzar || !czarOn)) { judge.classList.add('hidden'); applyResult(result); return; }
+    judge.classList.remove('hidden');
 
-      if (!entries.length) box.appendChild(el('p', 'online-line', 'Waiting for answers…'));
-      else if (!result) box.appendChild(el('p', 'online-hint', 'Tap a white card to flip it. Tap it again to try it on the black card, then pick the winner.'));
+    const entries = [], mismatched = [];
+    Object.keys(subs).forEach(k => {
+      if (czarOn && String(k) === String(st.seat)) return;
+      const s = normSub(subs[k]);
+      if (s.h && s.h !== promptHash) mismatched.push(k);
+      else entries.push({ k, texts: s.a });
+    });
+    CAH.botPlays().forEach((t, i) => entries.push({ k: 'b' + i, texts: t }));
+    entries.sort((a, b) => hashStr(st.room + st.round + a.k) - hashStr(st.room + st.round + b.k));
 
-      const wrap = el('div', 'online-subs');
-      entries.forEach((e, i) => {
-        const id = st.room + '|' + st.round + '|' + e.k;
-        const isFlipped = Boolean(result) || flipped.has(id);
-        const isChosen = chosen === id;
-        const isWinner = result && result.key === e.k;
-        const cell = el('div', 'online-cell');
-        const group = el('div', 'online-sub');
-        group.appendChild(el('div', 'online-line', result ? who(e.k) : 'Answer ' + (i + 1)));
-        const cards = el('div', 'online-sub-cards');
+    mismatched.forEach(k => judge.appendChild(el('p', 'online-warn',
+      '⚠️ ' + who(k) + ' is on a different black card (their round or decks don’t match), so their answer is hidden.')));
+    if (!entries.length) judge.appendChild(el('p', 'online-line', 'Waiting for answers…'));
+    else if (!result) judge.appendChild(el('p', 'online-hint', 'Tap a white card to flip it. Tap it again to try it on the black card, then pick the winner.'));
 
-        if (!isFlipped) {
-          const back = el('div', 'card online-white online-back flippable', 'Decks of Indecency\nTap to flip');
-          back.style.whiteSpace = 'pre-line';
-          back.setAttribute('role', 'button'); back.setAttribute('tabindex', '0');
-          back.setAttribute('aria-label', 'Face-down answer ' + (i + 1) + '. Tap to flip');
-          const flip = () => { flipped.add(id); render(); };
-          back.addEventListener('click', flip);
-          back.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); flip(); } });
-          cards.appendChild(back);
-        } else {
-          (e.texts.length ? e.texts : ['']).forEach(t => {
-            const c = whiteCard(t, (isChosen ? 'chosen ' : '') + (isWinner ? 'winner-card ' : '') + (result ? '' : 'pickable'));
-            if (!result) {
-              c.setAttribute('role', 'button'); c.setAttribute('tabindex', '0');
-              const choose = () => { chosen = id; render(); };
-              c.addEventListener('click', choose);
-              c.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); choose(); } });
-            }
-            cards.appendChild(c);
-          });
-        }
-        group.appendChild(cards);
+    const wrap = el('div', 'online-subs');
+    entries.forEach((e, i) => {
+      const id = st.room + '|' + st.round + '|' + e.k;
+      const isFlipped = Boolean(result) || flipped.has(id);
+      const isChosen = chosen === id;
+      const isWinner = result && String(result.key) === String(e.k);
+      const cell = el('div', 'online-cell');
+      const group = el('div', 'online-sub');
+      group.appendChild(el('div', 'online-line', result ? who(e.k) : 'Answer ' + (i + 1)));
+      const cards = el('div', 'online-sub-cards');
 
-        if (result) {
-          const tag = el('span', 'online-hint', isWinner ? 'Winner 👑' : '');
-          group.appendChild(tag);
-        } else if (isFlipped) {
-          const pick = el('button', 'small-button', isChosen ? 'Pick as winner' : 'Select');
-          pick.type = 'button';
-          pick.addEventListener('click', () => {
-            if (!isChosen) { chosen = id; render(); return; }
-            roomRef().child('rounds/' + st.round + '/result').transaction(v => v || { key: e.k, answers: e.texts });
-          });
-          group.appendChild(pick);
-        }
-        cell.appendChild(group);
-        wrap.appendChild(cell);
-      });
-      box.appendChild(wrap);
-
-      // Preview the selected answer on the black card.
-      if (!result && chosen) {
-        const picked = entries.find(e => st.room + '|' + st.round + '|' + e.k === chosen);
-        if (picked) fillBlack(picked.texts);
+      if (!isFlipped) {
+        const back = el('div', 'card online-white online-back flippable', 'Decks of Indecency\nTap to flip');
+        back.style.whiteSpace = 'pre-line';
+        back.setAttribute('role', 'button'); back.setAttribute('tabindex', '0');
+        back.setAttribute('aria-label', 'Face-down answer ' + (i + 1) + '. Tap to flip');
+        const flip = () => { flipped.add(id); scheduleRender(); };
+        back.addEventListener('click', flip);
+        back.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); flip(); } });
+        cards.appendChild(back);
+      } else {
+        (e.texts.length ? e.texts : ['']).forEach(t => {
+          const c = whiteCard(t, (isChosen ? 'chosen ' : '') + (isWinner ? 'winner-card ' : '') + (result ? '' : 'pickable'));
+          if (!result) {
+            c.setAttribute('role', 'button'); c.setAttribute('tabindex', '0');
+            const choose = () => { chosen = id; scheduleRender(); };
+            c.addEventListener('click', choose);
+            c.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); choose(); } });
+          }
+          cards.appendChild(c);
+        });
       }
-    }
+      group.appendChild(cards);
 
-    // Once the Czar has picked, the winning answer is written into the black card on every device.
-    if (result && result.answers) fillBlack(result.answers);
+      if (result) {
+        if (isWinner) group.appendChild(el('span', 'online-hint', 'Winner 👑'));
+      } else if (isFlipped) {
+        const pick = el('button', 'small-button', isChosen ? 'Pick as winner' : 'Select');
+        pick.type = 'button';
+        pick.addEventListener('click', () => {
+          if (!isChosen) { chosen = id; scheduleRender(); return; }
+          roomRef().child('rounds/' + st.round + '/result').transaction(v => v || { key: e.k, answers: e.texts });
+        });
+        group.appendChild(pick);
+      }
+      cell.appendChild(group);
+      wrap.appendChild(cell);
+    });
+    judge.appendChild(wrap);
+
+    // Preview the selected answer on the black card.
+    if (!result && chosen) {
+      const picked = entries.find(e => st.room + '|' + st.round + '|' + e.k === chosen);
+      if (picked) fillBlack(picked.texts);
+    }
+    applyResult(result);
   }
 
+  // Once the Czar has picked, the winning answer is written into the black card on every device.
+  function applyResult(result) { if (result && result.answers) fillBlack(result.answers); }
+
+  // Join the online room as soon as you are in one (not only after drawing cards), and let go when you leave.
+  setInterval(() => {
+    const st = CAH.state();
+    if (st.syncMode && st.room) attach().then(() => scheduleRender());
+    else if (attached) { detach(); attached = ''; seatsNow = {}; all = {}; }
+    scheduleRender();
+  }, 1000);
+
   window.CAHOnline = {
-    onDraw() { chosen = null; attach().then(render); render(); },
-    // index.html redraws the black card AFTER this hook runs, so re-apply on the next tick.
-    onSelect() { render(); setTimeout(() => {
-      const cur = all[CAH.state().round] || {};
-      if (cur.result && cur.result.answers) fillBlack(cur.result.answers);
-    }, 0); },
+    onDraw() { chosen = null; attach().then(() => scheduleRender(true)); scheduleRender(true); },
+    // index.html redraws the black card AFTER this hook runs, so re-apply the result on the next tick.
+    onSelect() { scheduleRender(); setTimeout(() => { const cur = all[CAH.state().round] || {}; applyResult(cur.result); }, 0); },
     onRound(n) { if (attached && n !== remoteRound) { remoteRound = n; roomRef().child('round').set(n); } }
   };
-  updateBadge();
+  scheduleRender(true);
 })();
